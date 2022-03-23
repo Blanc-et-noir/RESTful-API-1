@@ -20,8 +20,6 @@ public class AccesstokenInterceptor implements HandlerInterceptor{
 	@Autowired
 	private RedisUtil redisUtil;
 	@Autowired
-	private UserDAO userDAO;
-	@Autowired
 	private CookieUtil cookieUtil;
 	
 	@Override

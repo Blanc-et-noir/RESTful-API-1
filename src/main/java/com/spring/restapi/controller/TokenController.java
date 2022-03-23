@@ -42,4 +42,20 @@ public class TokenController {
 			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
 		}
 	}
+	
+	@RequestMapping(value= {"/token/logout.do"})
+	public ResponseEntity<HashMap> logout(HttpServletRequest request, HttpServletResponse response){
+		HashMap result = new HashMap();
+		try {
+			tokenService.logout(request, response);
+			result.put("flag", "false");
+			result.put("content", "액세스, 리프레시 토큰 갱신에 성공했습니다.");
+			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			result.put("flag", "false");
+			result.put("content", "액세스, 리프레시 토큰 갱신에 실패했습니다.");
+			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+		}
+	}
 }

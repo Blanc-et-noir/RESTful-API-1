@@ -579,7 +579,6 @@ $.fn.extend({
             		return;
             	}
                 if(e.which == 1){
-                	console.log("down");
                     curX = e.clientX;
                     curY = e.clientY;
                     dragFlag=true;
@@ -592,7 +591,6 @@ $.fn.extend({
             		return;
             	}
                 if(e.which == 1){
-                	console.log("up");
                     newX = e.clientX;
                     newY = e.clientY;
                     if(abs(curX-newX) > abs(curY-newY)){

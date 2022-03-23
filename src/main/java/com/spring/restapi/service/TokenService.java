@@ -65,7 +65,7 @@ public class TokenService {
 		System.out.println("액세스 리프레시 토큰을 재발급했습니다.");
 	}
 	
-	public void logout(HashMap<String,String> param,HttpServletRequest request,HttpServletResponse response) throws Exception{
+	public void logout(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		
 		String user_accesstoken = cookieUtil.getAccesstoken(request);
 		String user_refreshtoken = cookieUtil.getRefreshtoken(request);

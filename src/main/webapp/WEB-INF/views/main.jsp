@@ -14,13 +14,14 @@
     <script src="${path}/resources/js/jquery-cookie.js"></script>
     <script src="${path}/resources/js/JSEncrypt.js"></script>
     <script src="${path}/resources/js/fullpage.js"></script>
-    <script src="${path}/resources/js/info.js"></script>
+    <script src="${path}/resources/js/main.js"></script>
     
-    <link rel="stylesheet" href="${path}/resources/css/info.css">
+    <link rel="stylesheet" href="${path}/resources/css/main.css">
     <title>정보</title>
 </head>
 <body>
-	<div id="logout_button">로그아웃</div>
+	<div id="form_cover"></div>
+	<div id="alert_cover"></div>
     <div id="fullpage">
         <div class="section">
             <div class="slide" style="background-color:#EF476F">
@@ -28,6 +29,9 @@
                 	<div id="user_info"></div>
                 </div>
             </div>
+			<div class="slide" style="background-color:#96baff">
+				<p>asd</p>
+        	</div>
         </div>
         <div class="section">
             <div class="slide" style="background-color:#D1D1D1">

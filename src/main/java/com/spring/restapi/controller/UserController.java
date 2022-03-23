@@ -37,21 +37,9 @@ public class UserController {
 	private CookieUtil cookieUtil;
 	
 	//로그인 뷰를 리턴함
-	@RequestMapping(value="/user/loginForm.do")
+	@RequestMapping(value="/user/mainForm.do")
 	public ModelAndView loginForm(HttpServletRequest request, HttpServletResponse response) {
-		return new ModelAndView("login");
-	}
-	
-	//회원가입 뷰를 리턴함
-	@RequestMapping(value="/user/joinForm.do")
-	public ModelAndView testForm(HttpServletRequest request, HttpServletResponse response) {
-		return new ModelAndView("join");
-	}
-	
-	//회원정보 조회 뷰를 리턴함
-	@RequestMapping(value="/user/infoForm.do")
-	public ModelAndView infoForm(HttpServletRequest request, HttpServletResponse response) {
-		return new ModelAndView("info");
+		return new ModelAndView("main");
 	}
 	
 	@RequestMapping(value="/user/join.do")
@@ -86,14 +74,17 @@ public class UserController {
 			result.put("content", "로그인 성공");
 			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
 		}catch(InvalidIdException e) {
+			e.printStackTrace();
 			result.put("flag", "false");
 			result.put("content", e.getMessage());
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}catch(InvalidPwException e) {
+			e.printStackTrace();
 			result.put("flag", "false");
 			result.put("content", e.getMessage());
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}catch(Exception e) {
+			e.printStackTrace();
 			result.put("flag", "false");
 			result.put("content", "로그인 실패");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);

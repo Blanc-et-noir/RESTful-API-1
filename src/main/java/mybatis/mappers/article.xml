@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="article">
 	<select id="listArticles" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT article_id "article_id", article_title "article_title", article_content "article_content", article_date "article_date", article_view "article_view", user_id "user_id"
+		SELECT article_id "article_id", article_title "article_title", article_content "article_content", DATE_FORMAT(article_date,'%Y-%m-%d %T') "article_date", article_view "article_view", user_id "user_id"
 		FROM articles
-		WHERE ${search_flag} LIKE '%'||#{article_search}||'%'
+		WHERE ${search_flag} LIKE CONCAT('%',#{article_search},'%')
 		ORDER BY article_date DESC
 	</select>
 	

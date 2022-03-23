@@ -46,7 +46,6 @@ public class ArticleController {
 		HashMap result = new HashMap();
 		try {
 			List list = articleService.listArticles(request, param);
-			System.out.println(list.size());
 			result.put("flag", "true");
 			result.put("content", "게시글 목록 조회에 성공했습니다.");
 			result.put("list", list);

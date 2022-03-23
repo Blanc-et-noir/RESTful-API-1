@@ -12,7 +12,7 @@ import com.spring.restapi.exception.article.FailedToAddArticleException;
 @Repository("articleDAO")
 public class ArticleDAO {
 	@Autowired
-	SqlSession sqlSession;
+	private SqlSession sqlSession;
 	
 	public void addArticle(HashMap<String,String> param) throws FailedToAddArticleException {
 		if(sqlSession.insert("article.addArticle",param)==0) {

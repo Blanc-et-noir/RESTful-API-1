@@ -1,7 +1,5 @@
 package com.spring.restapi.interceptor;
 
-import java.util.HashMap;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,11 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.spring.restapi.dao.UserDAO;
 import com.spring.restapi.util.CookieUtil;
 import com.spring.restapi.util.JwtUtil;
 import com.spring.restapi.util.RedisUtil;
-import com.spring.restapi.vo.UserVO;
 
 import io.jsonwebtoken.ExpiredJwtException;
 
@@ -22,8 +18,6 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 	private JwtUtil jwtUtil;
 	@Autowired
 	private RedisUtil redisUtil;
-	@Autowired
-	private UserDAO userDAO;
 	@Autowired
 	private CookieUtil cookieUtil;
 	

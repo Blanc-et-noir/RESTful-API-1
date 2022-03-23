@@ -48,14 +48,12 @@ textarea:focus {
 	font-size:40px;
 }
 
-#logout_button{
+#loginForm_button, #logout_button, #joinForm_button{
 	display:block;
 	position:fixed;
-	bottom:10px;
-	right:10px;
 	width:80px;
 	height:40px;
-	z-index:500;
+	z-index:400;
 	color:white;
 	background-color:#5865F2;
 	text-align:center;
@@ -63,7 +61,15 @@ textarea:focus {
 	border-radius:5px;
 	font-size:12px;
 }
-#logout_button:hover{
+#loginForm_button, #logout_button{
+	bottom:10px;
+	right:10px;
+}
+#joinForm_button{
+	bottom:10px;
+	right:100px;
+}
+#loginForm_button:hover,#logout_button:hover,#joinForm_button:hover{
 	background-color:#4752c4;
 }
 
@@ -123,7 +129,7 @@ textarea:focus {
 	color:white;
 }
 #article_write_button:hover{
-	background-color:#026f53;
+	background-color:#018865;
 }
 
 
@@ -133,7 +139,6 @@ textarea:focus {
 	position:absolute;
 	width:450px;
 	height:400px;
-	background-color:pink;
 	top:50%;
 	left:50%;
 	transform:translate(-50%,-50%);
@@ -165,7 +170,7 @@ textarea:focus {
 	display:block;
 	width:60px;
 	color:white;
-	background-color:#FFD166;
+	background-color:#e5bb5a;
 }
 #article_search_button:hover{
 	background-color:#cca751;
@@ -187,7 +192,7 @@ textarea:focus {
 	display:block;
 	width:60px;
 	text-align:center;
-	background-color:#FFD166;
+	background-color:#e5bb5a;
 	color:white;
 	line-height:30px;
 }
@@ -195,7 +200,7 @@ textarea:focus {
 	display:block;
 	flex:1;
 	text-indent:20px;
-	background-color:#FFD166;
+	background-color:#e5bb5a;
 	color:white;
 	line-height:30px;
 }
@@ -203,7 +208,7 @@ textarea:focus {
 	display:block;
 	width:120px;
 	text-align:center;
-	background-color:#FFD166;
+	background-color:#e5bb5a;
 	color:white;
 	line-height:30px;
 }
@@ -246,4 +251,199 @@ textarea:focus {
 	width:120px;
 	text-align:center;
 	line-height:20px;
+}
+
+
+#loginForm{
+	border-radius:5px;
+	overflow:hidden;
+	position:fixed;
+	display:block;
+	width:300px;
+	height:160px;
+	background-color:#2f3136;
+	z-index:700;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+}
+
+#joinForm{
+	border-radius:5px;
+	overflow:hidden;
+	position:fixed;
+	display:block;
+	width:300px;
+	height:480px;
+	background-color:#2f3136;
+	z-index:700;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+}
+
+#alert_cover{
+	position:fixed;
+	z-index:1000;
+	width:100%;
+	height:100%;
+	display:none;
+	opacity:0.5;
+	background-color:black;
+}
+#form_cover{
+	position:fixed;
+	z-index:500;
+	width:100%;
+	height:100%;
+	display:none;
+	opacity:0.5;
+	background-color:black;
+}
+#loginForm #user_id{
+	display:block;
+	width:280px;
+	height:40px;
+	position:absolute;
+	top:10%;
+	left:50%;
+	transform:translate(-50%,-10%);
+	text-indent:20px;
+	line-height:40px;
+	border-radius:5px;
+	background-color:#40444b;
+	color:white;
+}
+
+#loginForm #user_pw{
+	width:280px;
+	height:40px;
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+	text-indent:20px;
+	line-height:40px;
+	border-radius:5px;
+	background-color:#40444b;
+	color:white;
+}
+
+
+
+
+
+
+
+
+
+#login_button, #loginFormClose_button{
+	display:block;
+	position:absolute;
+	height:40px;
+	z-index:400;
+	color:white;
+	background-color:#5865F2;
+	text-align:center;
+	line-height:40px;
+	border-radius:5px;
+	font-size:12px;
+}
+#login_button{
+	width:200px;
+	top:90%;
+	left:10%;
+	transform:translate(-10%,-90%);
+}
+#loginFormClose_button{
+	width:70px;
+	top:90%;
+	left:96%;
+	transform:translate(-96%,-90%);
+}
+#login_button:hover,#loginFormClose_button:hover{
+	background-color:#4752c4;
+}
+
+
+
+
+
+
+
+#joinForm #user_id,#joinForm #user_pw, #joinForm #user_pw_check, #joinForm #user_name, #joinForm #user_email, #joinForm #question_id, #joinForm #question_answer{
+	width:280px;
+	height:40px;
+	position:absolute;
+	text-indent:20px;
+	line-height:40px;
+	border-radius:5px;
+	background-color:#40444b;
+	color:white;
+}
+
+
+#joinForm #user_id{
+	top:5%;
+	left:50%;
+	transform:translate(-50%,-5%);
+}
+#joinForm #user_pw{
+	top:15%;
+	left:50%;
+	transform:translate(-50%,-15%);
+}
+#joinForm #user_pw_check{
+	top:25%;
+	left:50%;
+	transform:translate(-50%,-25%);
+}
+#joinForm #user_name{
+	top:45%;
+	left:50%;
+	transform:translate(-50%,-45%);
+}
+#joinForm #user_email{
+	top:55%;
+	left:50%;
+	transform:translate(-50%,-55%);
+}
+#joinForm #question_id{
+	top:75%;
+	left:50%;
+	transform:translate(-50%,-75%);
+}
+#joinForm #question_answer{
+	top:85%;
+	left:50%;
+	transform:translate(-50%,-85%);
+}
+
+
+#join_button, #joinFormClose_button{
+	display:block;
+	position:absolute;
+	height:40px;
+	z-index:400;
+	color:white;
+	background-color:#5865F2;
+	text-align:center;
+	line-height:40px;
+	border-radius:5px;
+	font-size:12px;
+}
+#join_button{
+	width:200px;
+	top:95%;
+	left:10%;
+	transform:translate(-10%,-95%);
+}
+#joinFormClose_button{
+	width:70px;
+	top:95%;
+	left:96%;
+	transform:translate(-96%,-95%);
+}
+#join_button:hover,#joinFormClose_button:hover{
+	background-color:#4752c4;
 }
