@@ -253,3 +253,63 @@ dataType : json
 ***
 
 <br/>
+
+### 문제 분류 목록 발급 요청
+문제들의 분류 번호와 분류명을 얻음
+
+<br/>
+
+##### REQUEST
+<pre>
+URL : /restapi/user/getCategories.do
+
+dataType : json
+
+세부사항
+
+1. 해당 API는 로그인이 필요한 기능이므로 반드시 액세스 토큰을 같이 전달해야함.
+
+2. 액세스 토큰을 갖고 해당 API를 처음 호출했을때 HTTP 401 응답을 수신하면
+   액세스 토큰이 만료되었을 수 있음.
+   
+   반드시 해당 액세스 토큰과 리프레쉬 토큰을 갖고 새로이 액세스 토큰과 리프레쉬 토큰을 재발급 받아야함.
+   새로 발급받은 액세스 토큰으로 다시 한 번 요청을 시도해야함.
+</pre>
+
+##### SUCCESS
+<pre>
+{
+   flag : true,
+   content : 응답 메세지,
+   list : [
+      {
+         category_id : 1,
+         category_name : "정보처리기사 필기 1과목"
+      },
+      {
+         category_id : 2,
+         category_name : "정보처리기사 필기 2과목"
+      },
+      {
+         category_id : 3,
+         category_name : "정보처리기사 필기 3과목"
+      },
+      
+                           ....
+   ]
+}
+</pre>
+
+##### FAIL
+<pre>
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+***
+
+<br/>
