@@ -447,3 +447,34 @@ textarea:focus {
 #join_button:hover,#joinFormClose_button:hover{
 	background-color:#4752c4;
 }
+
+
+
+
+#problems{
+	position:absolute;
+	width:400px;
+	height:400px;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+	overflow:scroll;
+	background-color:#788dcc;
+	border-radius:5px;
+}
+.problem{
+	width:350px;
+	margin:40px 20px;
+	background-color:white;
+	border-radius:5px;
+	padding:10px;
+}
+.problem_content{
+	font-size:15px;
+	font-weight:900;
+}
+.choice{
+	margin:10px 0px;
+	height:40px;
+	line-height:20px;
+}

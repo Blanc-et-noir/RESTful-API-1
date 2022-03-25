@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,7 +24,6 @@ import com.spring.restapi.service.UserService;
 import com.spring.restapi.util.CookieUtil;
 import com.spring.restapi.util.JwtUtil;
 import com.spring.restapi.util.RedisUtil;
-import com.spring.restapi.vo.UserVO;
 
 @Controller("UserController")
 public class UserController {
@@ -74,17 +74,14 @@ public class UserController {
 			result.put("content", "로그인 성공");
 			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
 		}catch(InvalidIdException e) {
-			e.printStackTrace();
 			result.put("flag", "false");
 			result.put("content", e.getMessage());
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}catch(InvalidPwException e) {
-			e.printStackTrace();
 			result.put("flag", "false");
 			result.put("content", e.getMessage());
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}catch(Exception e) {
-			e.printStackTrace();
 			result.put("flag", "false");
 			result.put("content", "로그인 실패");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
@@ -92,7 +89,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value= {"/user/info.do"})
-	public ResponseEntity<HashMap> test(HttpServletRequest request){
+	public ResponseEntity<HashMap> info(HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
 			String user_accesstoken = cookieUtil.getAccesstoken(request);
@@ -110,6 +107,52 @@ public class UserController {
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	
+	@RequestMapping(value= {"/user/getProblems.do"})
+	public ResponseEntity<HashMap> getProblems(@RequestParam HashMap param, HttpServletRequest request){
+		HashMap result = new HashMap();
+		try {
+			param.put("limit", 20);
+			result.put("problems",userService.getProblems(param));
+			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+		}catch(Exception e) {
+			result.put("flag", "false");
+			result.put("content", "문제 정보 획득 실패");
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value= {"/user/getCategories.do"})
+	public ResponseEntity<HashMap> getCategories(@RequestParam HashMap param){
+		HashMap result = new HashMap();
+		try {
+			result.put("categories",userService.getCategories(param));
+			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+		}catch(Exception e) {
+			result.put("flag", "false");
+			result.put("content", "문제 정보 획득 실패");
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	
+	
+	@RequestMapping(value= {"/user/scoreProblems.do"})
+	public ResponseEntity<HashMap> scoreProblems(@RequestBody HashMap param, HttpServletRequest request){
+		HashMap result = new HashMap();
+		try {
+			result = userService.scoreProblems(param);
+			result.put("flag", "true");
+			result.put("content", "채점성공");
+			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+		}catch(Exception e) {
+			result.put("flag", "false");
+			result.put("content", "채점실패");
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	
 	@RequestMapping(value= {"/user/getPublickey.do"})
 	public ResponseEntity<HashMap> getPublickey(HttpServletRequest request){
@@ -146,6 +189,4 @@ public class UserController {
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-
 }

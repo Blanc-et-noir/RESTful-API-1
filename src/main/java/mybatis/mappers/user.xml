@@ -12,9 +12,37 @@
 		SELECT *
 		FROM questions
 	</select>
-	
-	
-	
+	<select id="getCategories" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM categories
+	</select>
+	<select id="getProblems" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM problems
+		WHERE category_id = ${category_id}
+		ORDER BY RAND()
+		LIMIT ${limit}
+	</select>	
+	<select id="getChoices" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM choices
+		<where>
+			<foreach collection="problems" item="item" open="problem_id IN(" separator="," close=")">
+				${item.problem_id}
+			</foreach>
+		</where>
+	</select>
+	<select id="getChoicesInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM choices
+		<where>
+			<foreach collection="list" item="item" open="(problem_id,choice_id) IN(" separator="," close=")">
+				(${item.problem_id},${item.answer_id})
+			</foreach>
+		</where>
+	</select>
+
+
 	<select id="checkId" parameterType="java.util.HashMap" resultType="String">
 		SELECT user_id
 		FROM users

@@ -14,7 +14,10 @@
     <script src="${path}/resources/js/jquery-cookie.js"></script>
     <script src="${path}/resources/js/JSEncrypt.js"></script>
     <script src="${path}/resources/js/fullpage.js"></script>
+    
     <script src="${path}/resources/js/main.js"></script>
+    <script src="${path}/resources/js/article.js"></script>
+    <script src="${path}/resources/js/problem.js"></script>
     
     <link rel="stylesheet" href="${path}/resources/css/main.css">
     <title>정보</title>
@@ -29,8 +32,17 @@
                 	<div id="user_info"></div>
                 </div>
             </div>
-			<div class="slide" style="background-color:#96baff">
-				<p>asd</p>
+			<div class="slide" style="background-color:#5a6f99">
+				<div id="problem_form" class="touchable">
+					
+					<div>
+						<select id="category_id" class="touchable"></select>
+						<div id="get_problems_button" class='touchable'>조회하기</div>
+					</div>
+					<div id="problems" class='touchable'>
+						
+					</div>
+				</div>
         	</div>
         </div>
         <div class="section">

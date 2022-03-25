@@ -76,4 +76,20 @@ public class UserDAO {
 	public List getQuestions() throws Exception{
 		return sqlSession.selectList("user.getQuestions");
 	}
+	
+	public List getChoices(HashMap param) {
+		return sqlSession.selectList("user.getChoices", param);
+	}
+	
+	public List getChoicesInfo(HashMap param) {
+		return sqlSession.selectList("user.getChoicesInfo", param);
+	}
+	
+	public List getProblems(HashMap param) {
+		return sqlSession.selectList("user.getProblems", param);
+	}
+	
+	public List getCategories(HashMap param){
+		return sqlSession.selectList("user.getCategories", param);
+	}
 }
