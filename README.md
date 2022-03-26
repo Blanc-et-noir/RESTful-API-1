@@ -153,6 +153,96 @@ PARAMETER : {
 
 <br/>
 
+### 로그아웃 요청
+자신이 발급받은 액세스 토큰과 리프레쉬 토큰에 대해 로그아웃 처리를 수행하는 API
+
+<br/>
+
+##### REQUEST
+<pre>
+URL : /restapi/token/logout.do
+
+dataType : json
+
+PARAMETER : {
+   자신이 현재 사용중인 액세스 토큰(user_accesstoken)과
+   리프레쉬 토큰(user_refreshtoken) 쿠키를 전달함.
+}
+</pre>
+
+##### SUCCESS
+<pre>
+{
+   flag : true,
+   content : 응답 메세지
+}
+
+세부사항
+
+1. 로그아웃시 전달해야할 토큰들은 자신이 처음 로그인후 발급 받았거나
+   이후 갱신되어 새로 발급받은 액세스, 리프레쉬 토큰임.
+</pre>
+
+##### FAIL
+<pre>
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+***
+
+<br/>
+
+### 토큰 갱신 요청
+액세스 토큰의 기한 만료시에 새로운 액세스 토큰을 발급하는 API
+
+<br/>
+
+##### REQUEST
+<pre>
+URL : /restapi/token/refreshTokens.do
+
+dataType : json
+
+PARAMETER : {
+   자신이 현재 사용중인 액세스 토큰(user_accesstoken)과
+   리프레쉬 토큰(user_refreshtoken) 쿠키를 전달함.
+}
+</pre>
+
+##### SUCCESS
+<pre>
+{
+   flag : true,
+   content : 응답 메세지,
+   액세스(user_accesstoken) 토큰과 리프레쉬(user_refreshtoken) 토큰을 새로 발급함
+}
+
+세부사항
+
+1. 해당 API를 정상적으로 호출한 이후에는 모든 로그인 인증 여부가 필요한 API 호출시
+   반드시 새로 발급받은 액세스 토큰과 리프레쉬 토큰을 사용해야함.
+</pre>
+
+##### FAIL
+<pre>
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+***
+
+<br/>
+
+
 ### 회원가입 요청
 사용자로부터 여러 정보를 전달받고 회원정보를 등록하는 API
 
