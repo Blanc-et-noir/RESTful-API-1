@@ -403,3 +403,154 @@ dataType : json
 ***
 
 <br/>
+
+### 문제 분류 목록 발급 요청
+문제들의 분류 번호와 분류명을 얻음
+
+<br/>
+
+##### REQUEST
+<pre>
+URL : /restapi/user/getProblems.do
+
+dataType : json
+
+PARAMETER : {
+   category_id : 문제 분류 번호,
+   limit : 발급받을 문제의 수(전달하지 않거나 1이상의 정수가 아니면 기본 20문제를 발급함)
+}
+
+세부사항
+
+1. 해당 API는 로그인이 필요한 기능이므로 반드시 액세스 토큰을 같이 전달해야함.
+
+2. 액세스 토큰을 갖고 해당 API를 처음 호출했을때 HTTP 401 응답을 수신하면
+   액세스 토큰이 만료되었을 수 있음.
+   
+   반드시 해당 액세스 토큰과 리프레쉬 토큰을 갖고 새로이 액세스 토큰과 리프레쉬 토큰을 재발급 받아야함.
+   새로 발급받은 액세스 토큰으로 다시 한 번 요청을 시도해야함.
+</pre>
+
+##### SUCCESS
+<pre>
+{
+   flag : true,
+   content : 응답 메세지,
+   problems : [
+      {
+         problem_id : 56,
+         problem_content : "다음 중 자료사전(Data Dictionary)에서 선택의 의미를 나타내는 것은?",
+         problem_image_name : null,
+         answer_id : 1,
+         answer_content : "[ ]",
+         choices : [
+            {
+               choice_id : 1,
+               choice_content : "[ ]",
+               choice_yn : "Y",
+               choice_count : 0,
+            },
+            {
+               choice_id : 2,
+               choice_content : "{ }",
+               choice_yn : "N",
+               choice_count : 0,
+            },
+            {
+               choice_id : 3,
+               choice_content : "＋",
+               choice_yn : "N",
+               choice_count : 0,
+            },
+            {
+               choice_id : 4,
+               choice_content : "＝",
+               choice_yn : "N",
+               choice_count : 0,
+            }
+         ]
+      },
+      {
+         problem_id : 9,
+         problem_content : "트랜잭션이 올바르게 처리되고 있는지 데이터를 감시하고 제어하는 미들웨어는?",
+         problem_image_name : null,
+         answer_id : 3,
+         answer_content : "TP monitor",
+         choices : [
+            {
+               choice_id : 1,
+               choice_content : "RPC",
+               choice_yn : "N",
+               choice_count : 0,
+            },
+            {
+               choice_id : 2,
+               choice_content : "ORB",
+               choice_yn : "N",
+               choice_count : 0,
+            },
+            {
+               choice_id : 3,
+               choice_content : "TP monitor",
+               choice_yn : "Y",
+               choice_count : 0,
+            },
+            {
+               choice_id : 4,
+               choice_content : "HUB",
+               choice_yn : "N",
+               choice_count : 0,
+            }
+         ]
+      },
+      {
+         problem_id : 63,
+         problem_content : "바람직한 소프트웨어 설계 지침이 아닌 것은?"
+         problem_image_name : null,
+         answer_id : 3,
+         answer_content : "모듈 간의 결합도는 강할수록 바람직하다.",
+         choices : [
+            {
+               choice_id : 1,
+               choice_content : "적당한 모듈의 크기를 유지한다.",
+               choice_yn : "N",
+               choice_count : 0,
+            },
+            {
+               choice_id : 2,
+               choice_content : "모듈 간의 접속 관계를 분석하여 복잡도와 중복을 줄인다.",
+               choice_yn : "N",
+               choice_count : 0,
+            },
+            {
+               choice_id : 3,
+               choice_content : "모듈 간의 결합도는 강할수록 바람직하다.",
+               choice_yn : "Y",
+               choice_count : 0,
+            },
+            {
+               choice_id : 4,
+               choice_content : "모듈 간의 효과적인 제어를 위해 설계에서 계층적 자료 조직이 제시되어야 한다.",
+               choice_yn : "N",
+               choice_count : 0,
+            }
+         ]
+      },
+                           ....
+   ]
+}
+</pre>
+
+##### FAIL
+<pre>
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+***
+
+<br/>
