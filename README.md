@@ -164,10 +164,10 @@ URL : /restapi/token/logout.do
 
 dataType : json
 
-PARAMETER : {
-   자신이 현재 사용중인 액세스 토큰(user_accesstoken)과
-   리프레쉬 토큰(user_refreshtoken) 쿠키를 전달함.
-}
+세부사항
+
+1. 자신이 현재 사용중인 액세스 토큰(user_accesstoken)과
+   리프레쉬 토큰(user_refreshtoken) 쿠키를 전달해야함.
 </pre>
 
 ##### SUCCESS
@@ -208,10 +208,10 @@ URL : /restapi/token/refreshTokens.do
 
 dataType : json
 
-PARAMETER : {
-   자신이 현재 사용중인 액세스 토큰(user_accesstoken)과
-   리프레쉬 토큰(user_refreshtoken) 쿠키를 전달함.
-}
+세부사항
+
+1. 자신이 현재 사용중인 액세스 토큰(user_accesstoken)과
+   리프레쉬 토큰(user_refreshtoken) 쿠키를 전달해야함.
 </pre>
 
 ##### SUCCESS
