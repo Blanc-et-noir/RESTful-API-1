@@ -441,11 +441,12 @@ HTTP/1.1 400 Bad Request
 
 <br/>
 
-##### REQUEST
 <pre>
-URL : /restapi/user/getCategories.do
-
-dataType : json
+POST /restapi/user/getCategories.do HTTP/1.1
+Content-Type : application/json
+{
+   
+}
 
 세부사항
 
@@ -458,8 +459,8 @@ dataType : json
    새로 발급받은 액세스 토큰으로 다시 한 번 요청을 시도해야함.
 </pre>
 
-##### SUCCESS
 <pre>
+HTTP/1.1 200 OK
 {
    flag : true,
    content : 응답 메세지,
@@ -482,8 +483,8 @@ dataType : json
 }
 </pre>
 
-##### FAIL
 <pre>
+HTTP/1.1 401 Unauthorized
 {
    flag : false,
    content : 응답 메세지
@@ -510,13 +511,10 @@ dataType : json
 
 <br/>
 
-##### REQUEST
 <pre>
-URL : /restapi/user/getProblems.do
-
-dataType : json
-
-PARAMETER : {
+POST /restapi/user/getProblems.do HTTP/1.1
+Content-Type : application/json
+{
    category_id : 문제 분류 번호,
    limit : 발급받을 문제의 수(전달하지 않거나 1이상의 정수가 아니면 기본 20문제를 발급함)
 }
@@ -532,8 +530,8 @@ PARAMETER : {
    새로 발급받은 액세스 토큰으로 다시 한 번 요청을 시도해야함.
 </pre>
 
-##### SUCCESS
 <pre>
+HTTP/1.1 200 OK
 {
    flag : true,
    content : 응답 메세지,
@@ -642,8 +640,8 @@ PARAMETER : {
 }
 </pre>
 
-##### FAIL
 <pre>
+HTTP/1.1 401 Unauthorized
 {
    flag : false,
    content : 응답 메세지
