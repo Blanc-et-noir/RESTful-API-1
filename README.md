@@ -111,13 +111,15 @@ URL : /restapi/user/getPublickey.do
 dataType : json
 </pre>
 
-##### SUCCESS
+##### 200 OK
 <pre>
+HTTP/1.1 200 OK
 {
    flag : true,
    publickey : 공개키,
    content : 응답 메세지
 }
+
 
 세부사항
 
@@ -127,8 +129,9 @@ dataType : json
    반드시 로그인 및 회원가입 API를 요청할 때 해당 공개키 또한 파라미터로 전달해야함.
 </pre>
 
-##### FAIL
+##### 400 Bad Request
 <pre>
+HTTP/1.1 400 Bad Request
 {
    flag : false,
    content : 응답 메세지
@@ -168,7 +171,7 @@ PARAMETER : {
 }
 </pre>
 
-##### SUCCESS
+##### 200 OK
 <pre>
 {
    flag : true,
@@ -185,7 +188,7 @@ PARAMETER : {
    다시 처음에 호출하고자 하던 API 호출을 진행함.
 </pre>
 
-##### FAIL
+##### 400 Bad Request
 <pre>
 {
    flag : false,
@@ -225,7 +228,7 @@ dataType : json
    이후 갱신되어 새로 발급받은 액세스, 리프레쉬 토큰임.
 </pre>
 
-##### SUCCESS
+##### 200 OK
 <pre>
 {
    flag : true,
@@ -233,12 +236,12 @@ dataType : json
 }
 </pre>
 
-##### FAIL
+##### 401 Unauthorized
 <pre>
-{
-   flag : false,
-   content : 응답 메세지
-}
+세부사항
+
+1. 로그아웃에 사용했던 액세스 토큰 또는 리프레쉬 토큰에 문제가 있거나
+   두 종류의 토큰을 같이 전달하지 않아서 발생할 수 있음.
 </pre>
 
 <br/>
@@ -273,7 +276,7 @@ dataType : json
    리프레쉬 토큰(user_refreshtoken) 쿠키를 전달해야함.
 </pre>
 
-##### SUCCESS
+##### 200 OK
 <pre>
 {
    flag : true,
@@ -289,7 +292,7 @@ dataType : json
    반드시 새로 발급받은 액세스 토큰과 리프레쉬 토큰을 사용해야함.
 </pre>
 
-##### FAIL
+##### 401 Unauthorized
 <pre>
 {
    flag : false,
