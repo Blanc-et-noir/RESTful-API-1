@@ -209,8 +209,9 @@ public class UserService {
 		
 		//채점결과 기록, 나중에 구현
 		
+		userDAO.insertRecords(param);
+		
 		//채점결과 반환
-		System.out.println(right+" "+wrong);
 		result.put("percentage", (right*1.0/(right+wrong)*1.0)*100);
 		result.put("right_score", right);
 		result.put("wrong_score", wrong);
@@ -226,7 +227,7 @@ public class UserService {
 	public List getQuestions() throws Exception{
 		return userDAO.getQuestions();
 	}
-	public void validateTokens(HashMap param) throws Exception{
-		userDAO.validateTokens(param);
+	public HashMap getTokens(HashMap param){
+		return userDAO.getTokens(param);
 	}
 }

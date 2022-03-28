@@ -61,15 +61,19 @@ public class UserDAO {
 		}
 	}
 	
-	public void validateTokens(HashMap param) throws Exception{
-		if(sqlSession.selectOne("user.validateTokens", param)==null) {
-			throw new Exception("토큰을 DB에 업데이트 하는 과정에서 오류가 발생했습니다.");
-		}
+	public HashMap getTokens(HashMap param){
+		return sqlSession.selectOne("user.getTokens", param);
 	}
 	
 	public void join(HashMap param) throws Exception{
 		if(sqlSession.insert("user.join", param)==0) {
 			throw new Exception("회원가입을 시도하는 과정에서 오류가 발생했습니다.");
+		}
+	}
+	
+	public void insertRecords(HashMap param) throws Exception{
+		if(sqlSession.insert("user.insertRecords", param)==0) {
+			throw new Exception("채점기록 추가 실패");
 		}
 	}
 	

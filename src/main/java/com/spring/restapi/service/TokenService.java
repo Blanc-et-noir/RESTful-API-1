@@ -58,8 +58,8 @@ public class TokenService {
 		response.addCookie(cookieUtil.createCookie("user_accesstoken", new_user_accesstoken, "/restapi"));
 		response.addCookie(cookieUtil.createCookie("user_refreshtoken", new_user_refreshtoken, "/restapi/token"));
 		
-		//기존 리프레시 토큰 비활성화
-		//redisUtil.setData(user_accesstoken, "removed", jwtUtil.getExpiration(user_accesstoken));
+		//기존 액세스, 리프레시 토큰 비활성화
+		redisUtil.setData(user_accesstoken, "removed", jwtUtil.getExpiration(user_accesstoken));
 		redisUtil.setData(user_refreshtoken, "removed", jwtUtil.getExpiration(user_refreshtoken));
 		
 		System.out.println("액세스 리프레시 토큰을 재발급했습니다.");

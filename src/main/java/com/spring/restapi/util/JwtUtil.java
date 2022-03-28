@@ -75,13 +75,17 @@ public class JwtUtil {
     		return (String) e.getClaims().get(data);
     	}catch(Exception e) {
     		return null;
-    	}      	
+    	}
     }
     
     //해당 토큰의 남은 유효시간을 얻음
     public Long getExpiration(String token) {
-        Date expiration = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getExpiration();
-        Long now = new Date().getTime();
-        return (expiration.getTime() - now);
+    	try {
+            Date expiration = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getExpiration();
+            Long now = new Date().getTime();
+            return (expiration.getTime() - now);
+    	}catch(Exception e) {
+    		return 1L;
+    	}
     }
 }

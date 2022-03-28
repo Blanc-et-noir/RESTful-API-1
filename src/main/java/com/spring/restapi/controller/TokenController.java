@@ -39,7 +39,7 @@ public class TokenController {
 			e.printStackTrace();
 			result.put("flag", "false");
 			result.put("content", "액세스, 리프레시 토큰 갱신에 실패했습니다.");
-			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -49,13 +49,12 @@ public class TokenController {
 		try {
 			tokenService.logout(request, response);
 			result.put("flag", "false");
-			result.put("content", "액세스, 리프레시 토큰 갱신에 성공했습니다.");
+			result.put("content", "로그아웃에 성공했습니다.");
 			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
 		}catch(Exception e) {
-			e.printStackTrace();
 			result.put("flag", "false");
-			result.put("content", "액세스, 리프레시 토큰 갱신에 실패했습니다.");
-			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+			result.put("content", "로그아웃에 실패했습니다.");
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}
 	}
 }

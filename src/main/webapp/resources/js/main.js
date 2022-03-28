@@ -1,4 +1,5 @@
 var formFlag = false;
+var publickey;
 
 function closeForm(target){
 	$(target).parent().remove();
@@ -39,6 +40,32 @@ function getInfo(){
 	})
 }
 
+function getPublickey(){
+	return $.ajax({
+		"url":"/restapi/user/getPublickey.do",
+		"type":"post"
+	})
+}
+
+function login(publickey){
+	return $.ajax({
+		"url":"/restapi/user/login.do",
+		"data":{
+			"user_id":$("#user_id").val(),
+			"user_pw":encryptByRSA2048($("#user_pw").val(),publickey),
+			"publickey":publickey
+		},
+		"type":"POST"
+	});
+}
+
+function getQuestions(){
+	return 	$.ajax({
+		"url":"/restapi/user/getQuestions.do",
+		"type":"post"
+	});
+}
+
 $(document).ready(function(){
 	$("#fullpage").initialize({});
 
@@ -67,10 +94,6 @@ $(document).ready(function(){
 		})
 	})
 	
-	
-	
-	
-	
 	$(document).on("click","#logout_button",function(){
 		$.ajax({
 			"url":"/restapi/token/logout.do",
@@ -84,65 +107,33 @@ $(document).ready(function(){
 		})
 	})
 	
-
-	
-
-	
-	
-	
-	
-	
-	
-	
     $(document).on("click","#login_button",function(e){
-    	var publickey;
-    	$.ajax({
-    		"url":"/restapi/user/getPublickey.do",
-    		"type":"POST",
-    		"success":function(result, textStatus, request){
-				publickey = result.publickey;
-		    	$.ajax({
-		    		"url":"/restapi/user/login.do",
-		    		"data":{
-		    			"user_id":$("#user_id").val(),
-		    			"user_pw":encryptByRSA2048($("#user_pw").val(),publickey),
-		    			"publickey":publickey
-		    		},
-		    		"type":"POST",
-		    		"success":function(result, textStatus, request){
-		    			if(result.flag=="true"){
-		    				alert("로그인성공");
-		    				$("#loginForm_button").remove();
-		    				$("#joinForm_button").remove();
-		    				$("body").append("<div id='logout_button'>로그아웃</div>");
-		    				
-		    				$("#loginForm").remove();
-		    				$("#form_cover").css({
-		    					"display":"none"
-		    				})
-		    				formFlag=false;
-		    				
-		    			}else{
-		    				alert("로그인 실패");
-		    				$("#logout_button").remove();
-		    				$("body").append("<div id='loginForm_button'>로그인</div>");
-		    				$("body").append("<div id='joinForm_button'>회원가입</div>");
-		    			}
-		    		},
-		    		"error": function(xhr, status, error) {
-		    			alert(JSON.parse(xhr.responseText).content);
-		    			$("#logout_button").remove();
-		    			$("body").append("<div id='loginForm_button'>로그인</div>");
-		    			$("body").append("<div id='joinForm_button'>회원가입</div>");
-		      		}
-		    	});
-    		},
-    		"error": function(xhr, status, error) {
-    			alert(JSON.parse(xhr.responseText).content);
-    			$("#logout_button").remove();
-    			$("body").append("<div id='loginForm_button'>로그인</div>");
-    			$("body").append("<div id='joinForm_button'>회원가입</div>");
-      		}
+    	getPublickey()
+    	.done(function(result){
+    		var publickey = result.publickey;
+    		login(publickey)
+    		.done(function(result){
+    			$("#loginForm_button").remove();
+		    	$("#joinForm_button").remove();
+		    	$("body").append("<div id='logout_button'>로그아웃</div>");
+		    	$("#loginForm").remove();
+		    	$("#form_cover").css({
+		    		"display":"none"
+		    	})
+		    	formFlag=false;
+    		})
+    		.fail(function(xhr, status, error){
+				alert("로그인 실패");
+				$("#logout_button").remove();
+				$("body").append("<div id='loginForm_button'>로그인</div>");
+				$("body").append("<div id='joinForm_button'>회원가입</div>");
+    		})
+    	})
+    	.fail(function(xhr, status, error){
+			alert("로그인 실패");
+			$("#logout_button").remove();
+			$("body").append("<div id='loginForm_button'>로그인</div>");
+			$("body").append("<div id='joinForm_button'>회원가입</div>");
     	})
     });
 	
@@ -150,7 +141,6 @@ $(document).ready(function(){
 		$("#form_cover").css({
 			"display":"block"
 		})
-		//
 		var loginForm = $("<form id='loginForm'></form>");
 		loginForm.append("<input id='user_id' name='user_id' type='text' autocomplete='off' placeholder='아이디'>");
 		loginForm.append("<input id='user_pw' name='user_pw' type='password' autocomplete='off' placeholder='비밀번호'>");
@@ -163,7 +153,7 @@ $(document).ready(function(){
 		$("#form_cover").css({
 			"display":"block"
 		})
-		//
+		
 		var joinForm = $("<form id='joinForm'></form>");
 		joinForm.append("<input id='user_id' name='user_id' type='text' autocomplete='off' placeholder='아이디'>");
 		joinForm.append("<input id='user_pw' name='user_pw' type='password' autocomplete='off' placeholder='비밀번호'>");
@@ -175,18 +165,16 @@ $(document).ready(function(){
 		joinForm.append("<input id='join_button' type='button' value='회원가입'>");
 		joinForm.append("<input id='joinFormClose_button' type='button' value='닫기' onclick='closeForm(this)'>");
 		
-			
-		$.ajax({
-			"url":"/restapi/user/getQuestions.do",
-			"type":"post",
-			"success":function(result){
-				var i, list = result.list;
-				for(i=0;i<list.length;i++){
-					$("#question_id").append("<option value='"+list[i].question_id+"' label='"+list[i].question_content+"'></option>")
-				}
+		getQuestions()
+		.done(function(result){
+			var i, list = result.list;
+			for(i=0;i<list.length;i++){
+				$("#question_id").append("<option value='"+list[i].question_id+"' label='"+list[i].question_content+"'></option>")
 			}
-						
-		});
+		})
+		.fail(function(xhr, status, error){
+			alert("비밀번호 찾기 질문 목록 발급 실패");
+		})
 		openForm(joinForm);
     });
 })

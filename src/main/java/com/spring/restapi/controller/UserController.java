@@ -1,6 +1,7 @@
 package com.spring.restapi.controller;
 
 import java.security.KeyPair;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -113,7 +114,13 @@ public class UserController {
 	public ResponseEntity<HashMap> getProblems(@RequestParam HashMap param, HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
-			param.put("limit", 20);
+			try {
+				if(Integer.parseInt((String) param.get("limit"))<=0) {
+					param.put("limit", 20);
+				}
+			}catch(Exception e2) {
+				param.put("limit", 20);
+			}
 			result.put("problems",userService.getProblems(param));
 			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
 		}catch(Exception e) {
@@ -142,6 +149,11 @@ public class UserController {
 	public ResponseEntity<HashMap> scoreProblems(@RequestBody HashMap param, HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
+			String user_id = jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id");
+			ArrayList<HashMap<String,String>> list = (ArrayList<HashMap<String,String>>) param.get("list");
+			for(int i=0;i<list.size();i++) {
+				list.get(i).put("user_id", user_id);
+			}
 			result = userService.scoreProblems(param);
 			result.put("flag", "true");
 			result.put("content", "채점성공");

@@ -67,6 +67,13 @@
 		WHERE user_email = #{user_email}
 	</select>
 	
+	<select id="getTokens" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT user_accesstoken, user_refreshtoken
+		FROM users
+		WHERE user_id = #{user_id}
+	</select>
+	
+	
 	
 	<update id="updateTokens" parameterType="java.util.HashMap">
 		UPDATE users
@@ -79,7 +86,12 @@
 	
 	
 	
-	
+	<insert id="insertRecords" parameterType="java.util.HashMap">
+		INSERT INTO records(problem_id,choice_id,user_id) VALUES
+		<foreach collection="list" item="item" separator=",">
+			(${item.problem_id},${item.answer_id},#{item.user_id})
+		</foreach>
+	</insert>
 	<insert id="join" parameterType="java.util.HashMap">
 		INSERT INTO users
 		VALUES(#{user_id},#{user_pw},#{user_name},#{user_email},#{user_salt},null,null,${question_id},#{question_answer})

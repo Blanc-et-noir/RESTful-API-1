@@ -1,12 +1,17 @@
 package com.spring.restapi.interceptor;
 
+import java.io.IOException;
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.restapi.service.UserService;
 import com.spring.restapi.util.CookieUtil;
 import com.spring.restapi.util.JwtUtil;
 import com.spring.restapi.util.RedisUtil;
@@ -20,6 +25,8 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 	private RedisUtil redisUtil;
 	@Autowired
 	private CookieUtil cookieUtil;
+	@Autowired
+	private UserService userService;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -28,35 +35,30 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 		
 		//액세스토큰이 없으면
 		if(user_refreshtoken == null) {
-			System.out.println("리프레시 토큰이 없습니다.");
-			response.sendError(401, "리프레시 토큰이 없습니다.");
+			response.sendError(401);
 			return false;
 		}else if(user_accesstoken==null) {
-			System.out.println("액세스 토큰이 없습니다.");
-			response.sendError(401, "액세스 토큰이 없습니다.");
+			response.sendError(401);
 			return false;
 		}else {
 			//로그아웃된 리프레시토큰이면
 			if(redisUtil.getData(user_refreshtoken)!=null) {
-				System.out.println("해당 리프레시 토큰은 이미 로그아웃 처리되었습니다.");
-				response.sendError(401, "해당 리프레시 토큰은 이미 로그아웃 처리되었습니다.");
+				response.sendError(401);
 				return false;
 			}
 			
 			//로그아웃된 액세스토큰이면
 			if(redisUtil.getData(user_accesstoken)!=null) {
-				System.out.println("해당 액세스 토큰은 이미 로그아웃 처리되었습니다.");
-				response.sendError(401, "해당 액세스 토큰은 이미 로그아웃 처리되었습니다.");
+				response.sendError(401);
 				return false;
 			}
 			
 			try {
 				jwtUtil.validateToken(user_accesstoken);
 			}catch(ExpiredJwtException e) {
-				System.out.println("액세스 토큰의 기한이 만료되었습니다.");
+
 			}catch(Exception e) {
-				System.out.println("액세스 토큰이 위조되었거나 잘못되었습니다.");
-				response.sendError(401, "액세스 토큰이 위조되었거나 잘못되었습니다.");
+				response.sendError(401);
 				return false;
 			}
 			
@@ -69,20 +71,24 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 				
 				//현재 사용중이었던 액세스와 리프레시인지 확인
 				if(!access_user_id.equals(refresh_user_id)) {
-					System.out.println("액세스 토큰과 리프레시 토큰의 사용자 정보가 일치하지 않습니다.");
-					response.sendError(401, "액세스 토큰과 리프레시 토큰의 사용자 정보가 일치하지 않습니다.");
+					response.sendError(401);
 					return false;
 				}
 				
-				System.out.println("액세스 리프레시 토큰이 모두 정상입니다.");
+				HashMap param = new HashMap();
+				param.put("user_id", access_user_id);
+				HashMap tokens = userService.getTokens(param);
+				
+				if(!user_accesstoken.equals(tokens.get("user_accesstoken"))||!user_refreshtoken.equals(tokens.get("user_refreshtoken"))) {
+					response.sendError(401);
+					return false;
+				}
 				return true;
 			}catch(ExpiredJwtException e) {
-				System.out.println("리프레시 토큰의 기한이 만료되었습니다.");
-				response.sendError(401, "리프레시 토큰의 기한이 만료되었습니다.");
+				response.sendError(401);
 				return false;
 			}catch(Exception e) {
-				System.out.println("리프레시 토큰이 위조되었거나 잘못되었습니다.");
-				response.sendError(401, "리프레시 토큰이 위조되었거나 잘못되었습니다.");
+				response.sendError(401);
 				return false;
 			}
 		}
