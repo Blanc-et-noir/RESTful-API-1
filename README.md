@@ -104,14 +104,14 @@
 
 <br/>
 
-##### REQUEST
 <pre>
-URL : /restapi/user/getPublickey.do
-
-dataType : json
+POST /restapi/user/getPublickey.do HTTP/1.1
+Content-Type : application/json
+{
+   
+}
 </pre>
 
-##### 200 OK
 <pre>
 HTTP/1.1 200 OK
 {
@@ -129,7 +129,6 @@ HTTP/1.1 200 OK
    반드시 로그인 및 회원가입 API를 요청할 때 해당 공개키 또한 파라미터로 전달해야함.
 </pre>
 
-##### 400 Bad Request
 <pre>
 HTTP/1.1 400 Bad Request
 {
@@ -158,21 +157,18 @@ HTTP/1.1 400 Bad Request
 
 <br/>
 
-##### REQUEST
 <pre>
-URL : /restapi/user/login.do
-
-dataType : json
-
-PARAMETER : {
+POST /restapi/user/login.do HTTP/1.1
+Content-Type : application/json
+{
    user_id : 사용자 ID
    user_pw : 서버로부터 전달받은 공개키로 RSA2048 암호화한 사용자 PW
    publickey : 서버로부터 전달받아 암호화에 사용한 공개키
 }
 </pre>
 
-##### 200 OK
 <pre>
+HTTP/1.1 200 OK
 {
    flag : true,
    content : 응답 메세지
@@ -188,11 +184,11 @@ PARAMETER : {
    다시 처음에 호출하고자 하던 API 호출을 진행함.
 </pre>
 
-##### 400 Bad Request
 <pre>
+HTTP/1.1 400 Bad Request
 {
-   flag : false,
-   content : 응답 메세지
+    flag : false,
+    content : 응답 메세지
 }
 </pre>
 
@@ -218,9 +214,11 @@ PARAMETER : {
 
 ##### REQUEST
 <pre>
-URL : /restapi/token/logout.do
+POST /restapi/token/logout.do HTTP/1.1
+Content-Type : application/json
+{
 
-dataType : json
+}
 
 세부사항
 
@@ -228,16 +226,21 @@ dataType : json
    이후 갱신되어 새로 발급받은 액세스, 리프레쉬 토큰임.
 </pre>
 
-##### 200 OK
 <pre>
+HTTP/1.1 200 OK
 {
    flag : true,
    content : 응답 메세지
 }
 </pre>
 
-##### 401 Unauthorized
 <pre>
+HTTP/1.1 401 Unauthorized
+{
+    flag : false,
+    content : "응답메세지"
+}
+
 세부사항
 
 1. 로그아웃에 사용했던 액세스 토큰 또는 리프레쉬 토큰에 문제가 있거나
@@ -264,11 +267,12 @@ dataType : json
 
 <br/>
 
-##### REQUEST
 <pre>
-URL : /restapi/token/refreshTokens.do
-
-dataType : json
+POST /restapi/token/refreshTokens.do HTTP/1.1
+Content-Type : application/json
+{
+   
+}
 
 세부사항
 
@@ -276,8 +280,8 @@ dataType : json
    리프레쉬 토큰(user_refreshtoken) 쿠키를 전달해야함.
 </pre>
 
-##### 200 OK
 <pre>
+HTTP/1.1 200 OK
 {
    flag : true,
    content : 응답 메세지
@@ -292,8 +296,8 @@ dataType : json
    반드시 새로 발급받은 액세스 토큰과 리프레쉬 토큰을 사용해야함.
 </pre>
 
-##### 401 Unauthorized
 <pre>
+HTTP/1.1 401 Unauthorized
 {
    flag : false,
    content : 응답 메세지
@@ -320,13 +324,10 @@ dataType : json
 
 <br/>
 
-##### REQUEST
 <pre>
-URL : /restapi/user/join.do
-
-dataType : json
-
-PARAMETER : {
+POST /restapi/user/join.do HTTP/1.1
+Content-Type : application/json
+{
    user_id : 사용자 ID
    user_pw : 서버로부터 전달받은 공개키로 RSA2048 암호화한 사용자 PW,
    user_name : 사용자 이름,
@@ -344,16 +345,16 @@ PARAMETER : {
 2. 비밀번호 찾기 질문은 해당 질문들에 대한 정보를 요청하는 API를 호출하여 조회할 수 있음.
 </pre>
 
-##### SUCCESS
 <pre>
+HTTP/1.1 200 OK
 {
    flag : true,
    content : 응답 메세지
 }
 </pre>
 
-##### FAIL
 <pre>
+HTTP/1.1 400 Bad Request
 {
    flag : false,
    content : 응답 메세지
@@ -380,15 +381,16 @@ PARAMETER : {
 
 <br/>
 
-##### REQUEST
 <pre>
-URL : /restapi/user/getQuestions.do
-
-dataType : json
+POST /restapi/user/getQuestions.do HTTP/1.1
+Content-Type : application/json
+{
+   
+}
 </pre>
 
-##### SUCCESS
 <pre>
+HTTP/1.1 200 OK
 {
    flag : true,
    content : 응답 메세지,
@@ -411,8 +413,8 @@ dataType : json
 }
 </pre>
 
-##### FAIL
 <pre>
+HTTP/1.1 400 Bad Request
 {
    flag : false,
    content : 응답 메세지
