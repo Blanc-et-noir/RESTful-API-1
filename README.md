@@ -212,7 +212,6 @@ HTTP/1.1 400 Bad Request
 
 <br/>
 
-##### REQUEST
 <pre>
 POST /restapi/token/logout.do HTTP/1.1
 Content-Type : application/json
