@@ -342,7 +342,7 @@ POST /restapi/user/join.do HTTP/1.1
 </pre>
 
 <pre>
-HTTP/1.1 200 OK
+HTTP/1.1 201 Created
 {
    flag : true,
    content : 응답 메세지
@@ -694,7 +694,7 @@ Content-Type : application/json
 </pre>
 
 <pre>
-HTTP/1.1 200 OK
+HTTP/1.1 201 Created
 {
    flag : true,
    content : 응답 메세지,
