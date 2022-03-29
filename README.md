@@ -88,6 +88,8 @@
 
 8. [문제 목록 발급 요청](#/restapi/user/getProblems.do)
 
+9. [문제 채점 요청](#/restapi/user/scoreProblems.do)
+
 <br/>
 
 ***
@@ -106,7 +108,6 @@
 
 <pre>
 POST /restapi/user/getPublickey.do HTTP/1.1
-Content-Type : application/json
 {
    
 }
@@ -159,7 +160,6 @@ HTTP/1.1 400 Bad Request
 
 <pre>
 POST /restapi/user/login.do HTTP/1.1
-Content-Type : application/json
 {
    user_id : 사용자 ID
    user_pw : 서버로부터 전달받은 공개키로 RSA2048 암호화한 사용자 PW
@@ -214,7 +214,6 @@ HTTP/1.1 400 Bad Request
 
 <pre>
 POST /restapi/token/logout.do HTTP/1.1
-Content-Type : application/json
 {
 
 }
@@ -268,7 +267,6 @@ HTTP/1.1 401 Unauthorized
 
 <pre>
 POST /restapi/token/refreshTokens.do HTTP/1.1
-Content-Type : application/json
 {
    
 }
@@ -325,7 +323,6 @@ HTTP/1.1 401 Unauthorized
 
 <pre>
 POST /restapi/user/join.do HTTP/1.1
-Content-Type : application/json
 {
    user_id : 사용자 ID
    user_pw : 서버로부터 전달받은 공개키로 RSA2048 암호화한 사용자 PW,
@@ -382,7 +379,6 @@ HTTP/1.1 400 Bad Request
 
 <pre>
 POST /restapi/user/getQuestions.do HTTP/1.1
-Content-Type : application/json
 {
    
 }
@@ -442,7 +438,6 @@ HTTP/1.1 400 Bad Request
 
 <pre>
 POST /restapi/user/getCategories.do HTTP/1.1
-Content-Type : application/json
 {
    
 }
@@ -512,7 +507,6 @@ HTTP/1.1 401 Unauthorized
 
 <pre>
 POST /restapi/user/getProblems.do HTTP/1.1
-Content-Type : application/json
 {
    category_id : 문제 분류 번호,
    limit : 발급받을 문제의 수(전달하지 않거나 1이상의 정수가 아니면 기본 20문제를 발급함)
@@ -636,6 +630,79 @@ HTTP/1.1 200 OK
       },
                            ....
    ]
+}
+</pre>
+
+<pre>
+HTTP/1.1 401 Unauthorized
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+[API 목록으로 되돌아가기](#api_list)
+
+<br/>
+
+***
+
+<br/>
+
+<a id="/restapi/user/scoreProblems.do">
+   
+   ### 문제 채점 요청
+   
+</a>
+
+문제에 대한 채점 요청및 이에 대한 채점결과를 반환하는 API
+
+<br/>
+
+<pre>
+POST /restapi/user/scoreProblems.do HTTP/1.1
+Content-Type : application/json
+{
+   list : [
+      {
+         problem_id : 문제 번호,
+         answer_id : 정답 번호
+      },
+      {
+         problem_id : 문제 번호,
+         answer_id : 정답 번호
+      },
+      {
+         problem_id : 문제 번호,
+         answer_id : 정답 번호
+      },
+                 ....
+   ]
+}
+
+세부사항
+
+1. 해당 API는 로그인이 필요한 기능이므로 반드시 액세스 토큰을 같이 전달해야함.
+
+2. 액세스 토큰을 갖고 해당 API를 처음 호출했을때 HTTP 401 응답을 수신하면
+   액세스 토큰이 만료되었을 수 있음.
+   
+   반드시 해당 액세스 토큰과 리프레쉬 토큰을 갖고 새로이 액세스 토큰과 리프레쉬 토큰을 재발급 받아야함.
+   새로 발급받은 액세스 토큰으로 다시 한 번 요청을 시도해야함.
+</pre>
+
+<pre>
+HTTP/1.1 200 OK
+{
+   flag : true,
+   content : 응답 메세지,
+   percentage : 정답률,
+   right_score : 정답 개수,
+   wrong_score : 오답 개수,
+   right_problems  : [ 맞춘 문제 번호1, 맞춘 문제 번호2, 맞춘 문제 번호3, ... ],
+   wrong_problems  : [ 틀린 문제 번호1, 틀린 문제 번호2, 틀린 문제 번호3, ... ]
 }
 </pre>
 
