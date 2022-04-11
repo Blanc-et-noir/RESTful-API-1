@@ -27,12 +27,12 @@
 	<div id="alert_cover"></div>
     <div id="fullpage">
         <div class="section">
-            <div class="slide" style="background-color:#EF476F">
+            <div class="slide" style="background-color:#f4f4f4">
                 <div id="user_info_block">
                 	<div id="user_info"></div>
                 </div>
             </div>
-			<div class="slide" style="background-color:#5a6f99">
+			<div class="slide" style="background-color:#f4f4f4">
 				<div id="problem_form" class="touchable">
 					
 					<div>
@@ -46,17 +46,17 @@
         	</div>
         </div>
         <div class="section">
-            <div class="slide" style="background-color:#D1D1D1">
+            <div class="slide" style="background-color:#f4f4f4">
 				<p>The boxes are not essential elements</p>
             </div>
-            <div class="slide" style="background-color:#06D6A0">
+            <div class="slide" style="background-color:#f4f4f4">
                     <form id="article_form" class="touchable">
                     	<input id="article_title" name="article_title" class="touchable" type="text" required style="padding:10px" placeholder="게시글 제목">
                     	<textarea id="article_content" name="article_content" class="touchable" required style="padding:10px" placeholder="게시글 내용"></textarea>
                     	<input id="article_write_button" class="touchable" type="button" value="글 쓰기">
                     </form>
             </div>
-            <div class="slide" style="background-color:#FFD166">
+            <div class="slide" style="background-color:#f4f4f4">
 				<div id="article_list_form" class="touchable">
 					<div id="article_list_panel" class="touchable">
 						<select id="search_flag" class="touchable">
@@ -79,7 +79,7 @@
             </div>
         </div>
         <div class="section">
-            <div class="slide" style="background-color:#26547C">
+            <div class="slide" style="background-color:#f4f4f4">
 				<p>In this case, when the height of the browser is less than 2000px, then slide will be scrollable</p>
             </div>
         </div>
