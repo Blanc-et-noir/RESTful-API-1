@@ -115,10 +115,53 @@ function join(publickey){
 $(document).ready(function(){
 	$("#fullpage").initialize({});
 
+    var swiper = new Swiper(".mySwiper", {
+        slidesPerView: "auto",
+        spaceBetween: 80,
+        loop: true,
+        breakpoints: {
+            600: {
+                spaceBetween: 0
+            },
+        },
+        on: {
+            init: function() {
+                $('.swiper-slide').addClass('changed');
+                $('.custom-fraction .current').text(this.realIndex + 1);
+                $('.custom-fraction .all').text(this.loopedSlides);
+            },
+            slideChangeTransitionStart: function() {
+                $('.swiper-slide').addClass('changing');
+                $('.swiper-slide').removeClass('changed');
+                $('.custom-fraction .current').text(this.realIndex + 1);
+            },
+            slideChangeTransitionEnd: function() {
+                $('.swiper-slide').removeClass('changing');
+                $('.swiper-slide').addClass('changed');
+            }
+        },
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        }
+    });
+
+    swiper.autoplay.start();
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	getInfo().done(function(result){
-		var user_info = result.user_info;
-		console.log("정상적인 액세스 토큰으로 요청 성공");
 		$("#loginForm_button").remove();
 		$("#joinForm_button").remove();
 		$("body").append("<div id='logout_button'>로그아웃</div>");
@@ -225,7 +268,7 @@ $(document).ready(function(){
     		return;
     	}
     	
-    	getPublickey()
+    getPublickey()
     	.done(function(result){
     		var publickey = result.publickey;
     		join(publickey)

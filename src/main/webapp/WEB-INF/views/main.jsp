@@ -15,26 +15,51 @@
     <script src="${path}/resources/js/JSEncrypt.js"></script>
     <script src="${path}/resources/js/fullpage.js"></script>
     
+    <script src="${path}/resources/js/swiper.js"></script>
     <script src="${path}/resources/js/main.js"></script>
     <script src="${path}/resources/js/article.js"></script>
     <script src="${path}/resources/js/problem.js"></script>
     
     <link rel="stylesheet" href="${path}/resources/css/main.css">
+    <link rel="stylesheet" href="${path}/resources/css/swiper.css">
     <title>정보</title>
 </head>
 <body>
 	<div id="form_cover"></div>
 	<div id="alert_cover"></div>
+	<div id="blancetnoir">Made By <span style="color:#06d6a0">B</span>lanc et <span style="color:#ee3f5c">N</span>oir</div>
     <div id="fullpage">
         <div class="section">
-            <div class="slide" style="background-color:#f4f4f4">
-                <div id="user_info_block">
-                	<div id="user_info"></div>
-                </div>
+            <div class="slide touchable" style="background-color:#f4f4f4">
+				<div id="slide_box" class="wrapper touchable">
+  					<div class="swiper mySwiper touchable">
+    					<div class="swiper-wrapper touchable">
+      						<div class="swiper-slide touchable">
+      							<img class="touchable" src="${path}/resources/image/image0.svg">
+      							<p class="touchable"><span class='touchable highlight'>언</span>제, <span class='touchable highlight'>어</span>디서나</p>
+      						</div>
+      						<div class="swiper-slide">
+      							<img class="touchable" src="${path}/resources/image/image1.svg">
+      							<p class="touchable"><span class='touchable highlight'>모</span>바일로 <span class='touchable highlight'>간</span>편하게</p>
+      						</div>
+      						<div class="swiper-slide">
+      							<img class="touchable" src="${path}/resources/image/image2.svg">
+      							<p class="touchable"><span class='touchable highlight'>공</span>부하고</p>
+      						</div>
+      						<div class="swiper-slide">
+      							<img class="touchable" src="${path}/resources/image/image3.svg">
+      							<p class="touchable"><span class='touchable highlight'>평</span>가하고</p>
+      						</div>
+      						<div class="swiper-slide">
+      							<img class="touchable" src="${path}/resources/image/image4.svg">
+      							<p class="touchable"><span class='touchable highlight'>의</span>견을 <span class='touchable highlight'>공</span>유하세요</p>
+      						</div>
+  						</div>
+					</div>
+				</div>
             </div>
 			<div class="slide" style="background-color:#f4f4f4">
 				<div id="problem_form" class="touchable">
-					
 					<div>
 						<select id="category_id" class="touchable"></select>
 						<div id="get_problems_button" class='touchable'>조회하기</div>
