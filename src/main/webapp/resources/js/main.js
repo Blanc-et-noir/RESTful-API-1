@@ -11,8 +11,8 @@ function closeForm(target){
 
 function refreshTokens(){
 	return $.ajax({
-		"url":"/restapi/token/refreshTokens.do",
-		"type":"post"
+		"url":"/restapi/tokens",
+		"type":"put"
 	})
 }
 
@@ -26,49 +26,44 @@ function openForm(form){
 	}
 }
 
-function errorMessage(xhr, status, error){
-	JSON.parse(xhr.responseText).content
-}
-
 function getInfo(){
 	return $.ajax({
-		"url":"/restapi/user/info.do",
-		"type":"post",
-		"success":function(result){
-			
-		}
+		"url":"/restapi/users",
+		"type":"get"
 	})
 }
 
 function getPublickey(){
 	return $.ajax({
-		"url":"/restapi/user/getPublickey.do",
-		"type":"post"
+		"url":"/restapi/publickeys",
+		"type":"get"
 	})
 }
 
 function login(publickey){
 	return $.ajax({
-		"url":"/restapi/user/login.do",
+		"url":"/restapi/tokens",
+		"type":"post",
 		"data":{
 			"user_id":$("#user_id").val(),
 			"user_pw":encryptByRSA2048($("#user_pw").val(),publickey),
 			"publickey":publickey
-		},
-		"type":"POST"
+		}
 	});
 }
 
 function getQuestions(){
 	return 	$.ajax({
-		"url":"/restapi/user/getQuestions.do",
-		"type":"post"
+		"url":"/restapi/questions",
+		"type":"get",
+		"dataType":"json"
 	});
 }
 
 $(document).ready(function(){
 	$("#fullpage").initialize({});
 
+	
 	getInfo().done(function(result){
 		var user_info = result.user_info;
 		console.log("정상적인 액세스 토큰으로 요청 성공");
@@ -86,8 +81,7 @@ $(document).ready(function(){
 				$("#joinForm_button").remove();
 				$("body").append("<div id='logout_button'>로그아웃</div>");
 			})
-		}).fail(function(){
-			console.log("액세스, 리프레쉬토큰 재발급 실패");
+		}).fail(function(xhr,status,error){
 			$("#logout_button").remove();
 			$("body").append("<div id='loginForm_button'>로그인</div>");
 			$("body").append("<div id='joinForm_button'>회원가입</div>");
@@ -96,14 +90,14 @@ $(document).ready(function(){
 	
 	$(document).on("click","#logout_button",function(){
 		$.ajax({
-			"url":"/restapi/token/logout.do",
-			"type":"post"
+			"url":"/restapi/tokens",
+			"type":"delete"
 		}).done(function(){
 			$("#logout_button").remove();
 			$("body").append("<div id='loginForm_button'>로그인</div>");
 			$("body").append("<div id='joinForm_button'>회원가입</div>");
-		}).fail(function(){
-			alert("로그아웃에 실패했습니다.");
+		}).fail(function(xhr,status,error){
+			alert(xhr.responseJSON.content);
 		})
 	})
 	
@@ -123,14 +117,14 @@ $(document).ready(function(){
 		    	formFlag=false;
     		})
     		.fail(function(xhr, status, error){
-				alert("로그인 실패");
+    			alert(xhr.responseJSON.content);
 				$("#logout_button").remove();
 				$("body").append("<div id='loginForm_button'>로그인</div>");
 				$("body").append("<div id='joinForm_button'>회원가입</div>");
     		})
     	})
     	.fail(function(xhr, status, error){
-			alert("로그인 실패");
+    		alert(xhr.responseJSON.content);
 			$("#logout_button").remove();
 			$("body").append("<div id='loginForm_button'>로그인</div>");
 			$("body").append("<div id='joinForm_button'>회원가입</div>");
@@ -173,7 +167,7 @@ $(document).ready(function(){
 			}
 		})
 		.fail(function(xhr, status, error){
-			alert("비밀번호 찾기 질문 목록 발급 실패");
+			alert(xhr.responseJSON.content);
 		})
 		openForm(joinForm);
     });

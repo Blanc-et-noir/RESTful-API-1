@@ -1,17 +1,13 @@
 function listArticles(){
 	return $.ajax({
-		"url":"/restapi/article/listArticles.do",
-		"type":"post",
-		"data":{
-			"article_search":$("#article_search").val(),
-			"search_flag":$("#search_flag").val()
-		}
+		"url":"/restapi/articles?article_search="+$("#article_search").val()+"&search_flag="+$("#search_flag").val(),
+		"type":"get"
 	});
 }
 
 function addArticle(){
 	return $.ajax({
-		"url":"/restapi/article/addArticle.do",
+		"url":"/restapi/articles",
 		"type":"post",
 		"data":{
 			"article_title":$("#article_title").val(),
@@ -38,7 +34,7 @@ $(document).ready(function(){
 			}
 		})
 		.fail(function(xhr, status, error){
-			alert("게시글 조회 실패");
+			alert(xhr.responseJSON.content);
 		})
 	})
 
@@ -60,14 +56,14 @@ $(document).ready(function(){
 						alert(result.content);
 					})
 					.fail(function(xhr, status, error){
-						alert("게시글 작성 실패");
+						alert(xhr.responseJSON.content);
 					})
 				})
 				.fail(function(xhr, status, error){
-					alert("토큰갱신 실패");
+					alert(xhr.responseJSON.content);
 				})
 			}else{
-				alert("게시글 작성 실패");
+				alert(xhr.responseJSON.content);
 			}
 		})
 	})

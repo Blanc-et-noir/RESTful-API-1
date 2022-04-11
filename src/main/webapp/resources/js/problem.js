@@ -1,11 +1,19 @@
 function getProblems(){
 	return $.ajax({
-		"url":"/restapi/user/getProblems.do",
+		"url":"/restapi/problems?category_id="+$("#category_id").val(),
+		"type":"get",
+		"dataType":"json"
+	});
+}
+
+function sendSolution(list){
+	var obj = new Object();
+	obj.list = list;
+	return $.ajax({
+		"url":"/restapi/scores",
 		"type":"post",
-		"dataType":"json",
-		"data":{
-			"category_id":$("#category_id").val()
-		}
+		"contentType": "application/json;",
+		"data":JSON.stringify(obj)
 	});
 }
 
@@ -35,29 +43,18 @@ function renderProblems(result){
 	$("#problems").append("<div class='touchable' id='score_problems_button'>채점하기</div>");
 }
 
-function sendSolution(list){
-	var obj = new Object();
-	obj.list = list;
-	return $.ajax({
-		"url":"/restapi/user/scoreProblems.do",
-		"type":"post",
-		"contentType": "application/json;",
-		"data":JSON.stringify(obj)
-	});
-}
-
 $(document).ready(function(){
 	
 	$.ajax({
-		"url":"/restapi/user/getCategories.do",
-		"type":"post"
+		"url":"/restapi/categories",
+		"type":"get"
 	}).done(function(result){
 		var i, categories = result.categories;
 		for(i=0;i<categories.length;i++){
 			$("#category_id").append("<option value='"+categories[i].category_id+"' label='"+categories[i].category_name+"'></option>")
 		}
 	}).fail(function(xhr, status, error){
-		alert("카테고리 조회실패");
+		alert(xhr.responseJSON.content);
 	})
 	
 	$(document).on("click","#get_problems_button",function(e){
@@ -74,14 +71,14 @@ $(document).ready(function(){
 						renderProblems(result);
 					})
 					.fail(function(xhr, status, error){
-						alert("목록발급 실패");
+						alert(xhr.responseJSON.content);
 					})
 				})
 				.fail(function(xhr, status, error){
-					alert("토큰갱신 실패");
+					alert(xhr.responseJSON.content);
 				})
 			}else{
-				alert("목록발급 실패");
+				alert(xhr.responseJSON.content);
 			}
 		})
     });
@@ -115,14 +112,14 @@ $(document).ready(function(){
 						alert("[ "+(result.right_score)+" / "+(result.right_score+result.wrong_score)+" ] \n percentage : "+result.percentage);
 					})
 					.fail(function(xhr, status, error){
-						alert("채점 실패");
+						alert(xhr.responseJSON.content);
 					})
 				})
 				.fail(function(xhr, status, error){
-					alert("토큰갱신 실패");
+					alert(xhr.responseJSON.content);
 				});
 			}else{
-				alert("채점 실패");
+				alert(xhr.responseJSON.content);
 			}
 		})
     });

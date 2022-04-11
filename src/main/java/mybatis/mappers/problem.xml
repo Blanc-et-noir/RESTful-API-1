@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="problem">
+	<select id="getCategories" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM categories
+	</select>
+	
+	<select id="getProblems" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT category_id, problem_id, problem_content,problem_image_name, choice_id, choice_content, choice_yn, choice_count, NVL(choice_count/SUM(choice_count) OVER(PARTITION BY problem_id)*100,0) AS "pick_rate"
+		FROM(
+			SELECT *
+			FROM problems
+			WHERE category_id = ${category_id}
+			ORDER BY RAND()
+			LIMIT ${limit}
+		)AS t1 NATURAL JOIN choices;
+	</select>	
+	
+	<select id="getChoices" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM choices
+		<where>
+			<foreach collection="problems" item="item" open="problem_id IN(" separator="," close=")">
+				${item.problem_id}
+			</foreach>
+		</where>
+	</select>
+	
+	<select id="getChoicesInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM choices
+		<where>
+			<foreach collection="list" item="item" open="(problem_id,choice_id) IN(" separator="," close=")">
+				(${item.problem_id},${item.answer_id})
+			</foreach>
+		</where>
+	</select>
+	
+	<update id="updateChoiceCounts" parameterType="java.util.HashMap">
+		UPDATE choices
+		SET choice_count = choice_count + 1
+		<where>
+			choice_id IN
+			<foreach collection="list" close=")" open="(" separator="," item="item">
+				${item.problem_id}
+			</foreach>
+		</where>
+	</update>
+	
+	<insert id="insertRecords" parameterType="java.util.HashMap">
+		INSERT INTO records(problem_id,choice_id,user_id) VALUES
+		<foreach collection="list" item="item" separator=",">
+			(${item.problem_id},${item.answer_id},#{item.user_id})
+		</foreach>
+	</insert>
+</mapper>

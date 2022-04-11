@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="token">
+	<select id="getSalt" parameterType="java.util.HashMap" resultType="String">
+		SELECT user_salt
+		FROM users
+		WHERE user_id = #{user_id}
+	</select>
+
+	<select id="checkId" parameterType="java.util.HashMap" resultType="String">
+		SELECT user_id
+		FROM users
+		WHERE user_id = #{user_id}
+	</select>
+	
+	<select id="checkPw" parameterType="java.util.HashMap" resultType="String">
+		SELECT user_pw
+		FROM users
+		WHERE user_id = #{user_id} AND user_pw = #{user_pw}
+	</select>
+	
+	<select id="getTokens" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT user_accesstoken, user_refreshtoken
+		FROM users
+		WHERE user_id = #{user_id}
+	</select>
+	
+	<update id="updateTokens" parameterType="java.util.HashMap">
+		UPDATE users
+		SET user_accesstoken = #{user_accesstoken}, user_refreshtoken = #{user_refreshtoken}
+		WHERE user_id = #{user_id}
+	</update>
+</mapper>

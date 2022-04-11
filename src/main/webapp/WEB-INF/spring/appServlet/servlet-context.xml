@@ -29,9 +29,7 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
 
-	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="52428800"/>
 		<beans:property name="maxInMemorySize" value="1000000"/>
@@ -44,25 +42,19 @@
 
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/user/info.do"/>
-			<mvc:mapping path="/user/scoreProblems.do"/>
-			<mvc:mapping path="/user/getProblems.do"/>
-			<mvc:mapping path="/article/addArticle.do"/>
+			<mvc:mapping path="/articles"/>
+			<mvc:mapping path="/problems"/>
+			<mvc:mapping path="/users"/>
 			<beans:bean class="com.spring.restapi.interceptor.AccesstokenInterceptor"></beans:bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/token/refreshTokens.do"/>
-			<mvc:mapping path="/token/logout.do"/>
+			<mvc:mapping path="/tokens/*"/>
 			<beans:bean class="com.spring.restapi.interceptor.RefreshtokenInterceptor"></beans:bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
-	
 	
 	<beans:bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:usePool="true"  p:hostName="localhost" p:port="6379" p:password="destiny25"/>
 	<beans:bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" p:connectionFactory-ref="jedisConnectionFactory" />
 	<beans:bean id="cookieUtil" class="com.spring.restapi.util.CookieUtil"/>
 	<beans:bean id="jwtUtil" class="com.spring.restapi.util.JwtUtil"/>
-	
-
-	
 </beans:beans>
