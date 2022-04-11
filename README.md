@@ -88,6 +88,8 @@
 
 8. [문제 목록 발급 요청](#/restapi/user/getProblems.do)
 
+9. [문제 채점 요청](#/restapi/user/scoreProblems.do)
+
 <br/>
 
 ***
@@ -104,20 +106,21 @@
 
 <br/>
 
-##### REQUEST
 <pre>
-URL : /restapi/user/getPublickey.do
-
-dataType : json
+POST /restapi/user/getPublickey.do HTTP/1.1
+{
+   
+}
 </pre>
 
-##### SUCCESS
 <pre>
+HTTP/1.1 200 OK
 {
    flag : true,
    publickey : 공개키,
    content : 응답 메세지
 }
+
 
 세부사항
 
@@ -127,8 +130,8 @@ dataType : json
    반드시 로그인 및 회원가입 API를 요청할 때 해당 공개키 또한 파라미터로 전달해야함.
 </pre>
 
-##### FAIL
 <pre>
+HTTP/1.1 400 Bad Request
 {
    flag : false,
    content : 응답 메세지
@@ -155,21 +158,17 @@ dataType : json
 
 <br/>
 
-##### REQUEST
 <pre>
-URL : /restapi/user/login.do
-
-dataType : json
-
-PARAMETER : {
+POST /restapi/user/login.do HTTP/1.1
+{
    user_id : 사용자 ID
    user_pw : 서버로부터 전달받은 공개키로 RSA2048 암호화한 사용자 PW
    publickey : 서버로부터 전달받아 암호화에 사용한 공개키
 }
 </pre>
 
-##### SUCCESS
 <pre>
+HTTP/1.1 200 OK
 {
    flag : true,
    content : 응답 메세지
@@ -185,11 +184,11 @@ PARAMETER : {
    다시 처음에 호출하고자 하던 API 호출을 진행함.
 </pre>
 
-##### FAIL
 <pre>
+HTTP/1.1 400 Bad Request
 {
-   flag : false,
-   content : 응답 메세지
+    flag : false,
+    content : 응답 메세지
 }
 </pre>
 
@@ -213,11 +212,11 @@ PARAMETER : {
 
 <br/>
 
-##### REQUEST
 <pre>
-URL : /restapi/token/logout.do
+POST /restapi/token/logout.do HTTP/1.1
+{
 
-dataType : json
+}
 
 세부사항
 
@@ -225,20 +224,25 @@ dataType : json
    이후 갱신되어 새로 발급받은 액세스, 리프레쉬 토큰임.
 </pre>
 
-##### SUCCESS
 <pre>
+HTTP/1.1 200 OK
 {
    flag : true,
    content : 응답 메세지
 }
 </pre>
 
-##### FAIL
 <pre>
+HTTP/1.1 401 Unauthorized
 {
-   flag : false,
-   content : 응답 메세지
+    flag : false,
+    content : "응답메세지"
 }
+
+세부사항
+
+1. 로그아웃에 사용했던 액세스 토큰 또는 리프레쉬 토큰에 문제가 있거나
+   두 종류의 토큰을 같이 전달하지 않아서 발생할 수 있음.
 </pre>
 
 <br/>
@@ -261,11 +265,11 @@ dataType : json
 
 <br/>
 
-##### REQUEST
 <pre>
-URL : /restapi/token/refreshTokens.do
-
-dataType : json
+POST /restapi/token/refreshTokens.do HTTP/1.1
+{
+   
+}
 
 세부사항
 
@@ -273,8 +277,8 @@ dataType : json
    리프레쉬 토큰(user_refreshtoken) 쿠키를 전달해야함.
 </pre>
 
-##### SUCCESS
 <pre>
+HTTP/1.1 200 OK
 {
    flag : true,
    content : 응답 메세지
@@ -289,8 +293,8 @@ dataType : json
    반드시 새로 발급받은 액세스 토큰과 리프레쉬 토큰을 사용해야함.
 </pre>
 
-##### FAIL
 <pre>
+HTTP/1.1 401 Unauthorized
 {
    flag : false,
    content : 응답 메세지
@@ -317,13 +321,9 @@ dataType : json
 
 <br/>
 
-##### REQUEST
 <pre>
-URL : /restapi/user/join.do
-
-dataType : json
-
-PARAMETER : {
+POST /restapi/user/join.do HTTP/1.1
+{
    user_id : 사용자 ID
    user_pw : 서버로부터 전달받은 공개키로 RSA2048 암호화한 사용자 PW,
    user_name : 사용자 이름,
@@ -341,16 +341,16 @@ PARAMETER : {
 2. 비밀번호 찾기 질문은 해당 질문들에 대한 정보를 요청하는 API를 호출하여 조회할 수 있음.
 </pre>
 
-##### SUCCESS
 <pre>
+HTTP/1.1 201 Created
 {
    flag : true,
    content : 응답 메세지
 }
 </pre>
 
-##### FAIL
 <pre>
+HTTP/1.1 400 Bad Request
 {
    flag : false,
    content : 응답 메세지
@@ -377,15 +377,15 @@ PARAMETER : {
 
 <br/>
 
-##### REQUEST
 <pre>
-URL : /restapi/user/getQuestions.do
-
-dataType : json
+POST /restapi/user/getQuestions.do HTTP/1.1
+{
+   
+}
 </pre>
 
-##### SUCCESS
 <pre>
+HTTP/1.1 200 OK
 {
    flag : true,
    content : 응답 메세지,
@@ -408,8 +408,8 @@ dataType : json
 }
 </pre>
 
-##### FAIL
 <pre>
+HTTP/1.1 400 Bad Request
 {
    flag : false,
    content : 응답 메세지
@@ -436,11 +436,11 @@ dataType : json
 
 <br/>
 
-##### REQUEST
 <pre>
-URL : /restapi/user/getCategories.do
-
-dataType : json
+POST /restapi/user/getCategories.do HTTP/1.1
+{
+   
+}
 
 세부사항
 
@@ -453,8 +453,8 @@ dataType : json
    새로 발급받은 액세스 토큰으로 다시 한 번 요청을 시도해야함.
 </pre>
 
-##### SUCCESS
 <pre>
+HTTP/1.1 200 OK
 {
    flag : true,
    content : 응답 메세지,
@@ -477,8 +477,8 @@ dataType : json
 }
 </pre>
 
-##### FAIL
 <pre>
+HTTP/1.1 401 Unauthorized
 {
    flag : false,
    content : 응답 메세지
@@ -505,13 +505,9 @@ dataType : json
 
 <br/>
 
-##### REQUEST
 <pre>
-URL : /restapi/user/getProblems.do
-
-dataType : json
-
-PARAMETER : {
+POST /restapi/user/getProblems.do HTTP/1.1
+{
    category_id : 문제 분류 번호,
    limit : 발급받을 문제의 수(전달하지 않거나 1이상의 정수가 아니면 기본 20문제를 발급함)
 }
@@ -527,8 +523,8 @@ PARAMETER : {
    새로 발급받은 액세스 토큰으로 다시 한 번 요청을 시도해야함.
 </pre>
 
-##### SUCCESS
 <pre>
+HTTP/1.1 200 OK
 {
    flag : true,
    content : 응답 메세지,
@@ -637,8 +633,81 @@ PARAMETER : {
 }
 </pre>
 
-##### FAIL
 <pre>
+HTTP/1.1 401 Unauthorized
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+[API 목록으로 되돌아가기](#api_list)
+
+<br/>
+
+***
+
+<br/>
+
+<a id="/restapi/user/scoreProblems.do">
+   
+   ### 문제 채점 요청
+   
+</a>
+
+문제에 대한 채점 요청및 이에 대한 채점결과를 반환하는 API
+
+<br/>
+
+<pre>
+POST /restapi/user/scoreProblems.do HTTP/1.1
+Content-Type : application/json
+{
+   list : [
+      {
+         problem_id : 문제 번호,
+         answer_id : 정답 번호
+      },
+      {
+         problem_id : 문제 번호,
+         answer_id : 정답 번호
+      },
+      {
+         problem_id : 문제 번호,
+         answer_id : 정답 번호
+      },
+                 ....
+   ]
+}
+
+세부사항
+
+1. 해당 API는 로그인이 필요한 기능이므로 반드시 액세스 토큰을 같이 전달해야함.
+
+2. 액세스 토큰을 갖고 해당 API를 처음 호출했을때 HTTP 401 응답을 수신하면
+   액세스 토큰이 만료되었을 수 있음.
+   
+   반드시 해당 액세스 토큰과 리프레쉬 토큰을 갖고 새로이 액세스 토큰과 리프레쉬 토큰을 재발급 받아야함.
+   새로 발급받은 액세스 토큰으로 다시 한 번 요청을 시도해야함.
+</pre>
+
+<pre>
+HTTP/1.1 201 Created
+{
+   flag : true,
+   content : 응답 메세지,
+   percentage : 정답률,
+   right_score : 정답 개수,
+   wrong_score : 오답 개수,
+   right_problems  : [ 맞춘 문제 번호1, 맞춘 문제 번호2, 맞춘 문제 번호3, ... ],
+   wrong_problems  : [ 틀린 문제 번호1, 틀린 문제 번호2, 틀린 문제 번호3, ... ]
+}
+</pre>
+
+<pre>
+HTTP/1.1 401 Unauthorized
 {
    flag : false,
    content : 응답 메세지
