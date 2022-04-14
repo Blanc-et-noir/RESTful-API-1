@@ -115,6 +115,7 @@ function join(publickey){
 $(document).ready(function(){
 	$("#fullpage").initialize({});
 
+	
     var swiper = new Swiper(".mySwiper", {
         slidesPerView: "auto",
         spaceBetween: 80,
@@ -126,18 +127,18 @@ $(document).ready(function(){
         },
         on: {
             init: function() {
-                $('.swiper-slide').addClass('changed');
-                $('.custom-fraction .current').text(this.realIndex + 1);
-                $('.custom-fraction .all').text(this.loopedSlides);
+                $('.mySwiper .swiper-slide').addClass('changed');
+                $('.mySwiper .custom-fraction .current').text(this.realIndex + 1);
+                $('.mySwiper .custom-fraction .all').text(this.loopedSlides);
             },
             slideChangeTransitionStart: function() {
-                $('.swiper-slide').addClass('changing');
-                $('.swiper-slide').removeClass('changed');
-                $('.custom-fraction .current').text(this.realIndex + 1);
+                $('.mySwiper .swiper-slide').addClass('changing');
+                $('.mySwiper .swiper-slide').removeClass('changed');
+                $('.mySwiper .custom-fraction .current').text(this.realIndex + 1);
             },
             slideChangeTransitionEnd: function() {
-                $('.swiper-slide').removeClass('changing');
-                $('.swiper-slide').addClass('changed');
+                $('.mySwiper .swiper-slide').removeClass('changing');
+                $('.mySwiper .swiper-slide').addClass('changed');
             }
         },
         autoplay: {
@@ -252,11 +253,16 @@ $(document).ready(function(){
     		return;
     	}else if($("#user_pw").val()!= $("#user_pw_check").val()){
     		$("#user_pw").addClass("wrong");
+    		$("#user_pw_check").addClass("wrong");
     		$("#error_message").text("비밀번호가 서로 일치하지 않습니다.");
     		return;
     	}else if(!checkBytes($("#user_name").val(),60)){
     		$("#user_name").addClass("wrong");
     		$("#error_message").text("이름은 영어로 60, 한글로 20자 이하여야 합니다.");
+    		return;
+    	}else if($("#user_name").val().length==0){
+    		$("#user_name").addClass("wrong");
+    		$("#error_message").text("이름은 공백일 수 없습니다.");
     		return;
     	}else if(!checkEmail($("#user_email").val())){
     		$("#user_email").addClass("wrong");

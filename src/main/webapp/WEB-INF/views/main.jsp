@@ -35,24 +35,24 @@
   					<div class="swiper mySwiper touchable">
     					<div class="swiper-wrapper touchable">
       						<div class="swiper-slide touchable">
-      							<img class="touchable" src="${path}/resources/image/image0.svg">
-      							<p class="touchable"><span class='touchable highlight'>언</span>제, <span class='touchable highlight'>어</span>디서나</p>
+      							<img class="main_image touchable" src="${path}/resources/image/image0.svg">
+      							<p class="main_phrase touchable"><span class='touchable highlight'>언</span>제나 <span class='touchable highlight'>어</span>디서나</p>
       						</div>
       						<div class="swiper-slide">
-      							<img class="touchable" src="${path}/resources/image/image1.svg">
-      							<p class="touchable"><span class='touchable highlight'>모</span>바일로 <span class='touchable highlight'>간</span>편하게</p>
+      							<img class="main_image touchable" src="${path}/resources/image/image1.svg">
+      							<p class="main_phrase touchable"><span class='touchable highlight'>모</span>바일로 <span class='touchable highlight'>간</span>편하게</p>
       						</div>
       						<div class="swiper-slide">
-      							<img class="touchable" src="${path}/resources/image/image2.svg">
-      							<p class="touchable"><span class='touchable highlight'>공</span>부하고</p>
+      							<img class="main_image touchable" src="${path}/resources/image/image2.svg">
+      							<p class="main_phrase touchable"><span class='touchable highlight'>공</span>부하고</p>
       						</div>
       						<div class="swiper-slide">
-      							<img class="touchable" src="${path}/resources/image/image3.svg">
-      							<p class="touchable"><span class='touchable highlight'>평</span>가하고</p>
+      							<img class="main_image touchable" src="${path}/resources/image/image3.svg">
+      							<p class="main_phrase touchable"><span class='touchable highlight'>평</span>가하고</p>
       						</div>
       						<div class="swiper-slide">
-      							<img class="touchable" src="${path}/resources/image/image4.svg">
-      							<p class="touchable"><span class='touchable highlight'>의</span>견을 <span class='touchable highlight'>공</span>유하세요</p>
+      							<img class="main_image touchable" src="${path}/resources/image/image4.svg">
+      							<p class="main_phrase touchable"><span class='touchable highlight'>의</span>견을 <span class='touchable highlight'>공</span>유하세요</p>
       						</div>
   						</div>
 					</div>
@@ -64,9 +64,11 @@
 						<select id="category_id" class="touchable"></select>
 						<div id="get_problems_button" class='touchable'>조회하기</div>
 					</div>
-					<div id="problems" class='touchable'>
-						
-					</div>
+				</div>
+				<div id='score_problems_button'>채점하기</div>
+				<div id="problemSwiper" class="swiper problemSwiper">
+					<div id="problems" class="swiper-wrapper"></div>
+					<div class="swiper-pagination"></div>
 				</div>
         	</div>
         </div>

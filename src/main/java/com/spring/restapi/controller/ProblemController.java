@@ -1,14 +1,19 @@
 package com.spring.restapi.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +33,8 @@ public class ProblemController {
 	private JwtUtil jwtUtil;
 	@Autowired
 	private CookieUtil cookieUtil;
+	
+	private static final String IMAGE_BASE_PATH = "D:\\RestAPI\\problems\\"; 
 	
 	//액세스 필요
 	@RequestMapping(value= {"/problems"}, method= {RequestMethod.GET})
@@ -49,6 +56,57 @@ public class ProblemController {
 			result.put("flag", false);
 			result.put("content", "문제 정보 획득 실패");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	//액세스 필요
+	@RequestMapping(value= {"/problems/{problem_id}/images/{problem_image_name}"}, method= {RequestMethod.GET})
+	public void getImage(@PathVariable("problem_id") int problem_id,@PathVariable("problem_image_name") String problem_image_name, HttpServletRequest request, HttpServletResponse response){
+		HashMap result = new HashMap();
+		try {
+			//param에는 문제번호, 이미지 이름 필요
+			
+			//String extension = request.getHeader("accept").split("/")[1];
+			String extension = "png";
+			String path = IMAGE_BASE_PATH+problem_id+"\\images\\"+problem_image_name+"."+extension;
+			
+			File file = new File(path);
+			System.out.println(path);
+			if(!file.exists()) {
+				System.out.println("실패");
+				result.put("flag", false);
+				result.put("content", "이미지 파일이 존재하지 않음");
+				return;
+				//return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+			}else {
+				System.out.println("성공:"+file.length());
+				response.setHeader("Cache-Control", "no-cache");
+				response.addHeader("Content-disposition", "attachment; fileName="+problem_image_name+"."+extension);		
+				FileInputStream in = new FileInputStream(file);
+				
+				byte[] buffer = new byte[1024*1024*10];
+				OutputStream out = response.getOutputStream();
+				while(true) {
+					int len = in.read(buffer);
+					System.out.println(len);
+					if(len==-1) {
+						break;
+					}
+					out.write(buffer, 0, len);
+				}
+				in.close();
+				out.close();
+			}
+			result.put("flag", true);
+			result.put("content", "이미지 파일 로드 성공");
+			//return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+			return;
+		}catch(Exception e) {
+			e.printStackTrace();
+			result.put("flag", false);
+			result.put("content", "이미지 파일 로드 실패");
+			//return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+			return;
 		}
 	}
 	
@@ -83,14 +141,17 @@ public class ProblemController {
 			result.put("content", "채점 성공");
 			return new ResponseEntity<HashMap>(result,HttpStatus.CREATED);
 		}catch(UnableToUpdateCountsException e) {
+			e.printStackTrace();
 			result.put("flag", false);
 			result.put("content", e.getMessage());
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}catch(UnableToInsertRecordsException e) {
+			e.printStackTrace();
 			result.put("flag", false);
 			result.put("content", e.getMessage());
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}catch(Exception e) {
+			e.printStackTrace();
 			result.put("flag", false);
 			result.put("content", "채점 실패");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);

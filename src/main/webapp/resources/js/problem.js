@@ -21,26 +21,30 @@ function renderProblems(result){
 	var i,j, problems = result.problems;
 	
 	$("#problems").empty();
-	
+    console.log(problems);
 	for(i=0;i<problems.length;i++){
 		var choices = problems[i].choices;
+		var problem = $("<div id='problem_"+problems[i].problem_id+"' class='swiper-slide problem touchable'></div>");
+
+		$(problem).append("<div>["+(i+1)+"] "+problems[i].problem_content+"</div>");
 		
-		var problemsDiv = $("<div class='problem touchable'><div>");
-		
-		$(problemsDiv).append("<div class='problem_content touchable'> ["+(i+1)+"] : "+problems[i].problem_content+"</div>");
-		$(problemsDiv).append("<img class='touchable' src=''>");
-		
-		var choicesDiv = $("<div class='touchable'><div>");
-		 
-		for(j=0;j<choices.length;j++){
-			$(choicesDiv).append("<div class='choice touchable'><label class='touchable'><input class='touchable' type='radio' name='"+problems[i].problem_id+"' value='"+choices[j].choice_id+"'>"+choices[j].choice_content+"</label></div>");
+		if(problems[i].problem_image_name!=null){
+			$(problem).append("<img class='problem_image touchable' src='/restapi/problems/"+problems[i].problem_id+"/images/"+problems[i].problem_image_name+"';>");
 		}
 		
-		$(problemsDiv).append(choicesDiv);
-		$("#problems").append(problemsDiv);					
+		for(j=0;j<choices.length;j++){
+			$(problem).append("<div class='choice touchable'><input id='choice_"+choices[j].choice_id+"' class='touchable' type='radio' name='"+problems[i].problem_id+"' value='"+choices[j].choice_id+"'><label for='choice_"+choices[j].choice_id+"' class='touchable'>("+(j+1)+") "+choices[j].choice_content+"</label></div>");
+		}
+		
+		$("#problems").append(problem);
 	}
 	
-	$("#problems").append("<div class='touchable' id='score_problems_button'>채점하기</div>");
+    var problemSwiper = new Swiper(".problemSwiper", {
+    	pagination: {
+            el: ".swiper-pagination",
+            type: "progressbar",
+        },
+    });
 }
 
 $(document).ready(function(){
@@ -102,6 +106,32 @@ $(document).ready(function(){
 		sendSolution(list)
 		.done(function(result){
 			alert("[ "+(result.right_score)+" / "+(result.right_score+result.wrong_score)+" ] \n percentage : "+result.percentage);
+			
+			var right_problems = result.right_problems;
+			var wrong_problems = result.wrong_problems;
+			
+			console.log(right_problems);
+			console.log(wrong_problems);
+			for(i=0; i<right_problems.length; i++){
+				$("#problem_"+right_problems[i]+" input:checked").next("label").css({
+					"color":"#06d6a0",
+					"font-weight":900
+				})
+			}
+			
+			for(i=0; i<wrong_problems.length; i++){
+				$("#problem_"+wrong_problems[i]+" input:checked").next("label").css({
+					"color":"#ee3f5c",
+					"font-weight":900
+				})
+			}
+			
+			$("input[type='radio']").attr({
+				"disabled":true
+			})
+			
+			
+			
 		})
 		.fail(function(xhr, status, error){
 			if(xhr.status==401){
