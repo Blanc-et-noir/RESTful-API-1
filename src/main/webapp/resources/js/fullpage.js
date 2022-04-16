@@ -252,18 +252,18 @@ $.fn.extend({
                 "list-style": "none"
             });
             $(".verticalA").css({
-                "width": "10px",
-                "height": "10px",
+                "width": "5px",
+                "height": "5px",
                 "border-radius": "50%",
                 "background-color": settings.navigatorUnselectedColor,
-                "margin": "10px 10px"
+                "margin": "5px 5px"
             });
             $(".verticalA.selected").css({
-                "width": "10px",
-                "height": "10px",
+                "width": "5px",
+                "height": "5px",
                 "border-radius": "50%",
                 "background-color": settings.navigatorSelectedColor,
-                "margin": "10px 10px"
+                "margin": "5px 5px"
             });
         }
 
@@ -290,18 +290,18 @@ $.fn.extend({
                 "list-style": "none"
             });
             $(".horizontalA").css({
-                "width": "10px",
-                "height": "10px",
+                "width": "5px",
+                "height": "5px",
                 "border-radius": "50%",
                 "background-color": settings.navigatorUnselectedColor,
-                "margin": "10px 10px"
+                "margin": "5px 5px"
             });
             $(".horizontalA.selected").css({
-                "width": "10px",
-                "height": "10px",
+                "width": "5px",
+                "height": "5px",
                 "border-radius": "50%",
                 "background-color": settings.navigatorSelectedColor,
-                "margin": "10px 10px"
+                "margin": "5px 5px"
             });
         }
 

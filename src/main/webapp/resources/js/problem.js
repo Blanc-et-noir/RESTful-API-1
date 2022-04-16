@@ -1,3 +1,5 @@
+var problemSwiper;
+
 function getProblems(){
 	return $.ajax({
 		"url":"/restapi/problems?category_id="+$("#category_id").val(),
@@ -21,12 +23,11 @@ function renderProblems(result){
 	var i,j, problems = result.problems;
 	
 	$("#problems").empty();
-    console.log(problems);
 	for(i=0;i<problems.length;i++){
 		var choices = problems[i].choices;
 		var problem = $("<div id='problem_"+problems[i].problem_id+"' class='swiper-slide problem touchable'></div>");
 
-		$(problem).append("<div>["+(i+1)+"] "+problems[i].problem_content+"</div>");
+		$(problem).append("<div>["+(i+1)+"] "+problems[i].problem_content+", 정답률 : "+problems[i].answer_rate+"%</div>");
 		
 		if(problems[i].problem_image_name!=null){
 			$(problem).append("<img class='problem_image touchable' src='/restapi/problems/"+problems[i].problem_id+"/images/"+problems[i].problem_image_name+"';>");
@@ -38,8 +39,7 @@ function renderProblems(result){
 		
 		$("#problems").append(problem);
 	}
-	
-    var problemSwiper = new Swiper(".problemSwiper", {
+    problemSwiper = new Swiper(".problemSwiper", {
     	pagination: {
             el: ".swiper-pagination",
             type: "progressbar",

@@ -7,14 +7,32 @@
 	</select>
 	
 	<select id="getProblems" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT category_id, problem_id, problem_content,problem_image_name, choice_id, choice_content, choice_yn, choice_count, NVL(choice_count/SUM(choice_count) OVER(PARTITION BY problem_id)*100,0) AS "pick_rate"
+		SELECT t2.problem_id, t2.problem_content, t2.problem_image_name, t2.choice_id, t2.choice_content, t2.choice_yn, NVL(t3.pick_rate,0) AS "pick_rate"
+		FROM(
+			SELECT *
+			FROM(
+				SELECT *
+				FROM problems
+				WHERE category_id = ${category_id}
+				ORDER BY RAND()
+				LIMIT ${limit}
+			)AS t1 NATURAL JOIN choices
+		)AS t2 LEFT JOIN (
+			SELECT DISTINCT problem_id, choice_id, ROUND(COUNT(*) OVER(PARTITION BY problem_id,choice_id)/COUNT(*) OVER(PARTITION BY problem_id),2)*100 AS "pick_rate"
+			FROM records
+		)AS t3 ON t2.choice_id = t3.choice_id;
+	</select>	
+	
+	<select id="getPickrate" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT category_id, problem_id, problem_content,problem_image_name, choice_id, choice_content, choice_yn
 		FROM(
 			SELECT *
 			FROM problems
 			WHERE category_id = ${category_id}
 			ORDER BY RAND()
 			LIMIT ${limit}
-		)AS t1 NATURAL JOIN choices;
+		)AS t1 NATURAL JOIN choices
+		ORDER BY RAND()
 	</select>	
 	
 	<select id="getChoices" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -41,9 +59,9 @@
 		UPDATE choices
 		SET choice_count = choice_count + 1
 		<where>
-			choice_id IN
+			(problem_id, choice_id) IN
 			<foreach collection="list" close=")" open="(" separator="," item="item">
-				${item.problem_id}
+				(${item.problem_id},${item.answer_id})
 			</foreach>
 		</where>
 	</update>

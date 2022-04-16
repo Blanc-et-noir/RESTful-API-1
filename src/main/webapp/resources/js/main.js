@@ -148,19 +148,6 @@ $(document).ready(function(){
     });
 
     swiper.autoplay.start();
-    
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	getInfo().done(function(result){
 		$("#loginForm_button").remove();

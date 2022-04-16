@@ -12,13 +12,6 @@ public class CookieUtil {
 		cookie.setSecure(false);
 		return cookie;
 	}
-	public Cookie createCookie(String name, String value, String path) {
-		Cookie cookie = new Cookie(name,value);
-		cookie.setPath(path);
-		cookie.setHttpOnly(true);
-		cookie.setSecure(false);
-		return cookie;
-	}
 	public String getAccesstoken(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
 		for(Cookie cookie : cookies) {

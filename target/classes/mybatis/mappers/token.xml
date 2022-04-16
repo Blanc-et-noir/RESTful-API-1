@@ -30,4 +30,10 @@
 		SET user_accesstoken = #{user_accesstoken}, user_refreshtoken = #{user_refreshtoken}
 		WHERE user_id = #{user_id}
 	</update>
+	
+	<update id="deleteTokens" parameterType="java.util.HashMap">
+		UPDATE users
+		SET user_accesstoken = NULL, user_refreshtoken = NULL
+		WHERE user_id = #{user_id}
+	</update>
 </mapper>

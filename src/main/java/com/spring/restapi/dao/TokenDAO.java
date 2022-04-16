@@ -16,7 +16,13 @@ public class TokenDAO {
 
 	public void updateTokens(HashMap<String, String> param) throws Exception{
 		if(sqlSession.update("token.updateTokens", param)==0) {
-			throw new Exception("토큰을 DB에 업데이트 하는 과정에서 오류가 발생했습니다.");
+			throw new Exception("토큰을 DB에 업데이트하는 과정에서 오류가 발생했습니다.");
+		}
+	}
+	
+	public void deleteTokens(HashMap<String, String> param) throws Exception{
+		if(sqlSession.update("token.deleteTokens", param)==0) {
+			throw new Exception("토큰을 DB에서 삭제하는 과정에서 오류가 발생했습니다.");
 		}
 	}
 	

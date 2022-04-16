@@ -51,27 +51,33 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 		String uri = request.getRequestURI();
 		String method = request.getMethod();
 		
+		System.out.println(uri+" : "+method+" : "+(user_accesstoken!=null)+" : "+(user_refreshtoken!=null));
+		
 		if(uri.equals("/restapi/tokens")&&method.equals("POST")) {
 			return true;
 		}
 		
 		//액세스토큰이 없으면
 		if(user_refreshtoken == null) {
+			System.out.println("1");
 			response.sendError(401);
 			return false;
 		}else if(user_accesstoken==null) {
+			System.out.println("2");
 			response.sendError(401);
 			return false;
 		}else {
 			//로그아웃된 리프레시토큰이면
 			if(redisUtil.getData(user_refreshtoken)!=null) {
 				setErrorMessage(response,401,"로그아웃된 리프레시 토큰");
+				System.out.println("3");
 				return false;
 			}
 			
 			//로그아웃된 액세스토큰이면
 			if(redisUtil.getData(user_accesstoken)!=null) {
 				setErrorMessage(response,401,"로그아웃된 액세스 토큰");
+				System.out.println("4");
 				return false;
 			}
 			
@@ -81,6 +87,7 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 
 			}catch(Exception e) {
 				setErrorMessage(response,401,"위조된 액세스 토큰");
+				System.out.println("5");
 				return false;
 			}
 			
@@ -93,6 +100,7 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 				
 				//현재 사용중이었던 액세스와 리프레시인지 확인
 				if(!access_user_id.equals(refresh_user_id)) {
+					System.out.println("6");
 					setErrorMessage(response,401,"액세스 토큰, 리프레쉬 토큰의 소유자 ID 불일치");
 					return false;
 				}
@@ -102,14 +110,25 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 				HashMap tokens = tokenService.getTokens(param);
 				
 				if(!user_accesstoken.equals(tokens.get("user_accesstoken"))||!user_refreshtoken.equals(tokens.get("user_refreshtoken"))) {
+					
 					setErrorMessage(response,401,"액세스 토큰 또는 리프레쉬 토큰이 로그인에 사용한 것이 아님");
+					System.out.println("7");
+					
+					System.out.println(user_accesstoken);
+					System.out.println(tokens.get("user_accesstoken"));
+					
+					System.out.println(user_refreshtoken);
+					System.out.println(tokens.get("user_refreshtoken"));
 					return false;
 				}
+				System.out.println("8");
 				return true;
 			}catch(ExpiredJwtException e) {
+				System.out.println("9");
 				setErrorMessage(response,401,"리프레쉬 토큰 유효기간 만료");
 				return false;
 			}catch(Exception e) {
+				System.out.println("10");
 				setErrorMessage(response,401,"위조된 리프레쉬 토큰");
 				return false;
 			}

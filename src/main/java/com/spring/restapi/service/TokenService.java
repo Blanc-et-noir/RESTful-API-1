@@ -63,8 +63,8 @@ public class TokenService {
 		tokenDAO.updateTokens(param);
 		
 		//새로운 액세스 리프레시 토큰을 쿠키에 저장후 응답
-		response.addCookie(cookieUtil.createCookie("user_accesstoken", new_user_accesstoken, "/restapi"));
-		response.addCookie(cookieUtil.createCookie("user_refreshtoken", new_user_refreshtoken, "/restapi/tokens"));
+		response.addCookie(cookieUtil.createCookie("user_accesstoken", new_user_accesstoken, "/restapi",14*24*60*60));
+		response.addCookie(cookieUtil.createCookie("user_refreshtoken", new_user_refreshtoken, "/restapi/tokens",14*24*60*60));
 		
 		//기존 액세스, 리프레시 토큰 비활성화
 		redisUtil.setData(user_accesstoken, "removed", jwtUtil.getExpiration(user_accesstoken));
@@ -105,8 +105,8 @@ public class TokenService {
 		tokenDAO.updateTokens(param);
 		
 		//액세스, 리프레쉬 토큰 쿠키에 첨부
-		response.addCookie(cookieUtil.createCookie("user_accesstoken",user_accesstoken,"/restapi"));
-		response.addCookie(cookieUtil.createCookie("user_refreshtoken",user_refreshtoken,"/restapi/token"));
+		response.addCookie(cookieUtil.createCookie("user_accesstoken",user_accesstoken,"/restapi",14*24*60*60));
+		response.addCookie(cookieUtil.createCookie("user_refreshtoken",user_refreshtoken,"/restapi/tokens",14*24*60*60));
 	}
 	
 	public void logout(HttpServletRequest request,HttpServletResponse response) throws Exception{
@@ -125,6 +125,10 @@ public class TokenService {
 		}catch(ExpiredJwtException e) {
 			System.out.println("리프레시토큰 유효기간이 지나 블랙리스트에 추가할 필요 X");
 		}
+		
+		HashMap param = new HashMap();
+		param.put("user_id", jwtUtil.getData(user_accesstoken,"user_id"));
+		tokenDAO.deleteTokens(param);
 		
 		//액세스, 리프레쉬 토큰 쿠키에 첨부
 		response.addCookie(cookieUtil.createCookie("user_accesstoken","removed","/restapi",0));

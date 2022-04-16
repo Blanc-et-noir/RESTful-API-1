@@ -89,8 +89,6 @@ public class ProblemService {
 			}
 		}
 		
-		problemDAO.updateChoiceCounts(param);
-		
 		problemDAO.insertRecords(param);
 		
 		//채점결과 반환
