@@ -4,7 +4,9 @@
 	left:1%;
 	transform:translate(-1%,-99%);
 	z-index:500;
-	font-size:8px;
+}
+#blancetnoir span{
+	font-size:2px;
 }
 @font-face {
     font-family: BlackHanSans;
@@ -56,30 +58,39 @@ textarea:focus {
 	font-size:40px;
 }
 
-#loginForm_button, #logout_button, #joinForm_button{
+#loginForm_button,#logout_button, #joinForm_button{
 	display:block;
 	position:fixed;
 	width:60px;
 	height:30px;
 	z-index:400;
 	color:white;
-	background-color:#06d6a0;
 	text-align:center;
 	line-height:30px;
 	border-radius:5px;
 	font-size:10px;
 	transition:0.3s;
 }
-#loginForm_button, #logout_button{
+#loginForm_button{
+	background-color:#06d6a0;
 	bottom:10px;
 	right:10px;
 }
 #joinForm_button{
+	background-color:#06d6a0;
 	bottom:10px;
 	right:80px;
 }
-#loginForm_button:hover,#logout_button:hover,#joinForm_button:hover{
+#logout_button{
+	background-color:#ee3f5c;
+	bottom:10px;
+	right:10px;
+}
+#loginForm_button:hover,#joinForm_button:hover{
 	background-color:#02bb8b;
+}
+#logout_button:hover{
+	background-color:#c7324a;
 }
 
 #article_form{
@@ -380,7 +391,6 @@ textarea:focus {
 	height:40px;
 	z-index:400;
 	color:white;
-	background-color:#06d6a0;
 	text-align:center;
 	line-height:40px;
 	border-radius:5px;
@@ -389,17 +399,21 @@ textarea:focus {
 }
 
 #login_button{
+	background-color:#06d6a0;
 	margin-right:10px;
 	width:70%;
 }
 #loginFormClose_button{
+	background-color:#ee3f5c;
 	flex:1;
 }
 
-#login_button:hover,#loginFormClose_button:hover{
+#login_button:hover{
 	background-color:#02bb8b;
 }
-
+#loginFormClose_button:hover{
+	background-color:#c7324a;
+}
 
 
 
@@ -454,7 +468,6 @@ textarea:focus {
 	height:40px;
 	z-index:400;
 	color:white;
-	background-color:#06d6a0;
 	text-align:center;
 	line-height:40px;
 	border-radius:5px;
@@ -462,6 +475,7 @@ textarea:focus {
 	transition:0.3s;
 }
 #join_button{
+	background-color:#06d6a0;
 	width:200px;
 	top:97%;
 	left:10%;
@@ -472,9 +486,13 @@ textarea:focus {
 	top:97%;
 	left:96%;
 	transform:translate(-96%,-97%);
+	background-color:#ee3f5c;
 }
-#join_button:hover,#joinFormClose_button:hover{
+#join_button:hover{
 	background-color:#02bb8b;
+}
+#joinFormClose_button:hover{
+	background-color:#c7324a;
 }
 
 
@@ -577,4 +595,45 @@ input[type=radio] + label{
 input[type=radio]:not(:checked) + label:hover{
 	font-weight:900;
 	color:#007aff;
+}
+
+#card_board{
+	width: 290px;
+	height: 290px;
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+}
+
+.card{
+	width: 120px;
+	height: 120px;
+	background-color:#06d6a0;
+	border-radius:5px;
+	position:relative;
+	padding:5px;
+	position:absolute;
+	transition:0.3s;
+}
+.card:hover{
+	background-color:white;
+}
+.card:hover p{
+	color:#06d6a0;
+}
+.card img{
+	width:100%;
+	height:100%;
+}
+.card p{
+	font-weight:900;
+	font-size:10px;
+	display:block;
+	position:absolute;
+	color:white;
+	bottom:-20%;
+	width:100%;
+	height:40px;
+	text-align:center;
 }

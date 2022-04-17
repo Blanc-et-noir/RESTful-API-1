@@ -27,7 +27,7 @@
 <body>
 	<div id="form_cover"></div>
 	<div id="alert_cover"></div>
-	<div id="blancetnoir">Made By <span style="color:#06d6a0">B</span>lanc et <span style="color:#ee3f5c">N</span>oir</div>
+	<div id="blancetnoir"><span>Made By</span> <span style="color:#06d6a0">B</span>lanc et <span style="color:#ee3f5c">N</span><span>oir</span> </div>
     <div id="fullpage">
         <div class="section">
             <div class="slide touchable" style="background-color:#f4f4f4">
@@ -58,6 +58,33 @@
 					</div>
 				</div>
             </div>
+        </div>
+        <div class="section">
+            <div class="slide" style="background-color:#f4f4f4">
+				<div id="card_board" class="touchable">
+					<div id="move_button1" class="card touchable" style="top:10%; left:10%; transform:translate(-10%,-10%)">
+						<img class="touchable" src="${path}/resources/image/mobile.svg">
+						<p class="touchable">평가시험</p>
+					</div>
+					<div id="move_button2" class="card touchable" style="top:10%; left:90%; transform:translate(-90%,-10%)">
+						<img class="touchable" src="${path}/resources/image/people.svg">
+						<p class="touchable">커뮤니티</p>
+					</div>
+					<div id="move_button3" class="card touchable" style="top:90%; left:10%; transform:translate(-10%,-90%)">
+						<img class="touchable" src="${path}/resources/image/person.svg">
+						<p class="touchable">내 정보</p>
+					</div>
+					<div id="move_button4" class="card touchable" style="top:90%; left:90%; transform:translate(-90%,-90%)">
+						<img class="touchable" src="${path}/resources/image/project.svg">
+						<p class="touchable">고객지원</p>
+					</div>
+				</div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="slide" style="background-color:#f4f4f4">
+				<p>평가하기</p>
+            </div>
 			<div class="slide" style="background-color:#f4f4f4">
 				<div id="problem_form" class="touchable">
 					<div>
@@ -70,18 +97,18 @@
 					<div id="problems" class="swiper-wrapper"></div>
 					<div class="swiper-pagination"></div>
 				</div>
-        	</div>
+        	</div>            
         </div>
         <div class="section">
             <div class="slide" style="background-color:#f4f4f4">
-				<p>The boxes are not essential elements</p>
+				<p>커뮤니티</p>
             </div>
             <div class="slide" style="background-color:#f4f4f4">
-                    <form id="article_form" class="touchable">
-                    	<input id="article_title" name="article_title" class="touchable" type="text" required style="padding:10px" placeholder="게시글 제목">
-                    	<textarea id="article_content" name="article_content" class="touchable" required style="padding:10px" placeholder="게시글 내용"></textarea>
-                    	<input id="article_write_button" class="touchable" type="button" value="글 쓰기">
-                    </form>
+            	<form id="article_form" class="touchable">
+                    <input id="article_title" name="article_title" class="touchable" type="text" required style="padding:10px" placeholder="게시글 제목">
+                    <textarea id="article_content" name="article_content" class="touchable" required style="padding:10px" placeholder="게시글 내용"></textarea>
+                    <input id="article_write_button" class="touchable" type="button" value="글 쓰기">
+            	</form>
             </div>
             <div class="slide" style="background-color:#f4f4f4">
 				<div id="article_list_form" class="touchable">
@@ -107,8 +134,19 @@
         </div>
         <div class="section">
             <div class="slide" style="background-color:#f4f4f4">
-				<p>In this case, when the height of the browser is less than 2000px, then slide will be scrollable</p>
+				<p>내 정보</p>
             </div>
+			<div class="slide" style="background-color:#f4f4f4">
+				<p>내용</p>
+        	</div>          
+        </div>
+        <div class="section">
+            <div class="slide" style="background-color:#f4f4f4">
+				<p>고객지원</p>
+            </div>
+			<div class="slide" style="background-color:#f4f4f4">
+				<p>내용</p>
+        	</div>     
         </div>
     </div>
 </body>

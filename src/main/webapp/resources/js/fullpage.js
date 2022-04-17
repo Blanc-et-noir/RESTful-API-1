@@ -677,11 +677,23 @@ $.fn.extend({
                     }else{
                         settings.afterLoad(sectionIndex, slideIndex);
                     }
-                    
                 })
             }
         }
 
+        $(document).on("click","#move_button1",function(){
+        	movePage(2,0);
+        });
+        $(document).on("click","#move_button2",function(){
+        	movePage(3,0);
+        });
+        $(document).on("click","#move_button3",function(){
+        	movePage(4,0);
+        });
+        $(document).on("click","#move_button4",function(){
+        	movePage(5,0);
+        });
+        
         function moveUp(){
             var currentSection = $(".activeSection");
             var sectionIndex = $(".activeSection").index();

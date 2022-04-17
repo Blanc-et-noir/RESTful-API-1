@@ -113,9 +113,8 @@ function join(publickey){
 }
 
 $(document).ready(function(){
-	$("#fullpage").initialize({});
+	var fullpage = $("#fullpage").initialize({});
 
-	
     var swiper = new Swiper(".mySwiper", {
         slidesPerView: "auto",
         spaceBetween: 80,

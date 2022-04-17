@@ -132,7 +132,7 @@ public class TokenService {
 		
 		//액세스, 리프레쉬 토큰 쿠키에 첨부
 		response.addCookie(cookieUtil.createCookie("user_accesstoken","removed","/restapi",0));
-		response.addCookie(cookieUtil.createCookie("user_refreshtoken","removed","/restapi/token",0));
+		response.addCookie(cookieUtil.createCookie("user_refreshtoken","removed","/restapi/tokens",0));
 	}
 	
 	public HashMap getTokens(HashMap param){
