@@ -72,23 +72,23 @@
 
 <br/>
 
-1. [공개키 요청](#/restapi/user/getPublickey.do)
+1. [공개키 요청](#/anchor1)
 
-2. [로그인 요청](#/restapi/user/login.do)
+2. [로그인 요청](#/anchor2)
 
-3. [로그아웃 요청](#/restapi/token/logout.do)
+3. [로그아웃 요청](#/anchor3)
 
-4. [토큰 갱신 요청](#/restapi/token/refreshTokens.do)
+4. [토큰 갱신 요청](#/anchor4)
 
-5. [회원 가입 요청](#/restapi/user/join.do)
+5. [회원 가입 요청](#/anchor5)
 
-6. [비밀번호 찾기 질문 목록 발급 요청](#/restapi/user/getQuestions.do)
+6. [비밀번호 찾기 질문 목록 발급 요청](#/anchor6)
 
-7. [문제 분류 목록 발급 요청](#/restapi/user/getCategories.do)
+7. [문제 분류 목록 발급 요청](#/anchor6)
 
-8. [문제 목록 발급 요청](#/restapi/user/getProblems.do)
+8. [문제 목록 발급 요청](#/anchor7)
 
-9. [문제 채점 요청](#/restapi/user/scoreProblems.do)
+9. [문제 채점 요청](#/anchor8)
 
 <br/>
 
@@ -96,7 +96,7 @@
 
 <br/>
 
-<a id="/restapi/user/getPublickey.do">
+<a id="/anchor1">
    
    ### 공개키 요청
    
@@ -107,7 +107,7 @@
 <br/>
 
 <pre>
-POST /restapi/user/getPublickey.do HTTP/1.1
+GET /restapi/publickeys HTTP/1.1
 {
    
 }
@@ -148,7 +148,7 @@ HTTP/1.1 400 Bad Request
 
 <br/>
 
-<a id="/restapi/user/login.do">
+<a id="/anchor2">
    
    ### 로그인 요청
    
@@ -202,7 +202,7 @@ HTTP/1.1 400 Bad Request
 
 <br/>
 
-<a id="/restapi/token/logout.do">
+<a id="/anchor3">
    
    ### 로그아웃 요청
    
@@ -255,7 +255,7 @@ HTTP/1.1 401 Unauthorized
 
 <br/>
 
-<a id="/restapi/token/refreshTokens.do">
+<a id="/anchor4">
    
    ### 토큰 갱신 요청
    
@@ -311,7 +311,7 @@ HTTP/1.1 401 Unauthorized
 
 <br/>
 
-<a id="/restapi/user/join.do">
+<a id="/anchor5">
    
    ### 회원 가입 요청
    
@@ -367,7 +367,7 @@ HTTP/1.1 400 Bad Request
 
 <br/>
 
-<a id="/restapi/user/getQuestions.do">
+<a id="/anchor6">
    
    ### 비밀번호 찾기 질문 목록 발급 요청
    
@@ -426,7 +426,7 @@ HTTP/1.1 400 Bad Request
 
 <br/>
 
-<a id="/restapi/user/getCategories.do">
+<a id="/anchor7">
    
    ### 문제 분류 목록 발급 요청
    
@@ -495,7 +495,7 @@ HTTP/1.1 401 Unauthorized
 
 <br/>
 
-<a id="/restapi/user/getProblems.do">
+<a id="/anchor8">
    
    ### 문제 목록 발급 요청
    
@@ -651,7 +651,7 @@ HTTP/1.1 401 Unauthorized
 
 <br/>
 
-<a id="/restapi/user/scoreProblems.do">
+<a id="/anchor9">
    
    ### 문제 채점 요청
    
