@@ -1,6 +1,7 @@
 var formFlag = false;
 var publickey;
 
+
 function checkBytes(text, MAX_BYTES){
 	var sum = 0;
 	for(var i=0;i<text.length;i++){
@@ -47,7 +48,12 @@ function closeForm(target){
 function refreshTokens(){
 	return $.ajax({
 		"url":"/restapi/tokens",
-		"type":"put"
+		"type":"put",
+		"error":function(){
+			$("#logout_button").remove();
+			$("body").append("<div id='loginForm_button'>로그인</div>");
+			$("body").append("<div id='joinForm_button'>회원가입</div>");
+		}
 	})
 }
 
@@ -114,39 +120,6 @@ function join(publickey){
 
 $(document).ready(function(){
 	var fullpage = $("#fullpage").initialize({});
-
-    var swiper = new Swiper(".mySwiper", {
-        slidesPerView: "auto",
-        spaceBetween: 80,
-        loop: true,
-        breakpoints: {
-            600: {
-                spaceBetween: 0
-            },
-        },
-        on: {
-            init: function() {
-                $('.mySwiper .swiper-slide').addClass('changed');
-                $('.mySwiper .custom-fraction .current').text(this.realIndex + 1);
-                $('.mySwiper .custom-fraction .all').text(this.loopedSlides);
-            },
-            slideChangeTransitionStart: function() {
-                $('.mySwiper .swiper-slide').addClass('changing');
-                $('.mySwiper .swiper-slide').removeClass('changed');
-                $('.mySwiper .custom-fraction .current').text(this.realIndex + 1);
-            },
-            slideChangeTransitionEnd: function() {
-                $('.mySwiper .swiper-slide').removeClass('changing');
-                $('.mySwiper .swiper-slide').addClass('changed');
-            }
-        },
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
-        }
-    });
-
-    swiper.autoplay.start();
 	
 	getInfo().done(function(result){
 		$("#loginForm_button").remove();
@@ -164,9 +137,7 @@ $(document).ready(function(){
 				$("body").append("<div id='logout_button'>로그아웃</div>");
 			})
 		}).fail(function(xhr,status,error){
-			$("#logout_button").remove();
-			$("body").append("<div id='loginForm_button'>로그인</div>");
-			$("body").append("<div id='joinForm_button'>회원가입</div>");
+
 		})
 	})
 	

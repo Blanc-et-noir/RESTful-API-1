@@ -21,34 +21,33 @@ function sendSolution(list){
 
 function renderProblems(result){
 	var i,j, problems = result.problems;
+	$("#problem_div").empty();
+	var problemDiv = $("<div id='problems' class='touchable'></div>");
 	
-	$("#problems").empty();
 	for(i=0;i<problems.length;i++){
 		var choices = problems[i].choices;
-		var problem = $("<div id='problem_"+problems[i].problem_id+"' class='swiper-slide problem touchable'></div>");
+		var problem = $("<div id='problem_"+problems[i].problem_id+"' class='problem touchable'></div>");
 
-		$(problem).append("<div>["+(i+1)+"] "+problems[i].problem_content+", 정답률 : "+problems[i].answer_rate+"%</div>");
+		$(problem).append("<div class='problem_content touchable'>["+(i+1)+"] "+problems[i].problem_content+", 정답률 : "+problems[i].answer_rate+"%</div>");
 		
 		if(problems[i].problem_image_name!=null){
 			$(problem).append("<img class='problem_image touchable' src='/restapi/problems/"+problems[i].problem_id+"/images/"+problems[i].problem_image_name+"';>");
 		}
+		var choicesDiv = $("<div class='choices touchable'></div>");
 		
 		for(j=0;j<choices.length;j++){
-			$(problem).append("<div class='choice touchable'><input id='choice_"+choices[j].choice_id+"' class='touchable' type='radio' name='"+problems[i].problem_id+"' value='"+choices[j].choice_id+"'><label for='choice_"+choices[j].choice_id+"' class='touchable'>("+(j+1)+") "+choices[j].choice_content+"</label></div>");
+			choicesDiv.append("<div class='choice touchable'><input id='choice_"+choices[j].choice_id+"' class='touchable' type='radio' name='"+problems[i].problem_id+"' value='"+choices[j].choice_id+"'><label for='choice_"+choices[j].choice_id+"' class='touchable'>("+(j+1)+") "+choices[j].choice_content+"</label></div>");
 		}
-		
-		$("#problems").append(problem);
+		$(problem).append(choicesDiv);
+		$(problem).append("<div class='view'></div>");
+		$(problemDiv).append(problem);
 	}
-    problemSwiper = new Swiper(".problemSwiper", {
-    	pagination: {
-            el: ".swiper-pagination",
-            type: "progressbar",
-        },
-    });
+	$(problemDiv).append("<div id='score_problems_button' class='touchable'>채점하기</div>");
+	$("#problem_div").append(problemDiv);
 }
 
 $(document).ready(function(){
-	
+    
 	$.ajax({
 		"url":"/restapi/categories",
 		"type":"get"
@@ -110,9 +109,10 @@ $(document).ready(function(){
 			var right_problems = result.right_problems;
 			var wrong_problems = result.wrong_problems;
 			
-			console.log(right_problems);
-			console.log(wrong_problems);
 			for(i=0; i<right_problems.length; i++){
+				$("#problem_"+right_problems[i]).css({
+					"border":"2px solid #06d6a0"
+				})
 				$("#problem_"+right_problems[i]+" input:checked").next("label").css({
 					"color":"#06d6a0",
 					"font-weight":900
@@ -120,6 +120,9 @@ $(document).ready(function(){
 			}
 			
 			for(i=0; i<wrong_problems.length; i++){
+				$("#problem_"+wrong_problems[i]).css({
+					"border":"2px solid #ee3f5c"
+				})
 				$("#problem_"+wrong_problems[i]+" input:checked").next("label").css({
 					"color":"#ee3f5c",
 					"font-weight":900
@@ -130,6 +133,7 @@ $(document).ready(function(){
 				"disabled":true
 			})
 			
+			$("#score_problems_button").remove();
 			
 			
 		})
@@ -140,6 +144,29 @@ $(document).ready(function(){
 					sendSolution(list)
 					.done(function(result){
 						alert("[ "+(result.right_score)+" / "+(result.right_score+result.wrong_score)+" ] \n percentage : "+result.percentage);
+						
+						var right_problems = result.right_problems;
+						var wrong_problems = result.wrong_problems;
+						
+						for(i=0; i<right_problems.length; i++){
+							$("#problem_"+right_problems[i]+" input:checked").next("label").css({
+								"color":"#06d6a0",
+								"font-weight":900
+							})
+						}
+						
+						for(i=0; i<wrong_problems.length; i++){
+							$("#problem_"+wrong_problems[i]+" input:checked").next("label").css({
+								"color":"#ee3f5c",
+								"font-weight":900
+							})
+						}
+						
+						$("input[type='radio']").attr({
+							"disabled":true
+						})
+						
+						$("#score_problems_button").remove();
 					})
 					.fail(function(xhr, status, error){
 						alert(xhr.responseJSON.content);

@@ -645,15 +645,10 @@ $.fn.extend({
                 }else{
                     settings.beforeSectionLoad(sectionIndex, slideIndex);
                 }
-                for(i=0; i<$(".section").length; i++){
-                    var section = $(".section").eq(i);
-                    for(j=0; j<$(".section").eq(i).find(".slide").length; j++){
 
-                    }
-                }
                 $("#fullpage .section").eq(sectionIndex).find(".slide").animate({
                     "left":winW*slideIndex*(-1)
-                },settings.animationDuration, settings.animationEasing, function(){
+                },0, settings.animationEasing, function(){
                     currentSection.removeClass("activeSection");
                     $(".section").eq(sectionIndex).addClass("activeSection");
 

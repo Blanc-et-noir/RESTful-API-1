@@ -17,8 +17,6 @@ import com.spring.restapi.util.RedisUtil;
 
 import io.jsonwebtoken.ExpiredJwtException;
 
-
-
 public class AccesstokenInterceptor implements HandlerInterceptor{
 	@Autowired
 	private JwtUtil jwtUtil;
