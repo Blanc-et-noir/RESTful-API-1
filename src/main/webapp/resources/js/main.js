@@ -1,7 +1,16 @@
 var formFlag = false;
 var publickey;
 
-
+function setLogin(){
+	$("#loginForm_button").remove();
+	$("#joinForm_button").remove();
+	$("body").append("<div id='logout_button'>로그아웃</div>");
+}
+function setLogout(){
+	$("#logout_button").remove();
+	$("body").append("<div id='loginForm_button'>로그인</div>");
+	$("body").append("<div id='joinForm_button'>회원가입</div>");
+}
 function checkBytes(text, MAX_BYTES){
 	var sum = 0;
 	for(var i=0;i<text.length;i++){
@@ -48,12 +57,7 @@ function closeForm(target){
 function refreshTokens(){
 	return $.ajax({
 		"url":"/restapi/tokens",
-		"type":"put",
-		"error":function(){
-			$("#logout_button").remove();
-			$("body").append("<div id='loginForm_button'>로그인</div>");
-			$("body").append("<div id='joinForm_button'>회원가입</div>");
-		}
+		"type":"put"
 	})
 }
 
@@ -113,7 +117,7 @@ function join(publickey){
 			"user_name":$("#user_name").val(),
 			"user_email":$("#user_email").val(),
 			"question_id":$("#question_id").val(),
-			"question_answer":$("#question_answer").val()
+			"question_answer":encryptByRSA2048($("#question_answer").val(),publickey)
 		}
 	})
 }
@@ -122,9 +126,7 @@ $(document).ready(function(){
 	var fullpage = $("#fullpage").initialize({});
 	
 	getInfo().done(function(result){
-		$("#loginForm_button").remove();
-		$("#joinForm_button").remove();
-		$("body").append("<div id='logout_button'>로그아웃</div>");
+		setLogin();
 	}).fail(function(){
 		console.log("액세스 토큰에 문제가 있어 재발급 요청");
 		refreshTokens().done(function(){
@@ -132,12 +134,10 @@ $(document).ready(function(){
 			getInfo().done(function(result){
 				var user_info = result.user_info;
 				console.log("정상적인 액세스 토큰으로 요청 성공");
-				$("#loginForm_button").remove();
-				$("#joinForm_button").remove();
-				$("body").append("<div id='logout_button'>로그아웃</div>");
+				setLogin();
 			})
 		}).fail(function(xhr,status,error){
-
+			setLogout();
 		})
 	})
 	
@@ -146,9 +146,7 @@ $(document).ready(function(){
 			"url":"/restapi/tokens",
 			"type":"delete"
 		}).done(function(){
-			$("#logout_button").remove();
-			$("body").append("<div id='loginForm_button'>로그인</div>");
-			$("body").append("<div id='joinForm_button'>회원가입</div>");
+			setLogout();
 		}).fail(function(xhr,status,error){
 			alert(xhr.responseJSON.content);
 		})
@@ -177,9 +175,7 @@ $(document).ready(function(){
     		var publickey = result.publickey;
     		login(publickey)
     		.done(function(result){
-    			$("#loginForm_button").remove();
-		    	$("#joinForm_button").remove();
-		    	$("body").append("<div id='logout_button'>로그아웃</div>");
+    			setLogin();
 		    	$("#loginForm").remove();
 		    	$("#form_cover").css({
 		    		"display":"none"

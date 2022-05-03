@@ -60,11 +60,11 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 		//액세스토큰이 없으면
 		if(user_refreshtoken == null) {
 			System.out.println("1");
-			response.sendError(401);
+			setErrorMessage(response,401,"리프레쉬 토큰 없음");
 			return false;
 		}else if(user_accesstoken==null) {
 			System.out.println("2");
-			response.sendError(401);
+			setErrorMessage(response,401,"액세스 토큰 없음");
 			return false;
 		}else {
 			//로그아웃된 리프레시토큰이면

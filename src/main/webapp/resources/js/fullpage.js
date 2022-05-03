@@ -148,9 +148,9 @@ $.fn.extend({
         //these are default options
         if(settings.wheelMove == undefined){settings.wheelMove=true;}
         if(settings.dragMove == undefined){settings.dragMove=true;}
-        if(settings.dragSensitivity == undefined){settings.dragSensitivity = 0.15}
+        if(settings.dragSensitivity == undefined){settings.dragSensitivity = 0.10}
         if(settings.swipeMove == undefined){settings.swipeMove=true;}
-        if(settings.swipeSensitivity == undefined){settings.swipeSensitivity = 0.15}
+        if(settings.swipeSensitivity == undefined){settings.swipeSensitivity = 0.10}
         if(settings.touchMove == undefined){settings.touchMove=true;}
         if(settings.keyboardMove == undefined){settings.keyboardMove=false}
         if(settings.keyboardSettings== undefined){
@@ -503,15 +503,15 @@ $.fn.extend({
                     		return;
                     	}
                         if(e.deltaY&&e.shiftKey){
-                            if(e.deltaY < 0 && $("#fullpage .activeSection .activeSlide div[id$='container']").scrollLeft() == 0){
+                            if(e.deltaY < 0){
                                 moveLeft();
-                            }else if((e.deltaY >=0 &&$("#fullpage .activeSection .activeSlide").find(".box").length==0)||e.deltaY >=0 && Math.floor($("#fullpage .activeSection .activeSlide div[id$='container']").scrollLeft()) + 10 > Math.floor($("#fullpage .activeSection .activeSlide .box").css("width").replace("px","") - $("#fullpage .activeSection .activeSlide div[id$='container']").css("width").replace("px",""))){
+                            }else if(e.deltaY >=0){
                                 moveRight();
                             }
                         }else if(e.deltaY!=0){
-                            if(e.deltaY < 0 && $("#fullpage .activeSection .activeSlide div[id$='container']").scrollTop() == 0){
+                            if(e.deltaY < 0){
                                 moveUp();
-                            }else if((e.deltaY >=0 &&$("#fullpage .activeSection .activeSlide").find(".box").length==0)||(e.deltaY >=0 && Math.floor($("#fullpage .activeSection .activeSlide div[id$='container']").scrollTop()) + 10 > Math.floor($("#fullpage .activeSection .activeSlide .box").css("height").replace("px","") - $("#fullpage .activeSection .activeSlide div[id$='container']").css("height").replace("px","")))){
+                            }else if(e.deltaY >=0){
                                 moveDown();
                             }
                         }
@@ -543,24 +543,24 @@ $.fn.extend({
                 if(true){
                     if(abs(deltaX) > abs(deltaY)){
                         if(abs(deltaX) >= (($(".slide").css("width")).replace("px","")* settings.swipeSensitivity)){
-                            if(deltaX > 0 && $("#fullpage .activeSection .activeSlide div[id$='container']").scrollLeft() == 0){
+                            if(deltaX > 0){
                                 moveLeft();
                             }else{
-                                if($("#fullpage .activeSection .activeSlide").find(".box").length==0&&deltaX <=0 ){
+                                if(deltaX <=0 ){
                                     moveRight();
-                                }else if($("#fullpage .activeSection .activeSlide").find(".box").length!=0&&deltaX<=0&& Math.floor($("#fullpage .activeSection .activeSlide div[id$='container']").scrollLeft()) + 10 > Math.floor($("#fullpage .activeSection .activeSlide .box").css("width").replace("px","") - $("#fullpage .activeSection .activeSlide div[id$='container']").css("width").replace("px",""))){
+                                }else if(deltaX<=0){
                                     moveRight();
                                 }
                             }
                         }
                     }else{
                         if(abs(deltaY) >= (($(".slide").css("height")).replace("px","")* settings.swipeSensitivity)){
-                            if(deltaY > 0 && $("#fullpage .activeSection .activeSlide div[id$='container']").scrollTop() == 0){
+                            if(deltaY > 0){
                                 moveUp();
                             }else{
-                                if($("#fullpage .activeSection .activeSlide").find(".box").length==0&&deltaY <=0 ){
+                                if(deltaY <=0 ){
                                     moveDown();
-                                }else if($("#fullpage .activeSection .activeSlide").find(".box").length!=0&&deltaY <=0&& Math.floor($("#fullpage .activeSection .activeSlide div[id$='container']").scrollTop()) + 10 > Math.floor($("#fullpage .activeSection .activeSlide .box").css("height").replace("px","") - $("#fullpage .activeSection .activeSlide div[id$='container']").css("height").replace("px",""))){
+                                }else if(deltaY <=0){
                                     moveDown();
                                 }
                             }
@@ -595,24 +595,24 @@ $.fn.extend({
                     newY = e.clientY;
                     if(abs(curX-newX) > abs(curY-newY)){
                         if(abs(curX-newX)>=(($(".slide").css("width")).replace("px","")* settings.dragSensitivity)){
-                            if(curX-newX < 0 && $("#fullpage .activeSection .activeSlide div[id$='container']").scrollLeft() == 0){
+                            if(curX-newX < 0){
                                 moveLeft();
                             }else{
-                                if($("#fullpage .activeSection .activeSlide").find(".box").length==0 && curX -newX >= 0){
+                                if(curX -newX >= 0){
                                     moveRight();
-                                }else if($("#fullpage .activeSection .activeSlide").find(".box").length!=0 && curX -newX >= 0 && Math.floor($("#fullpage .activeSection .activeSlide div[id$='container']").scrollLeft()) + 10 > Math.floor($("#fullpage .activeSection .activeSlide .box").css("width").replace("px","") - $("#fullpage .activeSection .activeSlide div[id$='container']").css("width").replace("px",""))){
+                                }else if(curX -newX >= 0){
                                     moveRight();
                                 }
                             }
                         }
                     }else{
                         if(abs(curY-newY)>=($(".slide").css("height").replace("px","")* settings.dragSensitivity)){
-                            if(curY-newY < 0 && $("#fullpage .activeSection .activeSlide div[id$='container']").scrollTop() == 0){
-                                moveUp();
+                        	if(curY-newY < 0){
+                            	moveUp();
                             }else{
-                                if($("#fullpage .activeSection .activeSlide").find(".box").length==0 && curY -newY >= 0){
+                                if(curY -newY >= 0){
                                     moveDown();
-                                }else if($("#fullpage .activeSection .activeSlide").find(".box").length!=0 && curY -newY >= 0 && Math.floor($("#fullpage .activeSection .activeSlide div[id$='container']").scrollTop()) + 10 > Math.floor($("#fullpage .activeSection .activeSlide .box").css("height").replace("px","") - $("#fullpage .activeSection .activeSlide div[id$='container']").css("height").replace("px",""))){
+                                }else if(curY -newY >= 0){
                                     moveDown();
                                 }
                             }
@@ -688,7 +688,9 @@ $.fn.extend({
         $(document).on("click","#move_button4",function(){
         	movePage(5,0);
         });
-        
+        $(document).on("click",".return_button",function(){
+        	movePage(1,0);
+        });  
         function moveUp(){
             var currentSection = $(".activeSection");
             var sectionIndex = $(".activeSection").index();

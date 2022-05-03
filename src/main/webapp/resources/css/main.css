@@ -30,7 +30,12 @@
 	font-family:notosans;
 	font-size:10px;
 }
-
+.touchable{
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none
+}
 ul,li{
 	margin:0px;
 	padding:0px;
@@ -620,25 +625,23 @@ input[type=radio]:not(:checked) + label:hover{
 .problem{
 	border-radius:5px;
 	background-color:white;
+	padding:20px;
+	margin-top:20px;
+	margin-bottom:20px;
+	width:100%;
 }
 
 
 #problems{
 	margin:0px auto !important;
-	width:80%;
+	width:90%;
 	height:80%;
-	max-width:600px;
+	max-width:1200px;
 	min-width:270px;
 	min-height:80px;
 	overflow-y:scroll;
 	display:flex;
 	flex-direction:column;
-	padding:5px !important;
-}
-
-div[id^=problem]{
-	margin: 20px 0px;
-	padding:20px;
 }
 
 .problem_content{
@@ -659,15 +662,16 @@ div[id^=problem]{
 }
 #problem_div{
 	margin:0px auto !important;
-	width:90%;
-	height:80%;
-	max-width:1200px;
+	width:70%;
+	max-width:1500px;
 	min-width:270px;
 	min-height:80px;
 }
 #problem_form{
-	width:260px;
-	margin:10px auto 10px auto !important;
+	margin:20px auto !important;
+	max-width:1200px;
+	min-width:270px;
+	width:90%;
 	display:flex;
 	flex-direction:row;
 }
@@ -703,4 +707,44 @@ div[id^=problem]{
 
 #score_problems_button:hover{
 	background-color:#02bb8b;
+}
+
+.close_opinion_button{
+	display:none;
+}
+
+.opinions_form{
+	display:none;
+}
+
+.opinion{
+	margin:10px 0px;
+	display:flex;
+	flex-direction:column;
+	background-color:#ebe7f6;
+	padding:10px;
+	border-radius:5px;
+}
+.opinion_input{
+	resize: none;
+	padding:10px;
+	border-radius:5px;
+}
+.opinion_content{
+	margin-top:10px;
+	resize: none;
+	padding:10px;
+	border-radius:5px;
+}
+.opinion_user{
+	font-weight:900;
+}
+.opinion_date{
+	color:gray;
+}
+.opinion_edit_complete_button{
+	display:none;
+}
+.opinion_edit_cancel_button{
+	display:none;
 }

@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.spring.restapi.exception.problem.InvalidOpinionIdException;
+import com.spring.restapi.exception.problem.InvalidProblemIdException;
+import com.spring.restapi.exception.problem.InvalidUserIdException;
 import com.spring.restapi.exception.user.UnableToInsertRecordsException;
 import com.spring.restapi.exception.user.UnableToUpdateCountsException;
 import com.spring.restapi.service.ProblemService;
@@ -55,6 +58,114 @@ public class ProblemController {
 		}catch(Exception e) {
 			result.put("flag", false);
 			result.put("content", "문제 정보 획득 실패");
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	//액세스 필요
+	@RequestMapping(value= {"/problems/{problem_id}/opinions"}, method= {RequestMethod.POST})
+	public ResponseEntity<HashMap> writeOpinion(@PathVariable("problem_id") int problem_id, @RequestParam HashMap param, HttpServletRequest request){
+		HashMap result = new HashMap();
+		try {
+			param.put("user_id", jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id"));
+			param.put("problem_id", problem_id);
+			problemService.writeOpinion(param);
+			
+			result.put("flag", true);
+			result.put("content", "댓글 등록 성공");
+			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+		}catch(Exception e) {
+			result.put("flag", false);
+			result.put("content", "댓글 등록 실패");
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	//액세스 필요
+	@RequestMapping(value= {"/problems/{problem_id}/opinions/{opinion_id}"}, method= {RequestMethod.DELETE})
+	public ResponseEntity<HashMap> deleteOpinion(@PathVariable("problem_id") int problem_id,@PathVariable("opinion_id") int opinion_id, @RequestParam HashMap param, HttpServletRequest request){
+		HashMap result = new HashMap();
+		try {
+			param.put("user_id", jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id"));
+			param.put("problem_id", problem_id);
+			param.put("opinion_id", opinion_id);
+			problemService.deleteOpinion(param);
+			
+			result.put("flag", true);
+			result.put("content", "댓글 삭제 성공");
+			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+		}catch(InvalidProblemIdException e) {
+			result.put("flag", false);
+			result.put("content", e.getMessage());
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}catch(InvalidOpinionIdException e) {
+			result.put("flag", false);
+			result.put("content", e.getMessage());
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}catch(InvalidUserIdException e) {
+			result.put("flag", false);
+			result.put("content", e.getMessage());
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}catch(Exception e) {
+			result.put("flag", false);
+			result.put("content", "댓글 삭제 실패");
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	//액세스 필요
+	@RequestMapping(value= {"/problems/{problem_id}/opinions/{opinion_id}"}, method= {RequestMethod.PUT})
+	public ResponseEntity<HashMap> updateOpinion(@PathVariable("problem_id") int problem_id,@PathVariable("opinion_id") int opinion_id, @RequestParam HashMap param, HttpServletRequest request){
+		HashMap result = new HashMap();
+		try {
+			param.put("user_id", jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id"));
+			param.put("problem_id", problem_id);
+			param.put("opinion_id", opinion_id);
+			System.out.println(param.get("opinion_content"));
+			problemService.updateOpinion(param);
+			
+			result.put("flag", true);
+			result.put("content", "댓글 수정 성공");
+			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+		}catch(InvalidProblemIdException e) {
+			result.put("flag", false);
+			result.put("content", e.getMessage());
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}catch(InvalidOpinionIdException e) {
+			result.put("flag", false);
+			result.put("content", e.getMessage());
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}catch(InvalidUserIdException e) {
+			result.put("flag", false);
+			result.put("content", e.getMessage());
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}catch(Exception e) {
+			result.put("flag", false);
+			result.put("content", "댓글 수정 실패");
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	//액세스 필요
+	@RequestMapping(value= {"/problems/{problem_id}/opinions"}, method= {RequestMethod.GET})
+	public ResponseEntity<HashMap> readOpinion(@PathVariable("problem_id") int problem_id, @RequestParam HashMap param, HttpServletRequest request){
+		HashMap result = new HashMap();
+		try {
+			param.put("user_id", jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id"));
+			System.out.println(param.get("user_id"));
+			param.put("problem_id", problem_id);
+			
+			result = problemService.readOpinions(param);
+			result.put("flag", true);
+			result.put("content", "댓글 읽기 성공");
+			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+		}catch(InvalidProblemIdException e) {
+			result.put("flag", false);
+			result.put("content", e.getMessage());
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}catch(Exception e) {
+			result.put("flag", false);
+			result.put("content", "댓글 읽기 실패");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -102,7 +213,6 @@ public class ProblemController {
 			//return new ResponseEntity<HashMap>(result,HttpStatus.OK);
 			return;
 		}catch(Exception e) {
-			e.printStackTrace();
 			result.put("flag", false);
 			result.put("content", "이미지 파일 로드 실패");
 			//return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
@@ -141,17 +251,14 @@ public class ProblemController {
 			result.put("content", "채점 성공");
 			return new ResponseEntity<HashMap>(result,HttpStatus.CREATED);
 		}catch(UnableToUpdateCountsException e) {
-			e.printStackTrace();
 			result.put("flag", false);
 			result.put("content", e.getMessage());
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}catch(UnableToInsertRecordsException e) {
-			e.printStackTrace();
 			result.put("flag", false);
 			result.put("content", e.getMessage());
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}catch(Exception e) {
-			e.printStackTrace();
 			result.put("flag", false);
 			result.put("content", "채점 실패");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);

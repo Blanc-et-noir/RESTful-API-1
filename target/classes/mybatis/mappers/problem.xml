@@ -6,6 +6,24 @@
 		FROM categories
 	</select>
 	
+	<select id="checkProblemId" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM problems
+		WHERE problem_id = ${problem_id}
+	</select>
+
+	<select id="checkOpinionId" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM opinions
+		WHERE problem_id = ${problem_id} AND opinion_id = ${opinion_id}
+	</select>
+	
+	<select id="checkUserId" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM opinions
+		WHERE problem_id = ${problem_id} AND opinion_id = ${opinion_id} AND user_id = #{user_id}
+	</select>
+	
 	<select id="getProblems" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT t2.problem_id, t2.problem_content, t2.problem_image_name, t2.choice_id, t2.choice_content, t2.choice_yn, NVL(t3.pick_rate,0) AS "pick_rate"
 		FROM(
@@ -45,6 +63,20 @@
 		</where>
 	</select>
 	
+	<select id="getOpinionsTotal" parameterType="java.util.HashMap" resultType="Integer">
+		SELECT count(*)
+		FROM opinions
+		WHERE problem_id = ${problem_id}
+	</select>
+
+	<select id="readOpinions" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT opinion_id, problem_id, user_id,user_name, opinion_content, DATE_FORMAT(opinion_date,'%Y-%m-%d %T') AS opinion_date, IF(user_id=#{user_id},'true','false') AS editable
+		FROM opinions NATURAL JOIN users
+		WHERE problem_id = ${problem_id}
+		ORDER BY opinion_date DESC
+		LIMIT 10 OFFSET ${offset}
+	</select>
+	
 	<select id="getChoicesInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *
 		FROM choices
@@ -66,10 +98,26 @@
 		</where>
 	</update>
 	
+	<update id="updateOpinion" parameterType="java.util.HashMap">
+		UPDATE opinions
+		SET opinion_content = #{opinion_content}
+		WHERE problem_id = ${problem_id} AND opinion_id = ${opinion_id} AND user_id = #{user_id}
+	</update>
+		
 	<insert id="insertRecords" parameterType="java.util.HashMap">
 		INSERT INTO records(problem_id,choice_id,user_id) VALUES
 		<foreach collection="list" item="item" separator=",">
 			(${item.problem_id},${item.answer_id},#{item.user_id})
 		</foreach>
 	</insert>
+	
+	<insert id="writeOpinion" parameterType="java.util.HashMap">
+		INSERT INTO opinions(problem_id,user_id,opinion_content) VALUES(${problem_id},#{user_id},#{opinion_content})
+	</insert>
+	
+	<delete id="deleteOpinion" parameterType="java.util.HashMap">
+		DELETE
+		FROM opinions
+		WHERE problem_id = ${problem_id} AND opinion_id = ${opinion_id} AND user_id = #{user_id}
+	</delete>
 </mapper>

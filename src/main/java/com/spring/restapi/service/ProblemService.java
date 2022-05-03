@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.restapi.dao.ProblemDAO;
+import com.spring.restapi.exception.problem.InvalidOpinionIdException;
+import com.spring.restapi.exception.problem.InvalidProblemIdException;
+import com.spring.restapi.exception.problem.InvalidUserIdException;
 import com.spring.restapi.exception.user.UnableToInsertRecordsException;
 import com.spring.restapi.exception.user.UnableToUpdateCountsException;
 
@@ -18,6 +21,9 @@ import com.spring.restapi.exception.user.UnableToUpdateCountsException;
 		Exception.class,
 		UnableToUpdateCountsException.class,
 		UnableToInsertRecordsException.class,
+		InvalidProblemIdException.class,
+		InvalidOpinionIdException.class,
+		InvalidUserIdException.class
 		}
 )
 public class ProblemService {
@@ -64,6 +70,36 @@ public class ProblemService {
 				problem.put("answer_id", map.get("choice_id"));
 			}
 		}
+		return result;
+	}
+	
+	public void writeOpinion(HashMap param) throws InvalidProblemIdException, Exception{
+		problemDAO.checkProblemId(param);
+		problemDAO.writeOpinion(param);
+	}
+	
+	public void deleteOpinion(HashMap param) throws InvalidProblemIdException,InvalidOpinionIdException, InvalidUserIdException, Exception{
+		problemDAO.checkProblemId(param);
+		problemDAO.checkOpinionId(param);
+		problemDAO.checkUserId(param);
+		problemDAO.deleteOpinion(param);
+	}
+	
+	public void updateOpinion(HashMap param) throws InvalidProblemIdException,InvalidOpinionIdException, InvalidUserIdException, Exception{
+		problemDAO.checkProblemId(param);
+		problemDAO.checkOpinionId(param);
+		problemDAO.checkUserId(param);
+		problemDAO.updateOpinion(param);
+	}
+	
+	public HashMap readOpinions(HashMap param) throws InvalidProblemIdException, Exception{
+		HashMap result = new HashMap();
+		problemDAO.checkProblemId(param);
+		int total = problemDAO.getOpinionsTotal(param);
+		List list = problemDAO.readOpinions(param);
+		
+		result.put("total", total);
+		result.put("list", list);
 		return result;
 	}
 	

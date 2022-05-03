@@ -3,14 +3,11 @@ package com.spring.restapi.service;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.spring.restapi.dao.TokenDAO;
 import com.spring.restapi.dao.UserDAO;
 import com.spring.restapi.encrypt.RSA2048;
 import com.spring.restapi.encrypt.SHA;
@@ -21,7 +18,6 @@ import com.spring.restapi.exception.user.InvalidPwException;
 import com.spring.restapi.util.CookieUtil;
 import com.spring.restapi.util.JwtUtil;
 import com.spring.restapi.util.RedisUtil;
-import com.spring.restapi.vo.UserVO;
 
 @Transactional(propagation=Propagation.REQUIRED,rollbackFor={
 		Exception.class,
@@ -58,8 +54,8 @@ public class UserService {
 		String privatekey = (String) redisUtil.getData(param.get("publickey"));
 		
 		//비밀키로 해싱
-		String user_pw = SHA.DSHA512(RSA2048.decrypt(param.get("user_pw"), privatekey),user_salt);
-		String question_answer = SHA.DSHA512(RSA2048.decrypt(param.get("question_answer"), privatekey),user_salt);
+		String user_pw = SHA.DSHA512(RSA2048.decrypt(param.get("user_pw"), privatekey).replaceAll(" ", ""),user_salt);
+		String question_answer = SHA.DSHA512(RSA2048.decrypt(param.get("question_answer"), privatekey).replaceAll(" ", ""),user_salt);
 		param.put("user_pw", user_pw);
 		param.put("question_answer", question_answer);
 		

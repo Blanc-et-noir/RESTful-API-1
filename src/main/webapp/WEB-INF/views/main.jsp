@@ -64,36 +64,40 @@
 						<img class="touchable" src="${path}/resources/image/project.svg">
 						<p class="touchable">고객지원</p>
 					</div>
-					<p style="position:absolute; top:110%; left:50%; transform:translate(-50%,-110%); text-align:center;">단 한 번의 클릭으로<br>원하는 서비스를 제공받아보세요.</p>
+					<p style="position:absolute; top:95%; left:50%; transform:translate(-50%,-95%); text-align:center;">한 번의 클릭으로 간편하게!</p>
 				</div>
             </div>
         </div>
         <div class="section">
             <div class="slide" style="background-color:#f4f4f4">
             	<div class="intro_box">
-            		<div class="card touchable" style="top:50%; left:5%; transform:translate(-5%,-50%)">
-					<img class="touchable" src="${path}/resources/image/mobile.svg">
-					<p class="touchable">평가시험</p>
+            		<div class="card touchable return_button" style="top:50%; left:5%; transform:translate(-5%,-50%)">
+						<img class="touchable" src="${path}/resources/image/mobile.svg">
+						<p class="touchable">평가시험</p>
 					</div>
-					<p class="description">자신의 성적을 평가해보세요.<br>총 800여개의 문제가 제공됩니다.</p>
+					<p class="description touchable">자신의 성적을 평가해보세요.<br>총 800여개의 문제가 제공됩니다.</p>
             	</div>
             </div>
 			<div class="slide" style="background-color:#f4f4f4;">
-				<div id="problem_form" class="touchable">
-					<select id="category_id" class="touchable"></select>
-					<div id="get_problems_button" class='touchable'>조회하기</div>
+				<div id="problem_div">
+					<div id="problem_form" class="touchable">
+						<select id="category_id" class="touchable"></select>
+						<div id="get_problems_button" class='touchable'>조회하기</div>
+					</div>
 				</div>
-				<div id="problem_div"></div>
-        	</div>            
+        	</div>
+			<div class="slide" style="background-color:#f4f4f4;">
+				<p>dd</p>
+        	</div>          
         </div>
         <div class="section">
             <div class="slide" style="background-color:#f4f4f4">
             	<div class="intro_box">
-            		<div class="card touchable" style="top:50%; left:5%; transform:translate(-5%,-50%)">
-					<img class="touchable" src="${path}/resources/image/people.svg">
-					<p class="touchable">커뮤니티</p>
+            		<div class="card touchable return_button" style="top:50%; left:5%; transform:translate(-5%,-50%)">
+						<img class="touchable" src="${path}/resources/image/people.svg">
+						<p class="touchable">커뮤니티</p>
 					</div>
-					<p class="description">많은 사람들과 소통하세요.<br>그리고 더 많은 지식을 공유하세요.</p>
+					<p class="description touchable">많은 사람들과 소통하세요.<br>그리고 더 많은 지식을 공유하세요.</p>
             	</div>
             </div>
             <div class="slide" style="background-color:#f4f4f4">
@@ -128,11 +132,11 @@
         <div class="section">
             <div class="slide" style="background-color:#f4f4f4">
             	<div class="intro_box">
-            		<div class="card touchable" style="top:50%; left:5%; transform:translate(-5%,-50%)">
-					<img class="touchable" src="${path}/resources/image/person.svg">
-					<p class="touchable">내 정보</p>
+            		<div class="card touchable return_button" style="top:50%; left:5%; transform:translate(-5%,-50%)">
+						<img class="touchable" src="${path}/resources/image/person.svg">
+						<p class="touchable">내 정보</p>
 					</div>
-					<p class="description">회원님의 정보가 궁금하신가요?<br>여기에 다양한 정보가 있습니다.</p>
+					<p class="description touchable">회원님의 정보가 궁금하신가요?<br>여기에 다양한 정보가 있습니다.</p>
             	</div>
             </div>
 			<div class="slide" style="background-color:#f4f4f4">
@@ -142,11 +146,11 @@
         <div class="section">
             <div class="slide" style="background-color:#f4f4f4">
             	<div class="intro_box">
-            		<div class="card touchable" style="top:50%; left:5%; transform:translate(-5%,-50%)">
-					<img class="touchable" src="${path}/resources/image/project.svg">
-					<p class="touchable">고객지원</p>
+            		<div class="card touchable return_button" style="top:50%; left:5%; transform:translate(-5%,-50%)">
+						<img class="touchable" src="${path}/resources/image/project.svg">
+						<p class="touchable">고객지원</p>
 					</div>
-					<p class="description">도움이 필요하신가요?<br>신속하게 문제를 해결해드립니다.</p>
+					<p class="description touchable">도움이 필요하신가요?<br>신속하게 문제를 해결해드립니다.</p>
             	</div>
             </div>
 			<div class="slide" style="background-color:#f4f4f4">

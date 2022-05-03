@@ -58,7 +58,7 @@ public class AccesstokenInterceptor implements HandlerInterceptor{
 		System.out.println(uri+" : "+method+" : "+user_accesstoken);
 		//액세스토큰이 없으면
 		if(user_accesstoken==null) {
-			response.sendError(401);
+			setErrorMessage(response,401,"액세스 토큰 없음");
 			return false;
 		}else {
 			//로그아웃된 액세스토큰이면
