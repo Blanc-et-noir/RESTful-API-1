@@ -84,11 +84,23 @@
 
 6. [비밀번호 찾기 질문 목록 발급 요청](#/anchor6)
 
-7. [문제 분류 목록 발급 요청](#/anchor6)
+<br/>
 
-8. [문제 목록 발급 요청](#/anchor7)
+7. [문제 분류 목록 발급 요청](#/anchor7)
 
-9. [문제 채점 요청](#/anchor8)
+8. [문제 목록 발급 요청](#/anchor8)
+
+9. [문제 채점 요청](#/anchor9)
+
+10. [문제 이미지 요청](#/anchor9)
+
+11. [문제 의견 요청](#/anchor9)
+
+11. [문제 의견 작성 요청](#/anchor9)
+
+12. [문제 의견 수정 요청](#/anchor9)
+
+13. [문제 의견 삭제 요청](#/anchor9)
 
 <br/>
 
@@ -159,7 +171,7 @@ HTTP/1.1 400 Bad Request
 <br/>
 
 <pre>
-POST /restapi/user/login.do HTTP/1.1
+POST /restapi/tokens HTTP/1.1
 {
    user_id : 사용자 ID
    user_pw : 서버로부터 전달받은 공개키로 RSA2048 암호화한 사용자 PW
@@ -213,7 +225,7 @@ HTTP/1.1 400 Bad Request
 <br/>
 
 <pre>
-POST /restapi/token/logout.do HTTP/1.1
+DELETE /restapi/tokens HTTP/1.1
 {
 
 }
@@ -266,9 +278,9 @@ HTTP/1.1 401 Unauthorized
 <br/>
 
 <pre>
-POST /restapi/token/refreshTokens.do HTTP/1.1
+PUT /restapi/tokens HTTP/1.1
 {
-   
+
 }
 
 세부사항
@@ -322,7 +334,7 @@ HTTP/1.1 401 Unauthorized
 <br/>
 
 <pre>
-POST /restapi/user/join.do HTTP/1.1
+POST /restapi/users HTTP/1.1
 {
    user_id : 사용자 ID
    user_pw : 서버로부터 전달받은 공개키로 RSA2048 암호화한 사용자 PW,
@@ -378,7 +390,7 @@ HTTP/1.1 400 Bad Request
 <br/>
 
 <pre>
-POST /restapi/user/getQuestions.do HTTP/1.1
+GET /restapi/questions HTTP/1.1
 {
    
 }
@@ -437,7 +449,7 @@ HTTP/1.1 400 Bad Request
 <br/>
 
 <pre>
-POST /restapi/user/getCategories.do HTTP/1.1
+GET /restapi/categories HTTP/1.1
 {
    
 }
@@ -506,7 +518,7 @@ HTTP/1.1 401 Unauthorized
 <br/>
 
 <pre>
-POST /restapi/user/getProblems.do HTTP/1.1
+GET /restapi/problems HTTP/1.1
 {
    category_id : 문제 분류 번호,
    limit : 발급받을 문제의 수(전달하지 않거나 1이상의 정수가 아니면 기본 20문제를 발급함)
@@ -662,7 +674,7 @@ HTTP/1.1 401 Unauthorized
 <br/>
 
 <pre>
-POST /restapi/user/scoreProblems.do HTTP/1.1
+POST /restapi/scores HTTP/1.1
 Content-Type : application/json
 {
    list : [
