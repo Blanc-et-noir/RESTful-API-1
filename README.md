@@ -842,7 +842,7 @@ HTTP/1.1 401 Unauthorized
    
 </a>
 
-문제에 대한 댓글 작성을 요청하는 API
+문제에 대한  작성을 요청하는 API
 
 <br/>
 
@@ -850,7 +850,7 @@ HTTP/1.1 401 Unauthorized
 POST /restapi/problems/{problem_id}/opinions HTTP/1.1
 Content-Type : application/json
 {
-   opinion_content : "댓글 내용"
+   opinion_content : "의견 내용"
 }
 
 세부사항
@@ -893,7 +893,7 @@ HTTP/1.1 401 Unauthorized
    
 </a>
 
-문제에 대한 댓글 수정을 요청하는 API
+문제에 대한 의견 수정을 요청하는 API
 
 <br/>
 
@@ -901,7 +901,7 @@ HTTP/1.1 401 Unauthorized
 PUT /restapi/problems/{problem_id}/opinions/{opinion_id} HTTP/1.1
 Content-Type : application/json
 {
-   opinion_content : "댓글 내용"
+   opinion_content : "의견 내용"
 }
 
 세부사항
@@ -944,7 +944,7 @@ HTTP/1.1 401 Unauthorized
    
 </a>
 
-문제에 대한 댓글 삭제를 요청하는 API
+문제에 대한 의견 삭제를 요청하는 API
 
 <br/>
 
