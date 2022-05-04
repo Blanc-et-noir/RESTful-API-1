@@ -542,101 +542,101 @@ HTTP/1.1 200 OK
    content : 응답 메세지,
    problems : [
       {
-         problem_id : 56,
-         problem_content : "다음 중 자료사전(Data Dictionary)에서 선택의 의미를 나타내는 것은?",
+         problem_id : 32,
+         problem_content : "UML에서 활용되는 다이어그램 중, 시스템의 동작을 표현하는 행위(Behavioral) 다이어그램에 해당하지 않는 것은?",
          problem_image_name : null,
          answer_id : 1,
-         answer_content : "[ ]",
+         answer_rate : 100,
          choices : [
             {
-               choice_id : 1,
-               choice_content : "[ ]",
+               choice_id : 125,
+               choice_content : "유스케이스 다이어그램(Use Case Diagram)",
+               choice_yn : "N",
+               pick_rate : 0
+            },
+            {
+               choice_id : 126,
+               choice_content : "시퀀스 다이어그램(Sequence Diagram)",
+               choice_yn : "N",
+               pick_rate : 0
+            },
+            {
+               choice_id : 127,
+               choice_content : "활동 다이어그램(Activity Diagram)",
+               choice_yn : "N",
+               pick_rate : 0
+            },
+            {
+               choice_id : 128,
+               choice_content : "배치 다이어그램(Deployment Diagram)",
                choice_yn : "Y",
-               choice_count : 0,
-            },
-            {
-               choice_id : 2,
-               choice_content : "{ }",
-               choice_yn : "N",
-               choice_count : 0,
-            },
-            {
-               choice_id : 3,
-               choice_content : "＋",
-               choice_yn : "N",
-               choice_count : 0,
-            },
-            {
-               choice_id : 4,
-               choice_content : "＝",
-               choice_yn : "N",
-               choice_count : 0,
+               pick_rate : 100
             }
          ]
       },
       {
-         problem_id : 9,
-         problem_content : "트랜잭션이 올바르게 처리되고 있는지 데이터를 감시하고 제어하는 미들웨어는?",
-         problem_image_name : null,
-         answer_id : 3,
-         answer_content : "TP monitor",
+         problem_id : 22,
+         problem_content : "다음 내용이 설명하는 디자인 패턴은?",
+         problem_image_name : "ca724d98ea2af1c2db7d7d3bc2bb63c4",
+         answer_id : 87,
+         answer_rate : 75,
          choices : [
             {
-               choice_id : 1,
-               choice_content : "RPC",
+               choice_id : 85,
+               choice_content : "Visitor 패턴",
                choice_yn : "N",
-               choice_count : 0,
+               pick_rate : 0
             },
             {
-               choice_id : 2,
-               choice_content : "ORB",
+               choice_id : 86,
+               choice_content : "Observer 패턴",
                choice_yn : "N",
-               choice_count : 0,
+               pick_rate : 25
             },
             {
-               choice_id : 3,
-               choice_content : "TP monitor",
+               choice_id : 87,
+               choice_content : "Factory Method 패턴",
                choice_yn : "Y",
-               choice_count : 0,
+               pick_rate : 75
             },
             {
-               choice_id : 4,
-               choice_content : "HUB",
+               choice_id : 88,
+               choice_content : "Bridge 패턴",
                choice_yn : "N",
-               choice_count : 0,
+               pick_rate : 0
             }
          ]
       },
       {
-         problem_id : 63,
-         problem_content : "바람직한 소프트웨어 설계 지침이 아닌 것은?"
+         problem_id : 47,
+         problem_content : "코드화 대상 항목의 중량, 면적, 용량 등의 물리적 수치를 이용하여 만든 코드는?",
          problem_image_name : null,
-         answer_id : 3,
-         answer_content : "모듈 간의 결합도는 강할수록 바람직하다.",
+         answer_id : 188,
+         answer_rate : 75,
          choices : [
             {
-               choice_id : 1,
-               choice_content : "적당한 모듈의 크기를 유지한다.",
+               choice_id : 186,
+               choice_content : "순차 코드",
                choice_yn : "N",
-               choice_count : 0,
+               pick_rate : 13
             },
             {
-               choice_id : 2,
-               choice_content : "모듈 간의 접속 관계를 분석하여 복잡도와 중복을 줄인다.",
+               choice_id : 187,
+               choice_content : "10진 코드",
                choice_yn : "N",
-               choice_count : 0,
+               pick_rate : 0
             },
             {
-               choice_id : 3,
-               choice_content : "모듈 간의 결합도는 강할수록 바람직하다.",
+               choice_id : 188,
+               choice_content : "표의 숫자 코드",
                choice_yn : "Y",
-               choice_count : 0,
+               pick_rate : 75
             },
             {
-               choice_id : 4,
-               choice_content : "모듈 간의 효과적인 제어를 위해 설계에서 계층적 자료 조직이 제시되어야 한다.",
+               choice_id : 189,
+               choice_content : "블록 코드",
                choice_yn : "N",
-               choice_count : 0,
+               pick_rate : 13
             }
          ]
       },
