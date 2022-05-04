@@ -92,15 +92,15 @@
 
 9. [문제 채점 요청](#/anchor9)
 
-10. [문제 이미지 요청](#/anchor9)
+10. [문제 이미지 요청](#/anchor10)
 
-11. [문제 의견 요청](#/anchor9)
+11. [문제 의견 요청](#/anchor11)
 
-11. [문제 의견 작성 요청](#/anchor9)
+12. [문제 의견 작성 요청](#/anchor12)
 
-12. [문제 의견 수정 요청](#/anchor9)
+13. [문제 의견 수정 요청](#/anchor13)
 
-13. [문제 의견 삭제 요청](#/anchor9)
+14. [문제 의견 삭제 요청](#/anchor14)
 
 <br/>
 
@@ -715,6 +715,259 @@ HTTP/1.1 201 Created
    wrong_score : 오답 개수,
    right_problems  : [ 맞춘 문제 번호1, 맞춘 문제 번호2, 맞춘 문제 번호3, ... ],
    wrong_problems  : [ 틀린 문제 번호1, 틀린 문제 번호2, 틀린 문제 번호3, ... ]
+}
+</pre>
+
+<pre>
+HTTP/1.1 401 Unauthorized
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+[API 목록으로 되돌아가기](#api_list)
+
+<br/>
+
+***
+
+<br/>
+
+<a id="/anchor10">
+   
+   ### 문제 이미지 요청
+   
+</a>
+
+해당 문제에 대한 이미지가 있을시, 해당 이미지를 요청하는 API
+
+<br/>
+
+<pre>
+GET /restapi/problems/{problem_id}/images/{problem_image_name}
+{
+   
+}
+
+세부사항
+
+1. 
+
+2. 
+
+</pre>
+
+<pre>
+HTTP/1.1 200 Ok
+{
+
+}
+</pre>
+
+<pre>
+HTTP/1.1 401 Unauthorized
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+[API 목록으로 되돌아가기](#api_list)
+
+<br/>
+
+***
+
+<br/>
+
+<a id="/anchor11">
+   
+   ### 문제 의견 요청
+   
+</a>
+
+문제에 대한 댓글을 요청하는 API
+
+<br/>
+
+<pre>
+GET /restapi/problems/{problem_id}/opinions?section={section}&page={page} HTTP/1.1
+Content-Type : application/json
+{
+   
+}
+
+세부사항
+
+1. section과 page는 모두 1이상의 정수임
+
+2. section당 최대 25개, page당 최대 5개의 댓글을 보유할 수 있음
+
+</pre>
+
+<pre>
+HTTP/1.1 200 Ok
+{
+   flag : true,
+   content : 응답 메세지,
+}
+</pre>
+
+<pre>
+HTTP/1.1 401 Unauthorized
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+[API 목록으로 되돌아가기](#api_list)
+
+<br/>
+
+***
+
+<br/>
+
+<a id="/anchor12">
+   
+   ### 문제 의견 작성 요청
+   
+</a>
+
+문제에 대한 댓글 작성을 요청하는 API
+
+<br/>
+
+<pre>
+POST /restapi/problems/{problem_id}/opinions HTTP/1.1
+Content-Type : application/json
+{
+   opinion_content : "댓글 내용"
+}
+
+세부사항
+
+1. 
+
+2. 
+
+</pre>
+
+<pre>
+HTTP/1.1 201 Created
+{
+   flag : true,
+   content : 응답 메세지
+}
+</pre>
+
+<pre>
+HTTP/1.1 401 Unauthorized
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+[API 목록으로 되돌아가기](#api_list)
+
+<br/>
+
+***
+
+<br/>
+
+<a id="/anchor13">
+   
+   ### 문제 의견 수정 요청
+   
+</a>
+
+문제에 대한 댓글 수정을 요청하는 API
+
+<br/>
+
+<pre>
+PUT /restapi/problems/{problem_id}/opinions/{opinion_id} HTTP/1.1
+Content-Type : application/json
+{
+   opinion_content : "댓글 내용"
+}
+
+세부사항
+
+1. 
+
+2. 
+
+</pre>
+
+<pre>
+HTTP/1.1 200 Ok
+{
+   flag : true,
+   content : 응답 메세지
+}
+</pre>
+
+<pre>
+HTTP/1.1 401 Unauthorized
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+[API 목록으로 되돌아가기](#api_list)
+
+<br/>
+
+***
+
+<br/>
+
+<a id="/anchor14">
+   
+   ### 문제 의견 삭제 요청
+   
+</a>
+
+문제에 대한 채점 요청및 이에 대한 채점결과를 반환하는 API
+
+<br/>
+
+<pre>
+POST /restapi/problems/{problem_id}/opinions/{opinion_id} HTTP/1.1
+Content-Type : application/json
+{
+   
+}
+
+세부사항
+
+1. 
+
+2. 
+
+</pre>
+
+<pre>
+HTTP/1.1 201 Ok
+{
+   flag : true,
+   content : 응답 메세지
 }
 </pre>
 
