@@ -980,7 +980,7 @@ Content-Type : application/json
 
 세부사항
 
-1. 본인의 의견만 작성 가능
+1. 본인의 의견만 삭제 가능
 
 </pre>
 
