@@ -39,19 +39,7 @@
 			SELECT DISTINCT problem_id, choice_id, ROUND(COUNT(*) OVER(PARTITION BY problem_id,choice_id)/COUNT(*) OVER(PARTITION BY problem_id),2)*100 AS "pick_rate"
 			FROM records
 		)AS t3 ON t2.choice_id = t3.choice_id;
-	</select>	
-	
-	<select id="getPickrate" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT category_id, problem_id, problem_content,problem_image_name, choice_id, choice_content, choice_yn
-		FROM(
-			SELECT *
-			FROM problems
-			WHERE category_id = ${category_id}
-			ORDER BY RAND()
-			LIMIT ${limit}
-		)AS t1 NATURAL JOIN choices
-		ORDER BY RAND()
-	</select>	
+	</select>
 	
 	<select id="getChoices" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *
@@ -74,7 +62,7 @@
 		FROM opinions NATURAL JOIN users
 		WHERE problem_id = ${problem_id}
 		ORDER BY opinion_date DESC
-		LIMIT 10 OFFSET ${offset}
+		LIMIT 5 OFFSET ${offset}
 	</select>
 	
 	<select id="getChoicesInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">

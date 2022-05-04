@@ -1,30 +1,58 @@
 function paging(problem_id,total,section,page){
-	
 	var opinions =  $("#problem_"+problem_id).find(".opinions");
-	var max_section = Math.ceil(total/100);
-	var max_page = Math.ceil((total-(section-1)*100)/10)>=10?10:Math.ceil((total-(section-1)*100)/10);
+	var max_section = Math.ceil(total/25);
+	var max_page = Math.ceil((total-(section-1)*25)/5)>=5?5:Math.ceil((total-(section-1)*25)/5);
 	var pagebar = $("#problem_"+problem_id).find(".pagebar");
-
+	
 	$(pagebar).off();
-		
 	$(pagebar).empty();
-		
+	
 	var tag;
 		
 	if(section>=2){
 		tag = $("<a class='prev touchable'>이전</a>");
-		$(opinions).find(".pagebar").on("click",".prev",function(){
+		$(pagebar).on("click",".prev",function(){
 			$(opinions).attr("section",section-1);
 			$(opinions).attr("page",1);
+			$(opinions).parent().find("a").removeClass("viewd");
+			$(opinions).parent().find(".page"+i).addClass("viewd");
+
+			readOpinions(problem_id)
+			.done(function(result){
+				list = result.list;
+				total = result.total;
+				
+				$(opinions).empty();
+				renderOpinions(opinions,list);
+				paging(problem_id,total,section-1, 1);
+			})
+			.fail(function(xhr, status, error){
+				if(xhr.status==401){
+					refreshTokens()
+					.done(function(result){
+						list = result.list;
+						total = result.total;
+						
+						$(opinions).empty();
+						renderOpinions(opinions,list);
+						paging(problem_id,total,section-1, 1);
+					})
+					.fail(function(xhr, status, error){
+						alert(xhr.responseJSON.content);
+					})
+				}else{
+					alert(xhr.responseJSON.content);
+				}
+			})
 		})
 		$(".pagebar").append(tag);
 	}
 		
 	for(var i=1; i<=max_page;i++){
-		$(pagebar).append($("<a class='page"+i+"' value='"+i+"'>"+i+"</a>"));
+		$(pagebar).append($("<a class='page"+i+" touchable' value='"+i+"'>"+i+"</a>"));
 		$(pagebar).on("click",".page"+i,function(){
 			$(opinions).attr("page",$(this).attr("value"));
-
+			
 			readOpinions(problem_id)
 			.done(function(result){
 				list = result.list;
@@ -42,9 +70,7 @@ function paging(problem_id,total,section,page){
 						total = result.total;
 						
 						$(opinions).empty();
-						
 						renderOpinions(opinions,list);
-						
 						paging(problem_id,total,section, page);
 					})
 					.fail(function(xhr, status, error){
@@ -57,19 +83,47 @@ function paging(problem_id,total,section,page){
 		})
 	}
 	
-	/*
-	$("#paging a").removeClass("viewd");
-	$("#idx"+page).addClass("viewd");
-	*/
-
 	if(section<max_section){
 		tag = $("<a class='next touchable'>다음</a>");
-		$(".pagebar").on("click",".next",function(){
+		$(pagebar).on("click",".next",function(){
 			$(opinions).attr("section",section+1);
 			$(opinions).attr("page",1);
+			$(opinions).parent().find("a").removeClass("viewd");
+			$(opinions).parent().find(".page"+i).addClass("viewd");
+
+			readOpinions(problem_id)
+			.done(function(result){
+				list = result.list;
+				total = result.total;
+				
+				$(opinions).empty();
+				renderOpinions(opinions,list);
+				paging(problem_id,total,section+1, 1);
+			})
+			.fail(function(xhr, status, error){
+				if(xhr.status==401){
+					refreshTokens()
+					.done(function(result){
+						list = result.list;
+						total = result.total;
+						
+						$(opinions).empty();
+						renderOpinions(opinions,list);
+						paging(problem_id,total,section+1, 1);
+					})
+					.fail(function(xhr, status, error){
+						alert(xhr.responseJSON.content);
+					})
+				}else{
+					alert(xhr.responseJSON.content);
+				}
+			})
 		})
 		$(".pagebar").append(tag);
 	}
+	
+	$(opinions).parent().find("a").removeClass("viewd");
+	$(opinions).parent().find(".page"+$(opinions).attr("page")).addClass("viewd");
 }
 
 function checkBytes(text, MAX_BYTES){
@@ -137,7 +191,7 @@ function readOpinions(problem_id){
 		"type":"get",
 		"dataType":"json",
 		"data":{
-			"offset":(section-1)*100+(page-1)*10
+			"offset":(section-1)*25+(page-1)*5
 		}
 	});
 }
@@ -386,12 +440,12 @@ function renderOpinions(opinions,list){
 			)
 		}else{
 			$(opinions).append(
-				"<div class='opinion touchable'>" +
+					"<div class='opinion touchable'>" +
 					"<div class='touchable' style='flex-direction:row; justify-content:space-between; display:flex;'>" +
 						"<div class='opinion_user touchable'>"+list[i].user_name+"(<span class='touchable' style='color:gray;'>"+" "+list[i].user_id+" "+"</span>)</div>" +
 						"<div class='opinion_date touchable'>"+list[i].opinion_date+"</div>" +
 					"</div>" +
-					"<textarea class='opinion_content touchable'>"+list[i].opinion_content+"</textarea>" +
+					"<textarea readonly class='opinion_content touchable'>"+list[i].opinion_content+"</textarea>" +
 				"</div>"
 			)
 		}
@@ -589,7 +643,7 @@ function renderProblems(result){
 		var choices = problems[i].choices;
 		var problem = $("<div id='problem_"+problems[i].problem_id+"' class='problem touchable'></div>");
 
-		$(problem).append("<div class='problem_content touchable'>["+(i+1)+"] "+problems[i].problem_content+", 정답률 : "+problems[i].answer_rate+"%</div>");
+		$(problem).append("<div class='problem_content touchable'><span class='touchable' style='color:#ee3f5c; font-weight:900; font-size:12px;'>["+(i+1)+"]</span> "+problems[i].problem_content+", 정답률 : "+problems[i].answer_rate+"%</div>");
 		
 		if(problems[i].problem_image_name!=null){
 			$(problem).append("<img class='problem_image touchable' src='/restapi/problems/"+problems[i].problem_id+"/images/"+problems[i].problem_image_name+"';>");
