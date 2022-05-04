@@ -754,9 +754,7 @@ GET /restapi/problems/{problem_id}/images/{problem_image_name}
 
 세부사항
 
-1. 
-
-2. 
+1. 문제에 첨부된 이미지는 .png 파일로 응답
 
 </pre>
 
@@ -770,8 +768,7 @@ HTTP/1.1 200 Ok
 <pre>
 HTTP/1.1 401 Unauthorized
 {
-   flag : false,
-   content : 응답 메세지
+
 }
 </pre>
 
@@ -815,6 +812,34 @@ HTTP/1.1 200 Ok
 {
    flag : true,
    content : 응답 메세지,
+   total : 해당 문제에 관한 의견의 총 개수( 페이징에 활용 가능 ),
+   list : [
+      {
+         opinion_date : "2022-05-04 17:55:44",
+         opinion_id : 111,
+         user_id : "jrw9215",
+         user_name : "정래원",
+         editable : "true",
+         opinion_content : "이 문제는 다시 공부해봐야 할 것 같네요"
+      },
+      {
+         opinion_date : "2022-05-04 17:55:37",
+         opinion_id : 110,
+         user_id : "jrw9215",
+         user_name : "정래원",
+         editable : "true",
+         opinion_content : "답이 조금 모호한 것 같아요"
+      },
+      {
+         opinion_date : "2022-05-04 17:55:36",
+         opinion_id : 109,
+         user_id : "jrw9215",
+         user_name : "정래원",
+         editable : "true",
+         opinion_content : "좀 어렵긴 하지만, 못 풀 문제는 아닌 것 같은데요?"
+      },
+                                 ....
+   ]
 }
 </pre>
 
@@ -855,9 +880,7 @@ Content-Type : application/json
 
 세부사항
 
-1. 
-
-2. 
+1. 한글로 200자, 영어로 600자까지 의견 작성 가능
 
 </pre>
 
@@ -906,9 +929,9 @@ Content-Type : application/json
 
 세부사항
 
-1. 
+1. 한글로 200자, 영어로 600자까지 의견 수정 가능
 
-2. 
+2. 본인의 의견만 수정 가능
 
 </pre>
 
@@ -957,9 +980,7 @@ Content-Type : application/json
 
 세부사항
 
-1. 
-
-2. 
+1. 본인의 의견만 작성 가능
 
 </pre>
 
