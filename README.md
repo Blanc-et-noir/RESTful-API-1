@@ -944,12 +944,12 @@ HTTP/1.1 401 Unauthorized
    
 </a>
 
-문제에 대한 채점 요청및 이에 대한 채점결과를 반환하는 API
+문제에 대한 댓글 삭제를 요청하는 API
 
 <br/>
 
 <pre>
-POST /restapi/problems/{problem_id}/opinions/{opinion_id} HTTP/1.1
+DELETE /restapi/problems/{problem_id}/opinions/{opinion_id} HTTP/1.1
 Content-Type : application/json
 {
    
