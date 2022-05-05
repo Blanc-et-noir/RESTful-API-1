@@ -84,11 +84,23 @@
 
 6. [비밀번호 찾기 질문 목록 발급 요청](#/anchor6)
 
-7. [문제 분류 목록 발급 요청](#/anchor6)
+<br/>
 
-8. [문제 목록 발급 요청](#/anchor7)
+7. [문제 분류 목록 발급 요청](#/anchor7)
 
-9. [문제 채점 요청](#/anchor8)
+8. [문제 목록 발급 요청](#/anchor8)
+
+9. [문제 채점 요청](#/anchor9)
+
+10. [문제 이미지 요청](#/anchor10)
+
+11. [문제 의견 요청](#/anchor11)
+
+12. [문제 의견 작성 요청](#/anchor12)
+
+13. [문제 의견 수정 요청](#/anchor13)
+
+14. [문제 의견 삭제 요청](#/anchor14)
 
 <br/>
 
@@ -159,7 +171,7 @@ HTTP/1.1 400 Bad Request
 <br/>
 
 <pre>
-POST /restapi/user/login.do HTTP/1.1
+POST /restapi/tokens HTTP/1.1
 {
    user_id : 사용자 ID
    user_pw : 서버로부터 전달받은 공개키로 RSA2048 암호화한 사용자 PW
@@ -213,7 +225,7 @@ HTTP/1.1 400 Bad Request
 <br/>
 
 <pre>
-POST /restapi/token/logout.do HTTP/1.1
+DELETE /restapi/tokens HTTP/1.1
 {
 
 }
@@ -266,9 +278,9 @@ HTTP/1.1 401 Unauthorized
 <br/>
 
 <pre>
-POST /restapi/token/refreshTokens.do HTTP/1.1
+PUT /restapi/tokens HTTP/1.1
 {
-   
+
 }
 
 세부사항
@@ -322,7 +334,7 @@ HTTP/1.1 401 Unauthorized
 <br/>
 
 <pre>
-POST /restapi/user/join.do HTTP/1.1
+POST /restapi/users HTTP/1.1
 {
    user_id : 사용자 ID
    user_pw : 서버로부터 전달받은 공개키로 RSA2048 암호화한 사용자 PW,
@@ -378,7 +390,7 @@ HTTP/1.1 400 Bad Request
 <br/>
 
 <pre>
-POST /restapi/user/getQuestions.do HTTP/1.1
+GET /restapi/questions HTTP/1.1
 {
    
 }
@@ -437,7 +449,7 @@ HTTP/1.1 400 Bad Request
 <br/>
 
 <pre>
-POST /restapi/user/getCategories.do HTTP/1.1
+GET /restapi/categories HTTP/1.1
 {
    
 }
@@ -506,7 +518,7 @@ HTTP/1.1 401 Unauthorized
 <br/>
 
 <pre>
-POST /restapi/user/getProblems.do HTTP/1.1
+GET /restapi/problems HTTP/1.1
 {
    category_id : 문제 분류 번호,
    limit : 발급받을 문제의 수(전달하지 않거나 1이상의 정수가 아니면 기본 20문제를 발급함)
@@ -530,101 +542,101 @@ HTTP/1.1 200 OK
    content : 응답 메세지,
    problems : [
       {
-         problem_id : 56,
-         problem_content : "다음 중 자료사전(Data Dictionary)에서 선택의 의미를 나타내는 것은?",
+         problem_id : 32,
+         problem_content : "UML에서 활용되는 다이어그램 중, 시스템의 동작을 표현하는 행위(Behavioral) 다이어그램에 해당하지 않는 것은?",
          problem_image_name : null,
          answer_id : 1,
-         answer_content : "[ ]",
+         answer_rate : 100,
          choices : [
             {
-               choice_id : 1,
-               choice_content : "[ ]",
+               choice_id : 125,
+               choice_content : "유스케이스 다이어그램(Use Case Diagram)",
+               choice_yn : "N",
+               pick_rate : 0
+            },
+            {
+               choice_id : 126,
+               choice_content : "시퀀스 다이어그램(Sequence Diagram)",
+               choice_yn : "N",
+               pick_rate : 0
+            },
+            {
+               choice_id : 127,
+               choice_content : "활동 다이어그램(Activity Diagram)",
+               choice_yn : "N",
+               pick_rate : 0
+            },
+            {
+               choice_id : 128,
+               choice_content : "배치 다이어그램(Deployment Diagram)",
                choice_yn : "Y",
-               choice_count : 0,
-            },
-            {
-               choice_id : 2,
-               choice_content : "{ }",
-               choice_yn : "N",
-               choice_count : 0,
-            },
-            {
-               choice_id : 3,
-               choice_content : "＋",
-               choice_yn : "N",
-               choice_count : 0,
-            },
-            {
-               choice_id : 4,
-               choice_content : "＝",
-               choice_yn : "N",
-               choice_count : 0,
+               pick_rate : 100
             }
          ]
       },
       {
-         problem_id : 9,
-         problem_content : "트랜잭션이 올바르게 처리되고 있는지 데이터를 감시하고 제어하는 미들웨어는?",
-         problem_image_name : null,
-         answer_id : 3,
-         answer_content : "TP monitor",
+         problem_id : 22,
+         problem_content : "다음 내용이 설명하는 디자인 패턴은?",
+         problem_image_name : "ca724d98ea2af1c2db7d7d3bc2bb63c4",
+         answer_id : 87,
+         answer_rate : 75,
          choices : [
             {
-               choice_id : 1,
-               choice_content : "RPC",
+               choice_id : 85,
+               choice_content : "Visitor 패턴",
                choice_yn : "N",
-               choice_count : 0,
+               pick_rate : 0
             },
             {
-               choice_id : 2,
-               choice_content : "ORB",
+               choice_id : 86,
+               choice_content : "Observer 패턴",
                choice_yn : "N",
-               choice_count : 0,
+               pick_rate : 25
             },
             {
-               choice_id : 3,
-               choice_content : "TP monitor",
+               choice_id : 87,
+               choice_content : "Factory Method 패턴",
                choice_yn : "Y",
-               choice_count : 0,
+               pick_rate : 75
             },
             {
-               choice_id : 4,
-               choice_content : "HUB",
+               choice_id : 88,
+               choice_content : "Bridge 패턴",
                choice_yn : "N",
-               choice_count : 0,
+               pick_rate : 0
             }
          ]
       },
       {
-         problem_id : 63,
-         problem_content : "바람직한 소프트웨어 설계 지침이 아닌 것은?"
+         problem_id : 47,
+         problem_content : "코드화 대상 항목의 중량, 면적, 용량 등의 물리적 수치를 이용하여 만든 코드는?",
          problem_image_name : null,
-         answer_id : 3,
-         answer_content : "모듈 간의 결합도는 강할수록 바람직하다.",
+         answer_id : 188,
+         answer_rate : 75,
          choices : [
             {
-               choice_id : 1,
-               choice_content : "적당한 모듈의 크기를 유지한다.",
+               choice_id : 186,
+               choice_content : "순차 코드",
                choice_yn : "N",
-               choice_count : 0,
+               pick_rate : 13
             },
             {
-               choice_id : 2,
-               choice_content : "모듈 간의 접속 관계를 분석하여 복잡도와 중복을 줄인다.",
+               choice_id : 187,
+               choice_content : "10진 코드",
                choice_yn : "N",
-               choice_count : 0,
+               pick_rate : 0
             },
             {
-               choice_id : 3,
-               choice_content : "모듈 간의 결합도는 강할수록 바람직하다.",
+               choice_id : 188,
+               choice_content : "표의 숫자 코드",
                choice_yn : "Y",
-               choice_count : 0,
+               pick_rate : 75
             },
             {
-               choice_id : 4,
-               choice_content : "모듈 간의 효과적인 제어를 위해 설계에서 계층적 자료 조직이 제시되어야 한다.",
+               choice_id : 189,
+               choice_content : "블록 코드",
                choice_yn : "N",
-               choice_count : 0,
+               pick_rate : 13
             }
          ]
       },
@@ -662,7 +674,7 @@ HTTP/1.1 401 Unauthorized
 <br/>
 
 <pre>
-POST /restapi/user/scoreProblems.do HTTP/1.1
+POST /restapi/scores HTTP/1.1
 Content-Type : application/json
 {
    list : [
@@ -703,6 +715,280 @@ HTTP/1.1 201 Created
    wrong_score : 오답 개수,
    right_problems  : [ 맞춘 문제 번호1, 맞춘 문제 번호2, 맞춘 문제 번호3, ... ],
    wrong_problems  : [ 틀린 문제 번호1, 틀린 문제 번호2, 틀린 문제 번호3, ... ]
+}
+</pre>
+
+<pre>
+HTTP/1.1 401 Unauthorized
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+[API 목록으로 되돌아가기](#api_list)
+
+<br/>
+
+***
+
+<br/>
+
+<a id="/anchor10">
+   
+   ### 문제 이미지 요청
+   
+</a>
+
+해당 문제에 대한 이미지가 있을시, 해당 이미지를 요청하는 API
+
+<br/>
+
+<pre>
+GET /restapi/problems/{problem_id}/images/{problem_image_name}
+{
+   
+}
+
+세부사항
+
+1. 문제에 첨부된 이미지는 .png 파일로 응답
+
+</pre>
+
+<pre>
+HTTP/1.1 200 Ok
+{
+
+}
+</pre>
+
+<pre>
+HTTP/1.1 401 Unauthorized
+{
+
+}
+</pre>
+
+<br/>
+
+[API 목록으로 되돌아가기](#api_list)
+
+<br/>
+
+***
+
+<br/>
+
+<a id="/anchor11">
+   
+   ### 문제 의견 요청
+   
+</a>
+
+문제에 대한 댓글을 요청하는 API
+
+<br/>
+
+<pre>
+GET /restapi/problems/{problem_id}/opinions?section={section}&page={page} HTTP/1.1
+Content-Type : application/json
+{
+   
+}
+
+세부사항
+
+1. section과 page는 모두 1이상의 정수임
+
+2. section당 최대 25개, page당 최대 5개의 댓글을 보유할 수 있음
+
+</pre>
+
+<pre>
+HTTP/1.1 200 Ok
+{
+   flag : true,
+   content : 응답 메세지,
+   total : 해당 문제에 관한 의견의 총 개수( 페이징에 활용 가능 ),
+   list : [
+      {
+         opinion_date : "2022-05-04 17:55:44",
+         opinion_id : 111,
+         user_id : "jrw9215",
+         user_name : "정래원",
+         editable : "true",
+         opinion_content : "이 문제는 다시 공부해봐야 할 것 같네요"
+      },
+      {
+         opinion_date : "2022-05-04 17:55:37",
+         opinion_id : 110,
+         user_id : "jrw9215",
+         user_name : "정래원",
+         editable : "true",
+         opinion_content : "답이 조금 모호한 것 같아요"
+      },
+      {
+         opinion_date : "2022-05-04 17:55:36",
+         opinion_id : 109,
+         user_id : "jrw9215",
+         user_name : "정래원",
+         editable : "true",
+         opinion_content : "좀 어렵긴 하지만, 못 풀 문제는 아닌 것 같은데요?"
+      },
+                                 ....
+   ]
+}
+</pre>
+
+<pre>
+HTTP/1.1 401 Unauthorized
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+[API 목록으로 되돌아가기](#api_list)
+
+<br/>
+
+***
+
+<br/>
+
+<a id="/anchor12">
+   
+   ### 문제 의견 작성 요청
+   
+</a>
+
+문제에 대한  작성을 요청하는 API
+
+<br/>
+
+<pre>
+POST /restapi/problems/{problem_id}/opinions HTTP/1.1
+Content-Type : application/json
+{
+   opinion_content : "의견 내용"
+}
+
+세부사항
+
+1. 한글로 200자, 영어로 600자까지 의견 작성 가능
+
+</pre>
+
+<pre>
+HTTP/1.1 201 Created
+{
+   flag : true,
+   content : 응답 메세지
+}
+</pre>
+
+<pre>
+HTTP/1.1 401 Unauthorized
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+[API 목록으로 되돌아가기](#api_list)
+
+<br/>
+
+***
+
+<br/>
+
+<a id="/anchor13">
+   
+   ### 문제 의견 수정 요청
+   
+</a>
+
+문제에 대한 의견 수정을 요청하는 API
+
+<br/>
+
+<pre>
+PUT /restapi/problems/{problem_id}/opinions/{opinion_id} HTTP/1.1
+Content-Type : application/json
+{
+   opinion_content : "의견 내용"
+}
+
+세부사항
+
+1. 한글로 200자, 영어로 600자까지 의견 수정 가능
+
+2. 본인의 의견만 수정 가능
+
+</pre>
+
+<pre>
+HTTP/1.1 200 Ok
+{
+   flag : true,
+   content : 응답 메세지
+}
+</pre>
+
+<pre>
+HTTP/1.1 401 Unauthorized
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+[API 목록으로 되돌아가기](#api_list)
+
+<br/>
+
+***
+
+<br/>
+
+<a id="/anchor14">
+   
+   ### 문제 의견 삭제 요청
+   
+</a>
+
+문제에 대한 의견 삭제를 요청하는 API
+
+<br/>
+
+<pre>
+DELETE /restapi/problems/{problem_id}/opinions/{opinion_id} HTTP/1.1
+Content-Type : application/json
+{
+   
+}
+
+세부사항
+
+1. 본인의 의견만 삭제 가능
+
+</pre>
+
+<pre>
+HTTP/1.1 201 Ok
+{
+   flag : true,
+   content : 응답 메세지
 }
 </pre>
 
