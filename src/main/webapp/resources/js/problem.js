@@ -45,7 +45,7 @@ function paging(problem_id,total,section,page){
 				}
 			})
 		})
-		$(".pagebar").append(tag);
+		$(pagebar).append(tag);
 	}
 		
 	for(var i=1; i<=max_page;i++){
@@ -119,7 +119,7 @@ function paging(problem_id,total,section,page){
 				}
 			})
 		})
-		$(".pagebar").append(tag);
+		$(pagebar).append(tag);
 	}
 	
 	$(opinions).parent().find("a").removeClass("viewd");
@@ -510,9 +510,6 @@ function registerOpinion(target, problem_id){
 				writeOpinion(target,problem_id)
 				.done(function(result){
 					$(target).parent().find(".opinion_input").val("");
-					
-					
-					
 					readOpinions(problem_id)
 					.done(function(result){
 						list = result.list;

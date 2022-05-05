@@ -73,7 +73,7 @@ public class ProblemController {
 			
 			result.put("flag", true);
 			result.put("content", "댓글 등록 성공");
-			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+			return new ResponseEntity<HashMap>(result,HttpStatus.CREATED);
 		}catch(Exception e) {
 			result.put("flag", false);
 			result.put("content", "댓글 등록 실패");
@@ -175,22 +175,16 @@ public class ProblemController {
 	public void getImage(@PathVariable("problem_id") int problem_id,@PathVariable("problem_image_name") String problem_image_name, HttpServletRequest request, HttpServletResponse response){
 		HashMap result = new HashMap();
 		try {
-			//param에는 문제번호, 이미지 이름 필요
-			
-			//String extension = request.getHeader("accept").split("/")[1];
 			String extension = "png";
 			String path = IMAGE_BASE_PATH+problem_id+"\\images\\"+problem_image_name+"."+extension;
 			
 			File file = new File(path);
-			System.out.println(path);
+			
 			if(!file.exists()) {
-				System.out.println("실패");
 				result.put("flag", false);
 				result.put("content", "이미지 파일이 존재하지 않음");
 				return;
-				//return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 			}else {
-				System.out.println("성공:"+file.length());
 				response.setHeader("Cache-Control", "no-cache");
 				response.addHeader("Content-disposition", "attachment; fileName="+problem_image_name+"."+extension);		
 				FileInputStream in = new FileInputStream(file);
@@ -199,7 +193,6 @@ public class ProblemController {
 				OutputStream out = response.getOutputStream();
 				while(true) {
 					int len = in.read(buffer);
-					System.out.println(len);
 					if(len==-1) {
 						break;
 					}
@@ -210,12 +203,10 @@ public class ProblemController {
 			}
 			result.put("flag", true);
 			result.put("content", "이미지 파일 로드 성공");
-			//return new ResponseEntity<HashMap>(result,HttpStatus.OK);
 			return;
 		}catch(Exception e) {
 			result.put("flag", false);
 			result.put("content", "이미지 파일 로드 실패");
-			//return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 			return;
 		}
 	}
