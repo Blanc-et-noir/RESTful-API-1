@@ -122,9 +122,25 @@ function join(publickey){
 	})
 }
 
+function myFullFunction() {
+
+	var docElm = document.documentElement;
+	if (docElm.requestFullscreen) {
+		docElm.requestFullscreen();
+	}
+	else if (docElm.mozRequestFullScreen) {
+		docElm.mozRequestFullScreen();
+	}
+	else if (docElm.webkitRequestFullScreen) {
+		docElm.webkitRequestFullScreen();
+	}
+}
 $(document).ready(function(){
+	
 	var fullpage = $("#fullpage").initialize({});
 	
+	$(document).on("click","#fullpage",myFullFunction);
+		
 	getInfo().done(function(result){
 		setLogin();
 	}).fail(function(){

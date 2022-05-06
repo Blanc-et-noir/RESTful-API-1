@@ -4,35 +4,29 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+	<c:set var="path" value="${pageContext.request.contextPath}"/>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="IE=edge">
 
+	<link rel="manifest" href="${path}/resources/json/manifest.json">
     <!-- 모바일용웹 -->
-	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+	<meta name="viewport" content="initial-scale=1 width=device-width, height=device-height" />
 	
 	<!-- 안드로이드 홈화면추가시 상단 주소창 제거 -->
 	<meta name="mobile-web-app-capable" content="yes">
-	
 	<!-- ios홈화면추가시 상단 주소창 제거 -->
-	<!--
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	-->
-    <c:set var="path" value="${pageContext.request.contextPath}"/>
+	
     <script src="${path}/resources/js/jquery.js"></script>
     <script src="${path}/resources/js/jquery-ui.js"></script>
     <script src="${path}/resources/js/jquery-cookie.js"></script>
     <script src="${path}/resources/js/JSEncrypt.js"></script>
     <script src="${path}/resources/js/fullpage.js"></script>
         
-    <script src="${path}/resources/js/screenfull.js"></script>
     <script src="${path}/resources/js/main.js"></script>
     <script src="${path}/resources/js/article.js"></script>
     <script src="${path}/resources/js/problem.js"></script>
-    
-    <link rel="manifest" href="${path}/resources/json/manifest.json" />
+
     <link rel="stylesheet" href="${path}/resources/css/main.css">
-    <link rel="stylesheet" href="${path}/resources/css/swiper.css">
     <title>정보</title>
 </head>
 <body>

@@ -1,6 +1,6 @@
 {
-    "name": "Runloop",
-    "scope": "/",
-    "display": "standalone",
-    "orientation": "portrait"
+  "short_name": "CBT Service",
+  "name": "Online Web CBT Service",
+  "display": "fullscreen",
+  "orientation": "landscape"
 }
