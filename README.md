@@ -929,7 +929,6 @@ HTTP/1.1 401 Unauthorized
 
 <pre>
 PUT /restapi/problems/{problem_id}/opinions/{opinion_id} HTTP/1.1
-Content-Type : application/json
 {
    opinion_content : "의견 내용"
 }
