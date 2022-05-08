@@ -72,6 +72,8 @@
 
 <br/>
 
+#### 사용자 관련 API
+
 1. [공개키 요청](#/anchor1)
 
 2. [로그인 요청](#/anchor2)
@@ -85,6 +87,8 @@
 6. [비밀번호 찾기 질문 목록 발급 요청](#/anchor6)
 
 <br/>
+
+#### 문제 관련 API
 
 7. [문제 분류 목록 발급 요청](#/anchor7)
 
@@ -518,10 +522,9 @@ HTTP/1.1 401 Unauthorized
 <br/>
 
 <pre>
-GET /restapi/problems HTTP/1.1
+GET /restapi/problems?category_id={category_id}&limit={limit} HTTP/1.1
 {
-   category_id : 문제 분류 번호,
-   limit : 발급받을 문제의 수(전달하지 않거나 1이상의 정수가 아니면 기본 20문제를 발급함)
+
 }
 
 세부사항
@@ -533,6 +536,10 @@ GET /restapi/problems HTTP/1.1
    
    반드시 해당 액세스 토큰과 리프레쉬 토큰을 갖고 새로이 액세스 토큰과 리프레쉬 토큰을 재발급 받아야함.
    새로 발급받은 액세스 토큰으로 다시 한 번 요청을 시도해야함.
+   
+3. category_id는 문제 분류 번호
+
+4. limit는 발급받을 문제의 수(전달하지 않거나 1이상의 정수가 아니면 기본 20문제를 발급함)
 </pre>
 
 <pre>
