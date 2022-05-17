@@ -21,6 +21,6 @@
 
 	<insert id="join" parameterType="java.util.HashMap">
 		INSERT INTO users
-		VALUES(#{user_id},#{user_pw},#{user_name},#{user_email},#{user_salt},null,null,${question_id},#{question_answer})
+		VALUES(#{user_id},#{user_pw},#{user_name},#{user_email},#{user_salt},null,null,#{question_id},#{question_answer})
 	</insert>
 </mapper>

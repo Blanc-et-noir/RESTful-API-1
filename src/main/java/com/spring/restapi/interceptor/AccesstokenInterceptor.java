@@ -55,7 +55,7 @@ public class AccesstokenInterceptor implements HandlerInterceptor{
 		}else if(uri.equals("/restapi/users")&&method.equals("POST")) {
 			return true;
 		}
-		System.out.println(uri+" : "+method+" : "+user_accesstoken);
+		
 		//액세스토큰이 없으면
 		if(user_accesstoken==null) {
 			setErrorMessage(response,401,"액세스 토큰 없음");

@@ -37,7 +37,7 @@ public class ProblemController {
 	@Autowired
 	private CookieUtil cookieUtil;
 	
-	private static final String IMAGE_BASE_PATH = "D:\\RestAPI\\problems\\"; 
+	private static final String IMAGE_BASE_PATH = "D:\\RestAPI\\problem_images\\"; 
 	
 	//액세스 필요
 	@RequestMapping(value= {"/problems"}, method= {RequestMethod.GET})
@@ -64,7 +64,7 @@ public class ProblemController {
 	
 	//액세스 필요
 	@RequestMapping(value= {"/problems/{problem_id}/opinions"}, method= {RequestMethod.POST})
-	public ResponseEntity<HashMap> writeOpinion(@PathVariable("problem_id") int problem_id, @RequestParam HashMap param, HttpServletRequest request){
+	public ResponseEntity<HashMap> writeOpinion(@PathVariable("problem_id") String problem_id, @RequestParam HashMap param, HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
 			param.put("user_id", jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id"));
@@ -83,7 +83,7 @@ public class ProblemController {
 	
 	//액세스 필요
 	@RequestMapping(value= {"/problems/{problem_id}/opinions/{opinion_id}"}, method= {RequestMethod.DELETE})
-	public ResponseEntity<HashMap> deleteOpinion(@PathVariable("problem_id") int problem_id,@PathVariable("opinion_id") int opinion_id, @RequestParam HashMap param, HttpServletRequest request){
+	public ResponseEntity<HashMap> deleteOpinion(@PathVariable("problem_id") String problem_id,@PathVariable("opinion_id") String opinion_id, @RequestParam HashMap param, HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
 			param.put("user_id", jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id"));
@@ -115,7 +115,7 @@ public class ProblemController {
 	
 	//액세스 필요
 	@RequestMapping(value= {"/problems/{problem_id}/opinions/{opinion_id}"}, method= {RequestMethod.PUT})
-	public ResponseEntity<HashMap> updateOpinion(@PathVariable("problem_id") int problem_id,@PathVariable("opinion_id") int opinion_id, @RequestParam HashMap param, HttpServletRequest request){
+	public ResponseEntity<HashMap> updateOpinion(@PathVariable("problem_id") String problem_id,@PathVariable("opinion_id") String opinion_id, @RequestParam HashMap param, HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
 			param.put("user_id", jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id"));
@@ -148,11 +148,10 @@ public class ProblemController {
 	
 	//액세스 필요
 	@RequestMapping(value= {"/problems/{problem_id}/opinions"}, method= {RequestMethod.GET})
-	public ResponseEntity<HashMap> readOpinion(@PathVariable("problem_id") int problem_id, @RequestParam HashMap param, HttpServletRequest request){
+	public ResponseEntity<HashMap> readOpinion(@PathVariable("problem_id") String problem_id, @RequestParam HashMap param, HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
 			param.put("user_id", jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id"));
-			System.out.println(param.get("user_id"));
 			param.put("problem_id", problem_id);
 			
 			result = problemService.readOpinions(param);
@@ -164,6 +163,7 @@ public class ProblemController {
 			result.put("content", e.getMessage());
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}catch(Exception e) {
+			e.printStackTrace();
 			result.put("flag", false);
 			result.put("content", "댓글 읽기 실패");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
@@ -172,11 +172,11 @@ public class ProblemController {
 	
 	//액세스 필요
 	@RequestMapping(value= {"/problems/{problem_id}/images/{problem_image_name}"}, method= {RequestMethod.GET})
-	public void getImage(@PathVariable("problem_id") int problem_id,@PathVariable("problem_image_name") String problem_image_name, HttpServletRequest request, HttpServletResponse response){
+	public void getImage(@PathVariable("problem_id") String problem_id,@PathVariable("problem_image_name") String problem_image_name, HttpServletRequest request, HttpServletResponse response){
 		HashMap result = new HashMap();
 		try {
 			String extension = "png";
-			String path = IMAGE_BASE_PATH+problem_id+"\\images\\"+problem_image_name+"."+extension;
+			String path = IMAGE_BASE_PATH+problem_id+"\\"+problem_image_name+"."+extension;
 			
 			File file = new File(path);
 			
@@ -250,6 +250,7 @@ public class ProblemController {
 			result.put("content", e.getMessage());
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}catch(Exception e) {
+			e.printStackTrace();
 			result.put("flag", false);
 			result.put("content", "채점 실패");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);

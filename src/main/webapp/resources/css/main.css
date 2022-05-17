@@ -653,7 +653,7 @@ input[type=radio]:not(:checked) + label:hover{
 	margin: 10px 0px;
 }
 .choice{
-	margin: 10px 0px;
+	margin: 20px 0px;
 }
 
 .problem_image{
@@ -722,15 +722,12 @@ input[type=radio]:not(:checked) + label:hover{
 	display:flex;
 	flex-direction:column;
 	padding:10px;
-	border-radius:5px;
 }
 
 .opinion_content{
 	margin-top:10px;
 	resize: none;
-	padding:10px;
 	border-radius:5px;
-	background-color:#f0f0f0;
 }
 .opinion_user{
 	font-weight:900;
@@ -745,39 +742,61 @@ input[type=radio]:not(:checked) + label:hover{
 	display:none;
 }
 
+.close_opinion_button,.open_opinion_button{
+	margin-top:50px;
+	text-align:center;
+	color:gray;
+	border-radius:5px;
+	height:20px;
+	line-height:20px;
+}
+
+.close_opinion_button:hover,.open_opinion_button:hover{
+	color:#ee3f5c;
+}
+.opinion_edit_button, .opinion_edit_cancel_button, .opinion_edit_complete_button, .opinion_delete_button{
+	margin-left:20px;
+	color:gray;
+}
+.opinion_edit_button:hover, .opinion_edit_cancel_button:hover, .opinion_edit_complete_button:hover, .opinion_delete_button:hover{
+	color:#ee3f5c;
+}
+
+.opinion_edit_form{
+	display:flex;
+	flex-direction:row-reverse;
+	
+}
+
 .opinion_search_form{
 	display:flex;
 	flex-direction:row;
 	padding:10px;
+	border-top:0.1px solid gray;
 }
 
 .opinion_input{
 	flex:1;
 	border:2px solid white !important;
-	transition:0.3s;
 	display:block;
 	resize: none;
 	border-radius:5px;
-	padding:5px !important;
-	background-color:#f0f0f0;
-}
-
-.opinion_input:focus{
-	flex:1;
-	border:2px solid #ee3f5c !important;
+	height:40px;
 }
 
 .opinion_write_button{
 	line-height:40px;
 	text-align:center;
 	width:60px;
-	color:white;
-	background-color:#ee3f5c;
-	border-radius:5px;
+	color:gray;
 	margin-left:20px;
+	height:40px;
 }
-
+.opinion_write_button:hover{
+	color:#ee3f5c;
+}
 .pagebar{
+	margin-top:20px;
 	display:flex;
 	flex-direction:row;
 	justify-content: center;

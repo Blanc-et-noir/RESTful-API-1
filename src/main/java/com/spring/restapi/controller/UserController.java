@@ -99,7 +99,8 @@ public class UserController {
 			result.put("flag", false);
 			result.put("content", e.getMessage());
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
-		}catch(Exception e) {	
+		}catch(Exception e) {
+			e.printStackTrace();
 			result.put("flag", false);
 			result.put("content", "회원가입 실패");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);

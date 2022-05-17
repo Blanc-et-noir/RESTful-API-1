@@ -51,8 +51,6 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 		String uri = request.getRequestURI();
 		String method = request.getMethod();
 		
-		System.out.println(uri+" : "+method+" : "+(user_accesstoken!=null)+" : "+(user_refreshtoken!=null));
-		
 		if(uri.equals("/restapi/tokens")&&method.equals("POST")) {
 			return true;
 		}

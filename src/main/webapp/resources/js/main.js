@@ -1,16 +1,20 @@
 var formFlag = false;
 var publickey;
 
+//로그인 상태라면 로그아웃 버튼을 렌더링
 function setLogin(){
 	$("#loginForm_button").remove();
 	$("#joinForm_button").remove();
 	$("body").append("<div id='logout_button'>로그아웃</div>");
 }
+
+//로그아웃 상태라면 로그인, 회원가입 버튼을 렌더링
 function setLogout(){
 	$("#logout_button").remove();
 	$("body").append("<div id='loginForm_button'>로그인</div>");
 	$("body").append("<div id='joinForm_button'>회원가입</div>");
 }
+
 function checkBytes(text, MAX_BYTES){
 	var sum = 0;
 	for(var i=0;i<text.length;i++){
@@ -135,12 +139,15 @@ function myFullFunction() {
 		docElm.webkitRequestFullScreen();
 	}
 }
+
 $(document).ready(function(){
 	
 	var fullpage = $("#fullpage").initialize({});
 	
-	$(document).on("click","#fullpage",myFullFunction);
-		
+	//임시주석처리
+	//$(document).on("click","#fullpage",myFullFunction);
+	
+	//로그인 인증 여부를 검사하여 초기에 렌더링
 	getInfo().done(function(result){
 		setLogin();
 	}).fail(function(){
@@ -157,6 +164,7 @@ $(document).ready(function(){
 		})
 	})
 	
+	//로그아웃 이벤트 처리
 	$(document).on("click","#logout_button",function(){
 		$.ajax({
 			"url":"/restapi/tokens",
@@ -168,6 +176,7 @@ $(document).ready(function(){
 		})
 	})
 	
+	//문제가 있는 입력은 클릭시 자동으로 초기화 되게 설정
 	$(document).on("click",".input",function(e){
 		if($(this).hasClass("wrong")){
 			$(this).removeClass("wrong");
@@ -176,6 +185,7 @@ $(document).ready(function(){
 		}
 	})
 	
+	//로그인 이벤트 처리
     $(document).on("click","#login_button",function(e){
     	if(!check($("#user_id").val())){
     		$("#user_id").addClass("wrong");
@@ -211,6 +221,7 @@ $(document).ready(function(){
     	})
     });
 	
+	//회원가입 이벤트 처리
     $(document).on("click","#join_button",function(e){
     	if(!check($("#user_id").val())){
     		$("#user_id").addClass("wrong");
@@ -242,7 +253,6 @@ $(document).ready(function(){
     		$("#error_message").text("비밀번호 찾기 질문의 답은 반드시 입력해야 합니다.");
     		return;
     	}
-    	
     getPublickey()
     	.done(function(result){
     		var publickey = result.publickey;
@@ -284,6 +294,7 @@ $(document).ready(function(){
 		openForm(loginForm);
     });
     
+    //회원가입창 렌더링
     $(document).on("click","#joinForm_button",function(e){
 		$("#form_cover").css({
 			"display":"block"
@@ -308,6 +319,7 @@ $(document).ready(function(){
 		joinForm.append(innerBox);
 		joinForm.append(joinFormPanel);
 		
+		//서버로부터 질문 목록을 발급받음
 		getQuestions()
 		.done(function(result){
 			var i, list = result.list;

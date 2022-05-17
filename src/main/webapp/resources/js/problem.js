@@ -421,6 +421,10 @@ function updateOpinion(target, problem_id,opinion_id){
 }
 
 function renderOpinions(opinions,list){
+	if(list.length==0){
+		$(opinions).append("<div class='touchable' style='color:gray; text-align:center; height:40px; line-height:40px;'>등록된 의견이 없는걸요...</div>");
+		return;
+	}
 	for(i=0; i<list.length; i++){
 		if(list[i].editable=='true'){
 			$(opinions).append(
@@ -431,13 +435,13 @@ function renderOpinions(opinions,list){
 					"</div>" +
 					"<textarea readonly class='opinion_content touchable'>"+list[i].opinion_content+"</textarea>" +
 					"<div class='opinion_edit_form touchable'>"+
-						"<div class='opinion_edit_button touchable' onclick='setOpinionEditable(this,"+list[i].problem_id+")'>수정</div>"+
-						"<div class='opinion_edit_complete_button touchable' onclick='updateOpinion(this,"+list[i].problem_id+","+list[i].opinion_id+")'>수정완료</div>"+
-						"<div class='opinion_edit_cancel_button touchable' onclick='updateCancelOpinion(this,"+list[i].problem_id+")'>취소</div>"+
-						"<div class='opinion_delete_button touchable' onclick='deleteOpinion(this,"+list[i].problem_id+","+list[i].opinion_id+")'>삭제</div>"+
+						"<div class='opinion_edit_button touchable' onclick='setOpinionEditable(this,\""+list[i].problem_id+"\")'>수정</div>"+
+						"<div class='opinion_edit_complete_button touchable' onclick='updateOpinion(this,\""+list[i].problem_id+"\",\""+list[i].opinion_id+"\")'>수정완료</div>"+
+						"<div class='opinion_edit_cancel_button touchable' onclick='updateCancelOpinion(this,\""+list[i].problem_id+"\")'>취소</div>"+
+						"<div class='opinion_delete_button touchable' onclick='deleteOpinion(this,\""+list[i].problem_id+"\",\""+list[i].opinion_id+"\")'>삭제</div>"+
 					"</div>"+
 				"</div>"
-			)
+			);
 		}else{
 			$(opinions).append(
 					"<div class='opinion touchable'>" +
@@ -655,15 +659,16 @@ function renderProblems(result){
 			"<div class='opinions_form touchable'>" +
 				"<div class='opinions touchable' section='1' page='1'></div>" +
 				"<div class='opinion_search_form touchable'>" +
-					"<textarea class='opinion_input touchable' placeholder='댓글 내용'></textarea>" +
-					"<div class='opinion_write_button touchable' onclick='registerOpinion(this,"+problems[i].problem_id+")'>등록</div>" +
+					"<textarea class='opinion_input touchable' placeholder='이곳에 자신의 의견을 입력해주세요.'></textarea>" +
+					"<div class='opinion_write_button touchable' onclick='registerOpinion(this,\""+problems[i].problem_id+"\")'>등록</div>" +
 				"</div>" +
 				"<div class='pagebar touchable'></div>" +
 			"</div>"
 		);
-		
-		$(problem).append("<div class='open_opinion_button touchable' onclick='openOpinionsForm(this,"+problems[i].problem_id+")'>의견보기</div>");
-		$(problem).append("<div class='close_opinion_button touchable' onclick='closeOpinionsForm(this)'>의견닫기</div>");
+
+		//$(problem).append('<div class="open_opinion_button touchable" onclick="openOpinionsForm(this,\''+problems[i].problem_id+'\')"></div>');
+		$(problem).append("<div class='open_opinion_button touchable' onclick='openOpinionsForm(this,\""+problems[i].problem_id+"\")'>다른 사람들의 의견이 궁금하신가요?</div>");
+		$(problem).append("<div class='close_opinion_button touchable' onclick='closeOpinionsForm(this)'>문제를 다시 보여주세요!</div>");
 		
 		$(problemDiv).append(problem);
 	}

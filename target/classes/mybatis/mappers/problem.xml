@@ -9,19 +9,19 @@
 	<select id="checkProblemId" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *
 		FROM problems
-		WHERE problem_id = ${problem_id}
+		WHERE problem_id = #{problem_id}
 	</select>
 
 	<select id="checkOpinionId" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *
 		FROM opinions
-		WHERE problem_id = ${problem_id} AND opinion_id = ${opinion_id}
+		WHERE problem_id = #{problem_id} AND opinion_id = #{opinion_id}
 	</select>
 	
 	<select id="checkUserId" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *
 		FROM opinions
-		WHERE problem_id = ${problem_id} AND opinion_id = ${opinion_id} AND user_id = #{user_id}
+		WHERE problem_id = #{problem_id} AND opinion_id = #{opinion_id} AND user_id = #{user_id}
 	</select>
 	
 	<select id="getProblems" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -31,7 +31,7 @@
 			FROM(
 				SELECT *
 				FROM problems
-				WHERE category_id = ${category_id}
+				WHERE category_id = #{category_id}
 				ORDER BY RAND()
 				LIMIT ${limit}
 			)AS t1 NATURAL JOIN choices
@@ -46,7 +46,7 @@
 		FROM choices
 		<where>
 			<foreach collection="problems" item="item" open="problem_id IN(" separator="," close=")">
-				${item.problem_id}
+				#{item.problem_id}
 			</foreach>
 		</where>
 	</select>
@@ -54,13 +54,13 @@
 	<select id="getOpinionsTotal" parameterType="java.util.HashMap" resultType="Integer">
 		SELECT count(*)
 		FROM opinions
-		WHERE problem_id = ${problem_id}
+		WHERE problem_id = #{problem_id}
 	</select>
 
 	<select id="readOpinions" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT opinion_id, problem_id, user_id,user_name, opinion_content, DATE_FORMAT(opinion_date,'%Y-%m-%d %T') AS opinion_date, IF(user_id=#{user_id},'true','false') AS editable
 		FROM opinions NATURAL JOIN users
-		WHERE problem_id = ${problem_id}
+		WHERE problem_id = #{problem_id}
 		ORDER BY opinion_date DESC
 		LIMIT 5 OFFSET ${offset}
 	</select>
@@ -70,42 +70,31 @@
 		FROM choices
 		<where>
 			<foreach collection="list" item="item" open="(problem_id,choice_id) IN(" separator="," close=")">
-				(${item.problem_id},${item.answer_id})
+				(#{item.problem_id},#{item.answer_id})
 			</foreach>
 		</where>
 	</select>
 	
-	<update id="updateChoiceCounts" parameterType="java.util.HashMap">
-		UPDATE choices
-		SET choice_count = choice_count + 1
-		<where>
-			(problem_id, choice_id) IN
-			<foreach collection="list" close=")" open="(" separator="," item="item">
-				(${item.problem_id},${item.answer_id})
-			</foreach>
-		</where>
-	</update>
-	
 	<update id="updateOpinion" parameterType="java.util.HashMap">
 		UPDATE opinions
 		SET opinion_content = #{opinion_content}
-		WHERE problem_id = ${problem_id} AND opinion_id = ${opinion_id} AND user_id = #{user_id}
+		WHERE problem_id = #{problem_id} AND opinion_id = #{opinion_id} AND user_id = #{user_id}
 	</update>
 		
 	<insert id="insertRecords" parameterType="java.util.HashMap">
 		INSERT INTO records(problem_id,choice_id,user_id) VALUES
 		<foreach collection="list" item="item" separator=",">
-			(${item.problem_id},${item.answer_id},#{item.user_id})
+			(#{item.problem_id},#{item.answer_id},#{item.user_id})
 		</foreach>
 	</insert>
 	
 	<insert id="writeOpinion" parameterType="java.util.HashMap">
-		INSERT INTO opinions(problem_id,user_id,opinion_content) VALUES(${problem_id},#{user_id},#{opinion_content})
+		INSERT INTO opinions(problem_id,user_id,opinion_content) VALUES(#{problem_id},#{user_id},#{opinion_content})
 	</insert>
 	
 	<delete id="deleteOpinion" parameterType="java.util.HashMap">
 		DELETE
 		FROM opinions
-		WHERE problem_id = ${problem_id} AND opinion_id = ${opinion_id} AND user_id = #{user_id}
+		WHERE problem_id = #{problem_id} AND opinion_id = #{opinion_id} AND user_id = #{user_id}
 	</delete>
 </mapper>
