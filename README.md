@@ -72,35 +72,39 @@
 
 <br/>
 
-1. [공개키 요청](#/anchor1)
+#### 사용자 관련 API
 
-2. [로그인 요청](#/anchor2)
+#### 1. [공개키 요청](#/anchor1)
 
-3. [로그아웃 요청](#/anchor3)
+#### 2. [로그인 요청](#/anchor2)
 
-4. [토큰 갱신 요청](#/anchor4)
+#### 3. [로그아웃 요청](#/anchor3)
 
-5. [회원 가입 요청](#/anchor5)
+#### 4. [토큰 갱신 요청](#/anchor4)
 
-6. [비밀번호 찾기 질문 목록 발급 요청](#/anchor6)
+#### 5. [회원 가입 요청](#/anchor5)
+
+#### 6. [비밀번호 찾기 질문 목록 발급 요청](#/anchor6)
 
 <br/>
 
-7. [문제 분류 목록 발급 요청](#/anchor7)
+#### 문제 관련 API
 
-8. [문제 목록 발급 요청](#/anchor8)
+#### 7. [문제 분류 목록 발급 요청](#/anchor7)
 
-9. [문제 채점 요청](#/anchor9)
+#### 8. [문제 목록 발급 요청](#/anchor8)
 
-10. [문제 이미지 요청](#/anchor10)
+#### 9. [문제 채점 요청](#/anchor9)
 
-11. [문제 의견 요청](#/anchor11)
+#### 10. [문제 이미지 요청](#/anchor10)
 
-12. [문제 의견 작성 요청](#/anchor12)
+#### 11. [문제 의견 요청](#/anchor11)
 
-13. [문제 의견 수정 요청](#/anchor13)
+#### 12. [문제 의견 작성 요청](#/anchor12)
 
-14. [문제 의견 삭제 요청](#/anchor14)
+#### 13. [문제 의견 수정 요청](#/anchor13)
+
+#### 14. [문제 의견 삭제 요청](#/anchor14)
 
 <br/>
 
@@ -114,7 +118,7 @@
    
 </a>
 
-로그인 및 회원가입시 민감한 정보를 RSA2048로 암호화하여 전송할 때 사용할 공개키 발급을 요청하는 API
+#### 로그인 및 회원가입시 민감한 정보를 RSA2048로 암호화하여 전송할 때 사용할 공개키 발급을 요청하는 API
 
 <br/>
 
@@ -152,7 +156,7 @@ HTTP/1.1 400 Bad Request
 
 <br/>
 
-[API 목록으로 되돌아가기](#api_list)
+####  [API 목록으로 되돌아가기](#api_list)
 
 <br/>
 
@@ -166,7 +170,7 @@ HTTP/1.1 400 Bad Request
    
 </a>
 
-사용자의 ID, PW, 사용한 공개키를 전달받아 사용자를 인증하고 이에 대한 2가지 JWT 토큰을 발급하는 API
+#### 사용자의 ID, PW, 사용한 공개키를 전달받아 사용자를 인증하고 이에 대한 2가지 JWT 토큰을 발급하는 API
 
 <br/>
 
@@ -206,7 +210,7 @@ HTTP/1.1 400 Bad Request
 
 <br/>
 
-[API 목록으로 되돌아가기](#api_list)
+#### [API 목록으로 되돌아가기](#api_list)
 
 <br/>
 
@@ -220,7 +224,7 @@ HTTP/1.1 400 Bad Request
    
 </a>
 
-자신이 발급받은 액세스 토큰과 리프레쉬 토큰에 대해 로그아웃 처리를 수행하는 API
+#### 자신이 발급받은 액세스 토큰과 리프레쉬 토큰에 대해 로그아웃 처리를 수행하는 API
 
 <br/>
 
@@ -259,7 +263,7 @@ HTTP/1.1 401 Unauthorized
 
 <br/>
 
-[API 목록으로 되돌아가기](#api_list)
+#### [API 목록으로 되돌아가기](#api_list)
 
 <br/>
 
@@ -273,7 +277,7 @@ HTTP/1.1 401 Unauthorized
    
 </a>
 
-액세스 토큰의 기한 만료시에 새로운 액세스 토큰을 발급하는 API
+#### 액세스 토큰의 기한 만료시에 새로운 액세스 토큰을 발급하는 API
 
 <br/>
 
@@ -315,7 +319,7 @@ HTTP/1.1 401 Unauthorized
 
 <br/>
 
-[API 목록으로 되돌아가기](#api_list)
+#### [API 목록으로 되돌아가기](#api_list)
 
 <br/>
 
@@ -329,7 +333,7 @@ HTTP/1.1 401 Unauthorized
    
 </a>
 
-사용자로부터 여러 정보를 전달받고 회원정보를 등록하는 API
+#### 사용자로부터 여러 정보를 전달받고 회원정보를 등록하는 API
 
 <br/>
 
@@ -371,7 +375,7 @@ HTTP/1.1 400 Bad Request
 
 <br/>
 
-[API 목록으로 되돌아가기](#api_list)
+#### [API 목록으로 되돌아가기](#api_list)
 
 <br/>
 
@@ -385,7 +389,7 @@ HTTP/1.1 400 Bad Request
    
 </a>
 
-비밀번호 분실시 임시 비밀번호를 등록된 이메일로 전달받기 위한 비밀번호 찾기 질문 목록을 얻음
+#### 비밀번호 분실시 임시 비밀번호를 등록된 이메일로 전달받기 위한 비밀번호 찾기 질문 목록을 발급하는 API
 
 <br/>
 
@@ -430,7 +434,7 @@ HTTP/1.1 400 Bad Request
 
 <br/>
 
-[API 목록으로 되돌아가기](#api_list)
+#### [API 목록으로 되돌아가기](#api_list)
 
 <br/>
 
@@ -444,7 +448,7 @@ HTTP/1.1 400 Bad Request
    
 </a>
 
-문제들의 분류 번호와 분류명을 얻음
+#### 문제들의 분류 번호와 분류명을 발급하는 API
 
 <br/>
 
@@ -499,7 +503,7 @@ HTTP/1.1 401 Unauthorized
 
 <br/>
 
-[API 목록으로 되돌아가기](#api_list)
+#### [API 목록으로 되돌아가기](#api_list)
 
 <br/>
 
@@ -513,15 +517,14 @@ HTTP/1.1 401 Unauthorized
    
 </a>
 
-문제들의 목록과 그에 해당하는 보기들, 정답여부, 보기 선택횟수 등의 정보를 발급하는 API
+#### 문제들의 목록과 그에 해당하는 보기들, 정답여부, 보기 선택횟수 등의 정보를 발급하는 API
 
 <br/>
 
 <pre>
-GET /restapi/problems HTTP/1.1
+GET /restapi/problems?category_id={category_id}&limit={limit} HTTP/1.1
 {
-   category_id : 문제 분류 번호,
-   limit : 발급받을 문제의 수(전달하지 않거나 1이상의 정수가 아니면 기본 20문제를 발급함)
+
 }
 
 세부사항
@@ -533,6 +536,10 @@ GET /restapi/problems HTTP/1.1
    
    반드시 해당 액세스 토큰과 리프레쉬 토큰을 갖고 새로이 액세스 토큰과 리프레쉬 토큰을 재발급 받아야함.
    새로 발급받은 액세스 토큰으로 다시 한 번 요청을 시도해야함.
+   
+3. category_id는 문제 분류 번호
+
+4. limit는 발급받을 문제의 수(전달하지 않거나 1이상의 정수가 아니면 기본 20문제를 발급함)
 </pre>
 
 <pre>
@@ -655,7 +662,7 @@ HTTP/1.1 401 Unauthorized
 
 <br/>
 
-[API 목록으로 되돌아가기](#api_list)
+#### [API 목록으로 되돌아가기](#api_list)
 
 <br/>
 
@@ -669,7 +676,7 @@ HTTP/1.1 401 Unauthorized
    
 </a>
 
-문제에 대한 채점 요청및 이에 대한 채점결과를 반환하는 API
+#### 문제에 대한 채점 요청및 이에 대한 채점결과를 반환하는 API
 
 <br/>
 
@@ -728,7 +735,7 @@ HTTP/1.1 401 Unauthorized
 
 <br/>
 
-[API 목록으로 되돌아가기](#api_list)
+#### [API 목록으로 되돌아가기](#api_list)
 
 <br/>
 
@@ -742,7 +749,7 @@ HTTP/1.1 401 Unauthorized
    
 </a>
 
-해당 문제에 대한 이미지가 있을시, 해당 이미지를 요청하는 API
+#### 해당 문제에 대한 이미지가 있을시, 해당 이미지를 요청하는 API
 
 <br/>
 
@@ -774,7 +781,7 @@ HTTP/1.1 401 Unauthorized
 
 <br/>
 
-[API 목록으로 되돌아가기](#api_list)
+#### [API 목록으로 되돌아가기](#api_list)
 
 <br/>
 
@@ -788,7 +795,7 @@ HTTP/1.1 401 Unauthorized
    
 </a>
 
-문제에 대한 댓글을 요청하는 API
+#### 문제에 대한 댓글을 요청하는 API
 
 <br/>
 
@@ -853,7 +860,7 @@ HTTP/1.1 401 Unauthorized
 
 <br/>
 
-[API 목록으로 되돌아가기](#api_list)
+#### [API 목록으로 되돌아가기](#api_list)
 
 <br/>
 
@@ -867,7 +874,7 @@ HTTP/1.1 401 Unauthorized
    
 </a>
 
-문제에 대한  작성을 요청하는 API
+#### 문제에 대한  작성을 요청하는 API
 
 <br/>
 
@@ -902,7 +909,7 @@ HTTP/1.1 401 Unauthorized
 
 <br/>
 
-[API 목록으로 되돌아가기](#api_list)
+#### [API 목록으로 되돌아가기](#api_list)
 
 <br/>
 
@@ -916,13 +923,12 @@ HTTP/1.1 401 Unauthorized
    
 </a>
 
-문제에 대한 의견 수정을 요청하는 API
+#### 문제에 대한 의견 수정을 요청하는 API
 
 <br/>
 
 <pre>
 PUT /restapi/problems/{problem_id}/opinions/{opinion_id} HTTP/1.1
-Content-Type : application/json
 {
    opinion_content : "의견 내용"
 }
@@ -953,7 +959,7 @@ HTTP/1.1 401 Unauthorized
 
 <br/>
 
-[API 목록으로 되돌아가기](#api_list)
+#### [API 목록으로 되돌아가기](#api_list)
 
 <br/>
 
@@ -967,13 +973,12 @@ HTTP/1.1 401 Unauthorized
    
 </a>
 
-문제에 대한 의견 삭제를 요청하는 API
+#### 문제에 대한 의견 삭제를 요청하는 API
 
 <br/>
 
 <pre>
 DELETE /restapi/problems/{problem_id}/opinions/{opinion_id} HTTP/1.1
-Content-Type : application/json
 {
    
 }
@@ -1002,7 +1007,7 @@ HTTP/1.1 401 Unauthorized
 
 <br/>
 
-[API 목록으로 되돌아가기](#api_list)
+#### [API 목록으로 되돌아가기](#api_list)
 
 <br/>
 
