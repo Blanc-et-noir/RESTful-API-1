@@ -40,12 +40,6 @@ public class UserController {
 	@Autowired
 	private CookieUtil cookieUtil;
 	
-	//로그인 뷰를 리턴함
-	@RequestMapping(value="/user/mainForm.do")
-	public ModelAndView loginForm(HttpServletRequest request, HttpServletResponse response) {
-		return new ModelAndView("main");
-	}
-	
 	@RequestMapping(value= {"/publickeys"}, method= {RequestMethod.GET})
 	public ResponseEntity<HashMap> getPublickey(HttpServletRequest request){
 		HashMap result = new HashMap();

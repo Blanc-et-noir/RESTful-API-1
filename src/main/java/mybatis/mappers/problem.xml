@@ -25,7 +25,7 @@
 	</select>
 	
 	<select id="getProblems" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT t2.problem_id, t2.problem_content, t2.problem_image_name, t2.choice_id, t2.choice_content, t2.choice_yn, NVL(t3.pick_rate,0) AS "pick_rate"
+		SELECT t2.problem_id, t2.problem_content, t2.problem_image_name, t2.choice_id, t2.choice_content, t2.choice_yn, IFNULL(t3.pick_rate,0) AS "pick_rate"
 		FROM(
 			SELECT *
 			FROM(
