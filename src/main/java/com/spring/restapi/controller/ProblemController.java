@@ -37,7 +37,7 @@ public class ProblemController {
 	@Autowired
 	private CookieUtil cookieUtil;
 	
-	private static final String IMAGE_BASE_PATH = "D:\\RestAPI\\problem_images\\"; 
+	private static final String IMAGE_BASE_PATH = "//home//tomcat9//webapps//restapi_files//problem_images//"; 
 	
 	//액세스 필요
 	@RequestMapping(value= {"/problems"}, method= {RequestMethod.GET})
@@ -121,7 +121,7 @@ public class ProblemController {
 			param.put("user_id", jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id"));
 			param.put("problem_id", problem_id);
 			param.put("opinion_id", opinion_id);
-			System.out.println(param.get("opinion_content"));
+			
 			problemService.updateOpinion(param);
 			
 			result.put("flag", true);
@@ -176,7 +176,7 @@ public class ProblemController {
 		HashMap result = new HashMap();
 		try {
 			String extension = "png";
-			String path = IMAGE_BASE_PATH+problem_id+"\\"+problem_image_name+"."+extension;
+			String path = IMAGE_BASE_PATH+problem_id+"//"+problem_image_name+"."+extension;
 			
 			File file = new File(path);
 			

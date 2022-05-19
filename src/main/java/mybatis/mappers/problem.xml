@@ -4,6 +4,7 @@
 	<select id="getCategories" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *
 		FROM categories
+		ORDER BY category_name ASC
 	</select>
 	
 	<select id="checkProblemId" parameterType="java.util.HashMap" resultType="java.util.HashMap">
