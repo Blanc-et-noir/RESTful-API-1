@@ -407,15 +407,15 @@ HTTP/1.1 200 OK
    content : 응답 메세지,
    list : [
       {
-         question_id : 1,
+         question_id : "493e3234-d4f3-11ec-971d-2cfda159869a",
          question_content : "기억에 남는 추억의 장소는?"
       },
       {
-         question_id : 2,
+         question_id : "493f84a4-d4f3-11ec-971d-2cfda159869a",
          question_content : "자신의 인생 좌우명은?"
       },
       {
-         question_id : 3,
+         question_id : "49409b71-d4f3-11ec-971d-2cfda159869a",
          question_content : "가장 기억에 남는 선생님 성함은?"
       },
       
@@ -476,15 +476,15 @@ HTTP/1.1 200 OK
    content : 응답 메세지,
    list : [
       {
-         category_id : 1,
+         category_id : "79170a18-bb6a-4055-a4e2-50ebeaab3900",
          category_name : "정보처리기사 필기 1과목"
       },
       {
-         category_id : 2,
+         category_id : "76db87b3-4151-47ac-a502-d02404a553fa",
          category_name : "정보처리기사 필기 2과목"
       },
       {
-         category_id : 3,
+         category_id : "96b42835-41ab-4752-b32d-b16c98dbca1f",
          category_name : "정보처리기사 필기 3과목"
       },
       
@@ -549,32 +549,32 @@ HTTP/1.1 200 OK
    content : 응답 메세지,
    problems : [
       {
-         problem_id : 32,
+         problem_id : "b2e31a97-b0a4-41dd-8cef-39379e8012d0",
          problem_content : "UML에서 활용되는 다이어그램 중, 시스템의 동작을 표현하는 행위(Behavioral) 다이어그램에 해당하지 않는 것은?",
          problem_image_name : null,
-         answer_id : 1,
+         answer_id : "37570347-1664-40d8-b82a-43cf9dd457a6"1,
          answer_rate : 100,
          choices : [
             {
-               choice_id : 125,
+               choice_id : "4d8e453e-cd8b-4d1d-bae6-20406801b28b",
                choice_content : "유스케이스 다이어그램(Use Case Diagram)",
                choice_yn : "N",
                pick_rate : 0
             },
             {
-               choice_id : 126,
+               choice_id : "53bdf55e-b871-4c18-a67c-76109973c622",
                choice_content : "시퀀스 다이어그램(Sequence Diagram)",
                choice_yn : "N",
                pick_rate : 0
             },
             {
-               choice_id : 127,
+               choice_id : "9e9717a2-a8cd-45b1-8350-d889e5259736",
                choice_content : "활동 다이어그램(Activity Diagram)",
                choice_yn : "N",
                pick_rate : 0
             },
             {
-               choice_id : 128,
+               choice_id : "37570347-1664-40d8-b82a-43cf9dd457a6",
                choice_content : "배치 다이어그램(Deployment Diagram)",
                choice_yn : "Y",
                pick_rate : 100
@@ -582,32 +582,32 @@ HTTP/1.1 200 OK
          ]
       },
       {
-         problem_id : 22,
+         problem_id : "8b022abd-f1a5-4349-8854-fdc811cc62b3",
          problem_content : "다음 내용이 설명하는 디자인 패턴은?",
          problem_image_name : "ca724d98ea2af1c2db7d7d3bc2bb63c4",
-         answer_id : 87,
+         answer_id : "1580a690-ff36-439c-8eee-11d5e0ffd231",
          answer_rate : 75,
          choices : [
             {
-               choice_id : 85,
+               choice_id : "1a4d6556-6e4c-4a6d-bcd6-05ed793a7503",
                choice_content : "Visitor 패턴",
                choice_yn : "N",
                pick_rate : 0
             },
             {
-               choice_id : 86,
+               choice_id : "a490dc70-24cb-43cd-ba16-559e478fc5f4",
                choice_content : "Observer 패턴",
                choice_yn : "N",
                pick_rate : 25
             },
             {
-               choice_id : 87,
+               choice_id : "1580a690-ff36-439c-8eee-11d5e0ffd231",
                choice_content : "Factory Method 패턴",
                choice_yn : "Y",
                pick_rate : 75
             },
             {
-               choice_id : 88,
+               choice_id : "a0453b85-33d3-45a4-b161-092d1e274aaa",
                choice_content : "Bridge 패턴",
                choice_yn : "N",
                pick_rate : 0
@@ -615,32 +615,32 @@ HTTP/1.1 200 OK
          ]
       },
       {
-         problem_id : 47,
+         problem_id : "3f7258e8-f768-47db-a81d-602d6304653a",
          problem_content : "코드화 대상 항목의 중량, 면적, 용량 등의 물리적 수치를 이용하여 만든 코드는?",
          problem_image_name : null,
-         answer_id : 188,
+         answer_id : "0ecdedaa-b969-4973-9d8b-da5ba08f7a6f",
          answer_rate : 75,
          choices : [
             {
-               choice_id : 186,
+               choice_id : "3ed15afe-ad04-4435-9e4a-244d95b59d1f",
                choice_content : "순차 코드",
                choice_yn : "N",
                pick_rate : 13
             },
             {
-               choice_id : 187,
+               choice_id : "d560e4af-e22e-43bd-a7a2-e0809257e50b",
                choice_content : "10진 코드",
                choice_yn : "N",
                pick_rate : 0
             },
             {
-               choice_id : 188,
+               choice_id : "0ecdedaa-b969-4973-9d8b-da5ba08f7a6f",
                choice_content : "표의 숫자 코드",
                choice_yn : "Y",
                pick_rate : 75
             },
             {
-               choice_id : 189,
+               choice_id : "70cb4b60-0472-49f7-b650-b6c56ccf6789",
                choice_content : "블록 코드",
                choice_yn : "N",
                pick_rate : 13
@@ -686,16 +686,16 @@ Content-Type : application/json
 {
    list : [
       {
-         problem_id : 문제 번호,
-         answer_id : 정답 번호
+         problem_id : "fd431f82-a1ae-4cd8-be31-bc08d11f9fdd",
+         answer_id : "a5fb2d2c-147d-45f1-be9a-1fb38831cbaf"
       },
       {
-         problem_id : 문제 번호,
-         answer_id : 정답 번호
+         problem_id : "a772ad18-669b-422e-9c16-4c4f1998600f",
+         answer_id : "130ddcca-db48-4148-a5a2-fef004a92c6e"
       },
       {
-         problem_id : 문제 번호,
-         answer_id : 정답 번호
+         problem_id : "80c58a6c-ef1d-401b-b1c1-215f78710293",
+         answer_id : "8eb2fbf5-9e6a-455d-9f49-955cf4965ec5"
       },
                  ....
    ]
@@ -720,8 +720,8 @@ HTTP/1.1 201 Created
    percentage : 정답률,
    right_score : 정답 개수,
    wrong_score : 오답 개수,
-   right_problems  : [ 맞춘 문제 번호1, 맞춘 문제 번호2, 맞춘 문제 번호3, ... ],
-   wrong_problems  : [ 틀린 문제 번호1, 틀린 문제 번호2, 틀린 문제 번호3, ... ]
+   right_problems  : [ 맞춘 문제 ID1, 맞춘 문제 ID2, 맞춘 문제 ID3, ... ],
+   wrong_problems  : [ 틀린 문제 ID1, 틀린 문제 ID2, 틀린 문제 ID3, ... ]
 }
 </pre>
 
@@ -801,7 +801,6 @@ HTTP/1.1 401 Unauthorized
 
 <pre>
 GET /restapi/problems/{problem_id}/opinions?section={section}&page={page} HTTP/1.1
-Content-Type : application/json
 {
    
 }
@@ -823,7 +822,7 @@ HTTP/1.1 200 Ok
    list : [
       {
          opinion_date : "2022-05-04 17:55:44",
-         opinion_id : 111,
+         opinion_id : "12ffcb26-42a5-4019-b256-828c49491299",
          user_id : "jrw9215",
          user_name : "정래원",
          editable : "true",
@@ -831,7 +830,7 @@ HTTP/1.1 200 Ok
       },
       {
          opinion_date : "2022-05-04 17:55:37",
-         opinion_id : 110,
+         opinion_id : "0904c22a-90c4-43cf-95a1-97876197ea03",
          user_id : "jrw9215",
          user_name : "정래원",
          editable : "true",
@@ -839,7 +838,7 @@ HTTP/1.1 200 Ok
       },
       {
          opinion_date : "2022-05-04 17:55:36",
-         opinion_id : 109,
+         opinion_id : "8abcea5b-05aa-4d72-8ec6-899f7b470643",
          user_id : "jrw9215",
          user_name : "정래원",
          editable : "true",
@@ -880,7 +879,6 @@ HTTP/1.1 401 Unauthorized
 
 <pre>
 POST /restapi/problems/{problem_id}/opinions HTTP/1.1
-Content-Type : application/json
 {
    opinion_content : "의견 내용"
 }
@@ -930,7 +928,7 @@ HTTP/1.1 401 Unauthorized
 <pre>
 PUT /restapi/problems/{problem_id}/opinions/{opinion_id} HTTP/1.1
 {
-   opinion_content : "의견 내용"
+   opinion_content : 의견 내용
 }
 
 세부사항
