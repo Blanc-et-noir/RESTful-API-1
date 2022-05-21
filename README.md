@@ -67,7 +67,7 @@
 
 <a id="api_list">
    
-   # API 모음
+   # API 명세서
    
 </a>
 
