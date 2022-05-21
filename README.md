@@ -124,7 +124,7 @@
 <br/>
 
 <pre>
-GET /restapi/publickeys HTTP/1.1
+GET /restapi/users/publickeys HTTP/1.1
 {
    
 }
@@ -395,7 +395,7 @@ HTTP/1.1 400 Bad Request
 <br/>
 
 <pre>
-GET /restapi/questions HTTP/1.1
+GET /restapi/users/questions HTTP/1.1
 {
    
 }
@@ -454,7 +454,7 @@ HTTP/1.1 400 Bad Request
 <br/>
 
 <pre>
-GET /restapi/categories HTTP/1.1
+GET /restapi/problems/categories HTTP/1.1
 {
    
 }
@@ -682,7 +682,7 @@ HTTP/1.1 401 Unauthorized
 <br/>
 
 <pre>
-POST /restapi/scores HTTP/1.1
+POST /restapi/users/records HTTP/1.1
 Content-Type : application/json
 {
    list : [
