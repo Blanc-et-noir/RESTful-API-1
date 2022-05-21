@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" isELIgnored="false"%>
+    pageEncoding="UTF-8" isELIgnored="false" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -27,7 +27,7 @@
     <script src="${path}/resources/js/problem.js"></script>
 
     <link rel="stylesheet" href="${path}/resources/css/main.css">
-    <title>정보</title>
+    <title>CBT 웹 서비스</title>
 </head>
 <body>
 	<div id="form_cover"></div>

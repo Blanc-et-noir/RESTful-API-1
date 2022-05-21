@@ -4,6 +4,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 public class CookieUtil {
+	
 	public Cookie createCookie(String name, String value, String path, int expiry) {
 		Cookie cookie = new Cookie(name,value);
 		cookie.setPath(path);
@@ -12,22 +13,36 @@ public class CookieUtil {
 		cookie.setSecure(false);
 		return cookie;
 	}
+	
 	public String getAccesstoken(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
-		for(Cookie cookie : cookies) {
-			if(cookie.getName().equals("user_accesstoken")) {
-				return cookie.getValue();
+		String user_accesstoken = null;
+		try {
+			for(Cookie cookie : cookies) {
+				if(cookie.getName().equals("user_accesstoken")) {
+					user_accesstoken = cookie.getValue();
+					break;
+				}
 			}
+			return user_accesstoken;
+		}catch(Exception e) {
+			return null;
 		}
-		return null;
 	}
+	
 	public String getRefreshtoken(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
-		for(Cookie cookie : cookies) {
-			if(cookie.getName().equals("user_refreshtoken")) {
-				return cookie.getValue();
+		String user_refreshtoken = null;
+		try {
+			for(Cookie cookie : cookies) {
+				if(cookie.getName().equals("user_refreshtoken")) {
+					user_refreshtoken = cookie.getValue();
+					break;
+				}
 			}
+			return user_refreshtoken;
+		}catch(Exception e) {
+			return null;
 		}
-		return null;
 	}
 }
