@@ -13,12 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.spring.restapi.dao.TokenDAO;
 import com.spring.restapi.encrypt.RSA2048;
 import com.spring.restapi.encrypt.SHA;
-import com.spring.restapi.exception.user.DuplicateEmailException;
-import com.spring.restapi.exception.user.DuplicateIdException;
 import com.spring.restapi.exception.user.InvalidIdException;
 import com.spring.restapi.exception.user.InvalidPwException;
-import com.spring.restapi.exception.user.UnableToInsertRecordsException;
-import com.spring.restapi.exception.user.UnableToUpdateCountsException;
 import com.spring.restapi.util.CookieUtil;
 import com.spring.restapi.util.JwtUtil;
 import com.spring.restapi.util.RedisUtil;
@@ -69,8 +65,6 @@ public class TokenService {
 		//기존 액세스, 리프레시 토큰 비활성화
 		redisUtil.setData(user_accesstoken, "removed", jwtUtil.getExpiration(user_accesstoken));
 		redisUtil.setData(user_refreshtoken, "removed", jwtUtil.getExpiration(user_refreshtoken));
-		
-		System.out.println("액세스 리프레시 토큰을 재발급했습니다.");
 	}
 	
 	public void login(HashMap<String,String> param, HttpServletResponse response) throws InvalidIdException, InvalidPwException, Exception{
@@ -117,13 +111,13 @@ public class TokenService {
 		try {
 			redisUtil.setData(user_accesstoken, "removed", jwtUtil.getExpiration(user_accesstoken));
 		}catch(ExpiredJwtException e) {
-			System.out.println("액세스토큰 유효기간이 지나 블랙리스트에 추가할 필요 X");
+			
 		}
 		
 		try {
 			redisUtil.setData(user_refreshtoken, "removed", jwtUtil.getExpiration(user_refreshtoken));
 		}catch(ExpiredJwtException e) {
-			System.out.println("리프레시토큰 유효기간이 지나 블랙리스트에 추가할 필요 X");
+
 		}
 		
 		HashMap param = new HashMap();

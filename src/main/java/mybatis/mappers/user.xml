@@ -23,4 +23,11 @@
 		INSERT INTO users
 		VALUES(#{user_id},#{user_pw},#{user_name},#{user_email},#{user_salt},null,null,#{question_id},#{question_answer})
 	</insert>
+	
+	<insert id="insertRecords" parameterType="java.util.HashMap">
+		INSERT INTO records(problem_id,choice_id,user_id) VALUES
+		<foreach collection="list" item="item" separator=",">
+			(#{item.problem_id},#{item.answer_id},#{item.user_id})
+		</foreach>
+	</insert>
 </mapper>

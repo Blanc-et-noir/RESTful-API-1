@@ -84,7 +84,7 @@ function getInfo(){
 
 function getPublickey(){
 	return $.ajax({
-		"url":"/restapi/publickeys",
+		"url":"/restapi/users/publickeys",
 		"type":"get"
 	})
 }
@@ -103,7 +103,7 @@ function login(publickey){
 
 function getQuestions(){
 	return 	$.ajax({
-		"url":"/restapi/questions",
+		"url":"/restapi/users/questions",
 		"type":"get",
 		"dataType":"json"
 	});

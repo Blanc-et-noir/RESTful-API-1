@@ -14,12 +14,10 @@ import com.spring.restapi.exception.problem.InvalidOpinionIdException;
 import com.spring.restapi.exception.problem.InvalidProblemIdException;
 import com.spring.restapi.exception.problem.InvalidUserIdException;
 import com.spring.restapi.exception.user.UnableToInsertRecordsException;
-import com.spring.restapi.exception.user.UnableToUpdateCountsException;
 
 @Service("problemService")
 @Transactional(propagation=Propagation.REQUIRED,rollbackFor={
 		Exception.class,
-		UnableToUpdateCountsException.class,
 		UnableToInsertRecordsException.class,
 		InvalidProblemIdException.class,
 		InvalidOpinionIdException.class,
@@ -100,39 +98,6 @@ public class ProblemService {
 		
 		result.put("total", total);
 		result.put("list", list);
-		return result;
-	}
-	
-	public HashMap scoreProblems(HashMap param) throws UnableToUpdateCountsException,Exception{
-		HashMap<String,Object> result = new HashMap<String,Object>();
-		
-		ArrayList<HashMap<String,String>> list = (ArrayList<HashMap<String, String>>) param.get("list");
-		//본인이 선택한 보기들을 리스트로 얻음
-		list = (ArrayList<HashMap<String, String>>) problemDAO.getChoicesInfo(param);
-		
-		List right_problems = new ArrayList();
-		List wrong_problems = new ArrayList();
-		
-		//채점함
-		int right = 0, wrong = 0;
-		for(int i=0;i<list.size();i++) {
-			if(list.get(i).get("choice_yn").equalsIgnoreCase("Y")) {
-				right++;
-				right_problems.add(list.get(i).get("problem_id"));
-			}else {
-				wrong++;
-				wrong_problems.add(list.get(i).get("problem_id"));
-			}
-		}
-		
-		problemDAO.insertRecords(param);
-		
-		//채점결과 반환
-		result.put("percentage", (right*1.0/(right+wrong)*1.0)*100);
-		result.put("right_score", right);
-		result.put("wrong_score", wrong);
-		result.put("right_problems", right_problems);
-		result.put("wrong_problems", wrong_problems);
 		return result;
 	}
 	

@@ -3,7 +3,6 @@ package com.spring.restapi.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.spring.restapi.exception.problem.InvalidOpinionIdException;
 import com.spring.restapi.exception.problem.InvalidProblemIdException;
 import com.spring.restapi.exception.problem.InvalidUserIdException;
-import com.spring.restapi.exception.user.UnableToInsertRecordsException;
-import com.spring.restapi.exception.user.UnableToUpdateCountsException;
 import com.spring.restapi.service.ProblemService;
 import com.spring.restapi.util.CookieUtil;
 import com.spring.restapi.util.JwtUtil;
@@ -212,7 +208,7 @@ public class ProblemController {
 	}
 	
 	//토큰필요없음
-	@RequestMapping(value= {"/categories"}, method= {RequestMethod.GET})
+	@RequestMapping(value= {"/problems/categories"}, method= {RequestMethod.GET})
 	public ResponseEntity<HashMap> getCategories(@RequestParam HashMap param){
 		HashMap result = new HashMap();
 		try {
@@ -226,36 +222,6 @@ public class ProblemController {
 			result.put("message", e.getMessage());
 			result.put("flag", false);
 			result.put("content", "문제 정보 획득 실패");
-			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
-		}
-	}
-	
-	//액세스 필요
-	@RequestMapping(value= {"/scores"}, method= {RequestMethod.POST})
-	public ResponseEntity<HashMap> scoreProblems(@RequestBody HashMap param, HttpServletRequest request){
-		HashMap result = new HashMap();
-		try {
-			String user_id = jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id");
-			ArrayList<HashMap<String,String>> list = (ArrayList<HashMap<String,String>>) param.get("list");
-			for(int i=0;i<list.size();i++) {
-				list.get(i).put("user_id", user_id);
-			}
-			result = problemService.scoreProblems(param);
-			result.put("flag", true);
-			result.put("content", "채점 성공");
-			return new ResponseEntity<HashMap>(result,HttpStatus.CREATED);
-		}catch(UnableToUpdateCountsException e) {
-			result.put("flag", false);
-			result.put("content", e.getMessage());
-			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
-		}catch(UnableToInsertRecordsException e) {
-			result.put("flag", false);
-			result.put("content", e.getMessage());
-			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
-		}catch(Exception e) {
-			e.printStackTrace();
-			result.put("flag", false);
-			result.put("content", "채점 실패");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}
 	}

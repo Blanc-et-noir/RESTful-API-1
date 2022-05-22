@@ -9,10 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.restapi.exception.user.DuplicateEmailException;
 import com.spring.restapi.exception.user.DuplicateIdException;
-import com.spring.restapi.exception.user.InvalidIdException;
-import com.spring.restapi.exception.user.InvalidPwException;
 import com.spring.restapi.exception.user.UnableToInsertRecordsException;
-import com.spring.restapi.exception.user.UnableToUpdateCountsException;
 
 @Repository("userDAO")
 public class UserDAO {
@@ -45,4 +42,15 @@ public class UserDAO {
 	public List getQuestions() throws Exception{
 		return sqlSession.selectList("user.getQuestions");
 	}
+	
+	public List getChoicesInfo(HashMap param) {
+		return sqlSession.selectList("problem.getChoicesInfo", param);
+	}
+	
+	public void insertRecords(HashMap param) throws UnableToInsertRecordsException{
+		if(sqlSession.insert("user.insertRecords", param)==0) {
+			throw new UnableToInsertRecordsException();
+		}
+	}
+	
 }

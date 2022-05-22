@@ -175,7 +175,7 @@ function sendSolution(list){
 	var obj = new Object();
 	obj.list = list;
 	return $.ajax({
-		"url":"/restapi/scores",
+		"url":"/restapi/users/records",
 		"type":"post",
 		"contentType": "application/json;",
 		"data":JSON.stringify(obj)
@@ -187,12 +187,9 @@ function readOpinions(problem_id){
 	var section =  $(opinions).attr("section");
 	var page =  $(opinions).attr("page");
 	return $.ajax({
-		"url":"/restapi/problems/"+problem_id+"/opinions",
+		"url":"/restapi/problems/"+problem_id+"/opinions?offset="+((section-1)*25+(page-1)*5),
 		"type":"get",
-		"dataType":"json",
-		"data":{
-			"offset":(section-1)*25+(page-1)*5
-		}
+		"dataType":"json"
 	});
 }
 
@@ -205,10 +202,6 @@ function writeOpinion(target,problem_id){
 			"opinion_content":$(target).parent().find(".opinion_input").val()
 		}
 	});
-}
-
-function initializeOpinions(){
-	
 }
 
 function deleteOpinion(target, problem_id,opinion_id){
@@ -455,6 +448,7 @@ function renderOpinions(opinions,list){
 		}
 	}
 }
+
 function registerOpinion(target, problem_id){
 	var opinion_content = $(target).parent().find(".opinion_input").val();
 	if(!checkBytes(opinion_content,600)){
@@ -666,7 +660,6 @@ function renderProblems(result){
 			"</div>"
 		);
 
-		//$(problem).append('<div class="open_opinion_button touchable" onclick="openOpinionsForm(this,\''+problems[i].problem_id+'\')"></div>');
 		$(problem).append("<div class='open_opinion_button touchable' onclick='openOpinionsForm(this,\""+problems[i].problem_id+"\")'>다른 사람들의 의견이 궁금하신가요?</div>");
 		$(problem).append("<div class='close_opinion_button touchable' onclick='closeOpinionsForm(this)'>문제를 다시 보여주세요!</div>");
 		
@@ -680,7 +673,7 @@ function renderProblems(result){
 $(document).ready(function(){
     
 	$.ajax({
-		"url":"/restapi/categories",
+		"url":"/restapi/problems/categories",
 		"type":"get"
 	}).done(function(result){
 		var i, categories = result.categories;

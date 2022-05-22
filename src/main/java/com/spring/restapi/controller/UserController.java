@@ -11,19 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.restapi.encrypt.RSA2048;
 import com.spring.restapi.exception.user.DuplicateEmailException;
 import com.spring.restapi.exception.user.DuplicateIdException;
-import com.spring.restapi.exception.user.InvalidIdException;
-import com.spring.restapi.exception.user.InvalidPwException;
 import com.spring.restapi.exception.user.UnableToInsertRecordsException;
-import com.spring.restapi.exception.user.UnableToUpdateCountsException;
 import com.spring.restapi.service.UserService;
 import com.spring.restapi.util.CookieUtil;
 import com.spring.restapi.util.JwtUtil;
@@ -40,7 +37,7 @@ public class UserController {
 	@Autowired
 	private CookieUtil cookieUtil;
 	
-	@RequestMapping(value= {"/publickeys"}, method= {RequestMethod.GET})
+	@RequestMapping(value= {"/users/publickeys"}, method= {RequestMethod.GET})
 	public ResponseEntity<HashMap> getPublickey(HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
@@ -61,7 +58,7 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value= {"/questions"}, method={RequestMethod.GET})
+	@RequestMapping(value= {"/users/questions"}, method={RequestMethod.GET})
 	public ResponseEntity<HashMap> getQuestions(HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {	
@@ -120,6 +117,35 @@ public class UserController {
 		}catch(Exception e) {
 			result.put("flag", false);
 			result.put("content", "조회 실패");
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	//액세스 필요
+	@RequestMapping(value= {"/users/records"}, method= {RequestMethod.POST})
+	public ResponseEntity<HashMap> scoreProblems(@RequestBody HashMap param, HttpServletRequest request){
+		HashMap result = new HashMap();
+		try {
+			String user_id = jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id");
+			
+			ArrayList<HashMap<String,String>> list = (ArrayList<HashMap<String,String>>) param.get("list");
+			
+			for(int i=0;i<list.size();i++) {
+				list.get(i).put("user_id", user_id);
+			}
+			
+			result = userService.scoreProblems(param);
+			result.put("flag", true);
+			result.put("content", "채점 성공");
+			return new ResponseEntity<HashMap>(result,HttpStatus.CREATED);
+		}catch(UnableToInsertRecordsException e) {
+			result.put("flag", false);
+			result.put("content", e.getMessage());
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}catch(Exception e) {
+			e.printStackTrace();
+			result.put("flag", false);
+			result.put("content", "채점 실패");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}
 	}

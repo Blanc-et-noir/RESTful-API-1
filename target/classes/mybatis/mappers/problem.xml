@@ -81,13 +81,6 @@
 		SET opinion_content = #{opinion_content}
 		WHERE problem_id = #{problem_id} AND opinion_id = #{opinion_id} AND user_id = #{user_id}
 	</update>
-		
-	<insert id="insertRecords" parameterType="java.util.HashMap">
-		INSERT INTO records(problem_id,choice_id,user_id) VALUES
-		<foreach collection="list" item="item" separator=",">
-			(#{item.problem_id},#{item.answer_id},#{item.user_id})
-		</foreach>
-	</insert>
 	
 	<insert id="writeOpinion" parameterType="java.util.HashMap">
 		INSERT INTO opinions(problem_id,user_id,opinion_content) VALUES(#{problem_id},#{user_id},#{opinion_content})
