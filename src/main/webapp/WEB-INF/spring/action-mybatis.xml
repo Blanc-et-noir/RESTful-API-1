@@ -20,8 +20,8 @@
 		<property name="poolPingEnabled" value="true"/>
 		<property name="poolPingQuery" value="SELECT 1"/>
 		
-		<!-- 7200000ms 마다 from 백엔드 서버 to DB 서버로 핑 쿼리 전송-->
-		<property name="poolPingConnectionsNotUsedFor" value="7200000"/>
+		<!-- 1시간 마다 from 백엔드 서버 to DB 서버로 핑 쿼리 전송-->
+		<property name="poolPingConnectionsNotUsedFor" value="3600000"/>
 	</bean>
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
