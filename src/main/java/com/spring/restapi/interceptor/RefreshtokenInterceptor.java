@@ -19,12 +19,7 @@ import com.spring.restapi.util.RedisUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 
 public class RefreshtokenInterceptor implements HandlerInterceptor{
-	@Autowired
-	private JwtUtil jwtUtil;
-	@Autowired
-	private RedisUtil redisUtil;
-	@Autowired
-	private CookieUtil cookieUtil;
+	
 	@Autowired
 	private TokenService tokenService;
 	
@@ -45,8 +40,8 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		String user_accesstoken = cookieUtil.getAccesstoken(request);
-		String user_refreshtoken = cookieUtil.getRefreshtoken(request);
+		String user_accesstoken = CookieUtil.getAccesstoken(request);
+		String user_refreshtoken = CookieUtil.getRefreshtoken(request);
 		
 		String uri = request.getRequestURI();
 		String method = request.getMethod();
@@ -64,19 +59,19 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 			return false;
 		}else {
 			//로그아웃된 리프레시토큰이면
-			if(redisUtil.getData(user_refreshtoken)!=null) {
+			if(RedisUtil.getData(user_refreshtoken)!=null) {
 				setErrorMessage(response,401,"로그아웃된 리프레시 토큰");
 				return false;
 			}
 			
 			//로그아웃된 액세스토큰이면
-			if(redisUtil.getData(user_accesstoken)!=null) {
+			if(RedisUtil.getData(user_accesstoken)!=null) {
 				setErrorMessage(response,401,"로그아웃된 액세스 토큰");
 				return false;
 			}
 			
 			try {
-				jwtUtil.validateToken(user_accesstoken);
+				JwtUtil.validateToken(user_accesstoken);
 			}catch(ExpiredJwtException e) {
 
 			}catch(Exception e) {
@@ -85,11 +80,11 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 			}
 			
 			try {
-				jwtUtil.validateToken(user_refreshtoken);
+				JwtUtil.validateToken(user_refreshtoken);
 				
 				//액세스와 리프레시 id가 같은지 확인
-				String access_user_id = jwtUtil.getData(user_accesstoken, "user_id");
-				String refresh_user_id = jwtUtil.getData(user_refreshtoken, "user_id");
+				String access_user_id = JwtUtil.getData(user_accesstoken, "user_id");
+				String refresh_user_id = JwtUtil.getData(user_refreshtoken, "user_id");
 				
 				//현재 사용중이었던 액세스와 리프레시인지 확인
 				if(!access_user_id.equals(refresh_user_id)) {

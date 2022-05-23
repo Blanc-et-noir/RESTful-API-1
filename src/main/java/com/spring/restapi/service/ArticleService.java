@@ -24,14 +24,10 @@ import com.spring.restapi.util.JwtUtil;
 public class ArticleService {
 	@Autowired
 	private ArticleDAO articleDAO;
-	@Autowired
-	private CookieUtil cookieUtil;
-	@Autowired
-	private JwtUtil jwtUtil;
-	
+
 	public void addArticle(HttpServletRequest request,HashMap<String,String> param) throws FailedToAddArticleException, Exception {
-		String user_accesstoken = cookieUtil.getAccesstoken(request);
-		String user_id = jwtUtil.getData(user_accesstoken, "user_id");
+		String user_accesstoken = CookieUtil.getAccesstoken(request);
+		String user_id = JwtUtil.getData(user_accesstoken, "user_id");
 		
 		param.put("user_id", user_id);
 		

@@ -22,7 +22,7 @@ public class JwtUtil {
 	public static final int privateKeyMaxAge = 1*60*1000;
 	
 	//사용자 정보를 바탕으로 토큰을 생성하는 메소드
-	public String createToken(UserVO user, long age) {
+	public static String createToken(UserVO user, long age) {
 		Map<String,Object> headers = new HashMap<String,Object>();
 		
 		headers.put("typ", "JWT");
@@ -49,7 +49,7 @@ public class JwtUtil {
 	}
 	
 	//해당 토큰이 유효한지 아닌지 판단하는 메소드
-	public boolean validateToken(String token) throws ExpiredJwtException, Exception{
+	public static boolean validateToken(String token) throws ExpiredJwtException, Exception{
 		Claims claims = null;
 		//해당 토큰이 유효한지 검증함
 		claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
@@ -57,7 +57,7 @@ public class JwtUtil {
 	}
 	
 	//해당 토큰에 첨부한 정보가 담긴 맵 객체를 얻음
-    public Map<String,Object> getInfo(String token) throws Exception{
+    public static Map<String,Object> getInfo(String token) throws Exception{
     	try {
     		Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
     		return claims.getBody();
@@ -67,7 +67,7 @@ public class JwtUtil {
     }
     
     //해당 토큰에 담긴 정보를 얻음
-    public String getData(String token, String data) throws Exception{
+    public static String getData(String token, String data) throws Exception{
     	try {
     		Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
     		return (String) claims.getBody().get(data);
@@ -79,7 +79,7 @@ public class JwtUtil {
     }
     
     //해당 토큰의 남은 유효시간을 얻음
-    public Long getExpiration(String token) {
+    public static Long getExpiration(String token) {
     	try {
             Date expiration = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getExpiration();
             Long now = new Date().getTime();

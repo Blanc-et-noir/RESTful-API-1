@@ -18,7 +18,6 @@ import com.spring.restapi.service.ArticleService;
 
 @Controller("articleController")
 public class ArticleController {
-
 	@Autowired
 	private ArticleService articleService;
 	

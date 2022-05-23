@@ -18,13 +18,11 @@ import com.spring.restapi.util.JwtUtil;
 public class LogInterceptor implements HandlerInterceptor{
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	private CookieUtil cookieUtil = new CookieUtil();
-	private JwtUtil jwtUtil = new JwtUtil();
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
 
-		String user_id = jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id");
+		String user_id = JwtUtil.getData(CookieUtil.getAccesstoken(request), "user_id");
 		
 		logger.info("","");
 		logger.info("URL : {} {}",request.getMethod(),request.getRequestURL());
@@ -35,8 +33,8 @@ public class LogInterceptor implements HandlerInterceptor{
 		
 		logger.info("TIME : {}",LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
         logger.info("IP_ADDRESS : {}",request.getRemoteAddr());
-        logger.info("ACCESS_TOKEN : {}",cookieUtil.getAccesstoken(request));
-        logger.info("REFRESH_TOKEN : {}",cookieUtil.getRefreshtoken(request));
+        logger.info("ACCESS_TOKEN : {}",CookieUtil.getAccesstoken(request));
+        logger.info("REFRESH_TOKEN : {}",CookieUtil.getRefreshtoken(request));
 
         Enumeration<String> enumeration = request.getParameterNames();
         if(enumeration.hasMoreElements()) {

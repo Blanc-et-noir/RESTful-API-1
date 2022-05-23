@@ -18,12 +18,6 @@ import com.spring.restapi.util.RedisUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 
 public class AccesstokenInterceptor implements HandlerInterceptor{
-	@Autowired
-	private JwtUtil jwtUtil;
-	@Autowired
-	private RedisUtil redisUtil;
-	@Autowired
-	private CookieUtil cookieUtil;
 	
 	private void setErrorMessage(HttpServletResponse response, int errorcode, String message){
 		try {
@@ -42,8 +36,8 @@ public class AccesstokenInterceptor implements HandlerInterceptor{
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		String user_accesstoken = cookieUtil.getAccesstoken(request);
 		
+		String user_accesstoken = CookieUtil.getAccesstoken(request);
 		String uri = request.getRequestURI();
 		String method = request.getMethod();
 		
@@ -62,13 +56,13 @@ public class AccesstokenInterceptor implements HandlerInterceptor{
 			return false;
 		}else {
 			//로그아웃된 액세스토큰이면
-			if(redisUtil.getData(user_accesstoken)!=null) {
+			if(RedisUtil.getData(user_accesstoken)!=null) {
 				setErrorMessage(response,401,"로그아웃된 액세스 토큰");
 				return false;
 			}
 			
 			try {
-				jwtUtil.validateToken(user_accesstoken);
+				JwtUtil.validateToken(user_accesstoken);
 				return true;
 			}catch(ExpiredJwtException e) {
 				setErrorMessage(response,401,"액세스 토큰 유효기간 만료");

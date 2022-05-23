@@ -29,27 +29,21 @@ import io.jsonwebtoken.ExpiredJwtException;
 )
 public class TokenService {
 	@Autowired
-	private JwtUtil jwtUtil;
-	@Autowired
-	private RedisUtil redisUtil;
-	@Autowired
 	private TokenDAO tokenDAO;
-	@Autowired
-	private CookieUtil cookieUtil;
 	
 	public void refreshTokens(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		HashMap result = new HashMap();
 		
-		String user_accesstoken = cookieUtil.getAccesstoken(request);
-		String user_refreshtoken = cookieUtil.getRefreshtoken(request);
+		String user_accesstoken = CookieUtil.getAccesstoken(request);
+		String user_refreshtoken = CookieUtil.getRefreshtoken(request);
 
 		//액세스 리프레시 토큰 재발급
-		String user_id = jwtUtil.getData(user_accesstoken, "user_id");
+		String user_id = JwtUtil.getData(user_accesstoken, "user_id");
 		UserVO user = new UserVO();
 		user.setUser_id(user_id);
 
-		String new_user_accesstoken = jwtUtil.createToken(user, JwtUtil.accesstokenMaxAge);
-		String new_user_refreshtoken = jwtUtil.createToken(user, JwtUtil.refreshtokenMaxAge);
+		String new_user_accesstoken = JwtUtil.createToken(user, JwtUtil.accesstokenMaxAge);
+		String new_user_refreshtoken = JwtUtil.createToken(user, JwtUtil.refreshtokenMaxAge);
 		
 		//새로운 액세스 리프레시 토큰으로 DB 업데이트
 		HashMap param = new HashMap();
@@ -59,12 +53,12 @@ public class TokenService {
 		tokenDAO.updateTokens(param);
 		
 		//새로운 액세스 리프레시 토큰을 쿠키에 저장후 응답
-		response.addCookie(cookieUtil.createCookie("user_accesstoken", new_user_accesstoken, "/restapi",14*24*60*60));
-		response.addCookie(cookieUtil.createCookie("user_refreshtoken", new_user_refreshtoken, "/restapi/tokens",14*24*60*60));
+		response.addCookie(CookieUtil.createCookie("user_accesstoken", new_user_accesstoken, "/restapi",14*24*60*60));
+		response.addCookie(CookieUtil.createCookie("user_refreshtoken", new_user_refreshtoken, "/restapi/tokens",14*24*60*60));
 		
 		//기존 액세스, 리프레시 토큰 비활성화
-		redisUtil.setData(user_accesstoken, "removed", jwtUtil.getExpiration(user_accesstoken));
-		redisUtil.setData(user_refreshtoken, "removed", jwtUtil.getExpiration(user_refreshtoken));
+		RedisUtil.setData(user_accesstoken, "removed", JwtUtil.getExpiration(user_accesstoken));
+		RedisUtil.setData(user_refreshtoken, "removed", JwtUtil.getExpiration(user_refreshtoken));
 	}
 	
 	public void login(HashMap<String,String> param, HttpServletResponse response) throws InvalidIdException, InvalidPwException, Exception{
@@ -76,7 +70,7 @@ public class TokenService {
 		String user_salt = tokenDAO.getSalt(param);
 		
 		//비밀키를 얻음
-		String privatekey = (String) redisUtil.getData(param.get("publickey"));
+		String privatekey = (String) RedisUtil.getData(param.get("publickey"));
 		
 		//비밀키로 해싱
 		String user_pw = SHA.DSHA512(RSA2048.decrypt(param.get("user_pw"), privatekey),user_salt);
@@ -90,8 +84,8 @@ public class TokenService {
 		user.setUser_id(user_id);
 		
 		
-		String user_accesstoken = jwtUtil.createToken(user, JwtUtil.accesstokenMaxAge);
-		String user_refreshtoken = jwtUtil.createToken(user, JwtUtil.refreshtokenMaxAge);
+		String user_accesstoken = JwtUtil.createToken(user, JwtUtil.accesstokenMaxAge);
+		String user_refreshtoken = JwtUtil.createToken(user, JwtUtil.refreshtokenMaxAge);
 		
 		//액세스, 리프레쉬 토큰 DB에 저장
 		param.put("user_accesstoken", user_accesstoken);
@@ -99,34 +93,34 @@ public class TokenService {
 		tokenDAO.updateTokens(param);
 		
 		//액세스, 리프레쉬 토큰 쿠키에 첨부
-		response.addCookie(cookieUtil.createCookie("user_accesstoken",user_accesstoken,"/restapi",14*24*60*60));
-		response.addCookie(cookieUtil.createCookie("user_refreshtoken",user_refreshtoken,"/restapi/tokens",14*24*60*60));
+		response.addCookie(CookieUtil.createCookie("user_accesstoken",user_accesstoken,"/restapi",14*24*60*60));
+		response.addCookie(CookieUtil.createCookie("user_refreshtoken",user_refreshtoken,"/restapi/tokens",14*24*60*60));
 	}
 	
 	public void logout(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		
-		String user_accesstoken = cookieUtil.getAccesstoken(request);
-		String user_refreshtoken = cookieUtil.getRefreshtoken(request);
+		String user_accesstoken = CookieUtil.getAccesstoken(request);
+		String user_refreshtoken = CookieUtil.getRefreshtoken(request);
 		
 		try {
-			redisUtil.setData(user_accesstoken, "removed", jwtUtil.getExpiration(user_accesstoken));
+			RedisUtil.setData(user_accesstoken, "removed", JwtUtil.getExpiration(user_accesstoken));
 		}catch(ExpiredJwtException e) {
 			
 		}
 		
 		try {
-			redisUtil.setData(user_refreshtoken, "removed", jwtUtil.getExpiration(user_refreshtoken));
+			RedisUtil.setData(user_refreshtoken, "removed", JwtUtil.getExpiration(user_refreshtoken));
 		}catch(ExpiredJwtException e) {
 
 		}
 		
 		HashMap param = new HashMap();
-		param.put("user_id", jwtUtil.getData(user_accesstoken,"user_id"));
+		param.put("user_id", JwtUtil.getData(user_accesstoken,"user_id"));
 		tokenDAO.deleteTokens(param);
 		
 		//액세스, 리프레쉬 토큰 쿠키에 첨부
-		response.addCookie(cookieUtil.createCookie("user_accesstoken","removed","/restapi",0));
-		response.addCookie(cookieUtil.createCookie("user_refreshtoken","removed","/restapi/tokens",0));
+		response.addCookie(CookieUtil.createCookie("user_accesstoken","removed","/restapi",0));
+		response.addCookie(CookieUtil.createCookie("user_refreshtoken","removed","/restapi/tokens",0));
 	}
 	
 	public HashMap getTokens(HashMap param){

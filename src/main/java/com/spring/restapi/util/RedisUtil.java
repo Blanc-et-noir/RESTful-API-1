@@ -9,10 +9,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class RedisUtil {
 
-    @Autowired
-    private RedisTemplate redisTemplate;
+    private static RedisTemplate redisTemplate;
 
-    public Object getData(String key){
+    @Autowired
+    RedisUtil(RedisTemplate redisTemplate){
+    	this.redisTemplate = redisTemplate;
+    }
+    
+    public static Object getData(String key){
     	try {
             return redisTemplate.opsForValue().get(key);
     	}catch(Exception e) {
@@ -21,15 +25,15 @@ public class RedisUtil {
     	}
     }
 
-    public void setData(String key, String value){
+    public static void setData(String key, String value){
         redisTemplate.opsForValue().set(key,value);
     }
 
-    public void setData(String key,String value,long duration){
+    public static void setData(String key,String value,long duration){
 		redisTemplate.opsForValue().set(key, value, duration, TimeUnit.MILLISECONDS);
     }
 
-    public void deleteData(String key){
+    public static void deleteData(String key){
     	redisTemplate.delete(key);
     }
 }

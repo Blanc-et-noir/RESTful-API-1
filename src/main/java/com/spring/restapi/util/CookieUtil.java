@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class CookieUtil {
 	
-	public Cookie createCookie(String name, String value, String path, int expiry) {
+	public static Cookie createCookie(String name, String value, String path, int expiry) {
 		Cookie cookie = new Cookie(name,value);
 		cookie.setPath(path);
 		cookie.setMaxAge(expiry);
@@ -14,7 +14,7 @@ public class CookieUtil {
 		return cookie;
 	}
 	
-	public String getAccesstoken(HttpServletRequest request) {
+	public static String getAccesstoken(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
 		String user_accesstoken = null;
 		try {
@@ -30,7 +30,7 @@ public class CookieUtil {
 		}
 	}
 	
-	public String getRefreshtoken(HttpServletRequest request) {
+	public static String getRefreshtoken(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
 		String user_refreshtoken = null;
 		try {

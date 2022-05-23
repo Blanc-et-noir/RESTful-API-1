@@ -29,13 +29,7 @@ import com.spring.restapi.util.RedisUtil;
 @Controller("userController")
 public class UserController {
 	@Autowired
-	private RedisUtil redisUtil;
-	@Autowired
-	private JwtUtil jwtUtil;
-	@Autowired
 	private UserService userService;
-	@Autowired
-	private CookieUtil cookieUtil;
 	
 	@RequestMapping(value= {"/users/publickeys"}, method= {RequestMethod.GET})
 	public ResponseEntity<HashMap> getPublickey(HttpServletRequest request){
@@ -45,7 +39,7 @@ public class UserController {
 			String privatekey = RSA2048.keyToString(keyPair.getPrivate());
 			String publickey = RSA2048.keyToString(keyPair.getPublic());
 			
-			redisUtil.setData(publickey, privatekey,JwtUtil.privateKeyMaxAge);
+			RedisUtil.setData(publickey, privatekey,JwtUtil.privateKeyMaxAge);
 			
 			result.put("flag", true);
 			result.put("content", "공개키 발급 성공");
@@ -103,13 +97,13 @@ public class UserController {
 	public ResponseEntity<HashMap> info(HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
-			String user_accesstoken = cookieUtil.getAccesstoken(request);
+			String user_accesstoken = CookieUtil.getAccesstoken(request);
 			result.put("flag", "true");
-			result.put("content", "로그인 정보가 필요한 기능 사용 성공\n요청자 ID : "+jwtUtil.getData(user_accesstoken, "user_id")+"\n액세스 토큰의 잔여 시간 : "+(jwtUtil.getExpiration(user_accesstoken)/1000)+"초");
+			result.put("content", "로그인 정보가 필요한 기능 사용 성공\n요청자 ID : "+JwtUtil.getData(user_accesstoken, "user_id")+"\n액세스 토큰의 잔여 시간 : "+(JwtUtil.getExpiration(user_accesstoken)/1000)+"초");
 			
 			HashMap map = new HashMap();
-			map.put("user_id", jwtUtil.getData(user_accesstoken, "user_id"));
-			map.put("user_accesstoken_exp", (jwtUtil.getExpiration(user_accesstoken)/1000)+"초");
+			map.put("user_id", JwtUtil.getData(user_accesstoken, "user_id"));
+			map.put("user_accesstoken_exp", (JwtUtil.getExpiration(user_accesstoken)/1000)+"초");
 			result.put("user_info", map);
 			result.put("flag", true);
 			result.put("content", "조회 설공");
@@ -126,7 +120,7 @@ public class UserController {
 	public ResponseEntity<HashMap> scoreProblems(@RequestBody HashMap param, HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
-			String user_id = jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id");
+			String user_id = JwtUtil.getData(CookieUtil.getAccesstoken(request), "user_id");
 			
 			ArrayList<HashMap<String,String>> list = (ArrayList<HashMap<String,String>>) param.get("list");
 			

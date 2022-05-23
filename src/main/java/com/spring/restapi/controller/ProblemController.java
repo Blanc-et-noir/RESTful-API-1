@@ -28,10 +28,6 @@ import com.spring.restapi.util.JwtUtil;
 public class ProblemController {
 	@Autowired
 	ProblemService problemService;
-	@Autowired
-	private JwtUtil jwtUtil;
-	@Autowired
-	private CookieUtil cookieUtil;
 	
 	private static final String IMAGE_BASE_PATH = "//home//tomcat9//webapps//restapi_files//problem_images//"; 
 	
@@ -63,7 +59,7 @@ public class ProblemController {
 	public ResponseEntity<HashMap> writeOpinion(@PathVariable("problem_id") String problem_id, @RequestParam HashMap param, HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
-			param.put("user_id", jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id"));
+			param.put("user_id", JwtUtil.getData(CookieUtil.getAccesstoken(request), "user_id"));
 			param.put("problem_id", problem_id);
 			problemService.writeOpinion(param);
 			
@@ -82,7 +78,7 @@ public class ProblemController {
 	public ResponseEntity<HashMap> deleteOpinion(@PathVariable("problem_id") String problem_id,@PathVariable("opinion_id") String opinion_id, @RequestParam HashMap param, HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
-			param.put("user_id", jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id"));
+			param.put("user_id", JwtUtil.getData(CookieUtil.getAccesstoken(request), "user_id"));
 			param.put("problem_id", problem_id);
 			param.put("opinion_id", opinion_id);
 			problemService.deleteOpinion(param);
@@ -114,7 +110,7 @@ public class ProblemController {
 	public ResponseEntity<HashMap> updateOpinion(@PathVariable("problem_id") String problem_id,@PathVariable("opinion_id") String opinion_id, @RequestParam HashMap param, HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
-			param.put("user_id", jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id"));
+			param.put("user_id", JwtUtil.getData(CookieUtil.getAccesstoken(request), "user_id"));
 			param.put("problem_id", problem_id);
 			param.put("opinion_id", opinion_id);
 			
@@ -147,7 +143,7 @@ public class ProblemController {
 	public ResponseEntity<HashMap> readOpinion(@PathVariable("problem_id") String problem_id, @RequestParam HashMap param, HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
-			param.put("user_id", jwtUtil.getData(cookieUtil.getAccesstoken(request), "user_id"));
+			param.put("user_id", JwtUtil.getData(CookieUtil.getAccesstoken(request), "user_id"));
 			param.put("problem_id", problem_id);
 			
 			result = problemService.readOpinions(param);
