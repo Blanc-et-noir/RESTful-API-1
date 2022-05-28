@@ -665,7 +665,7 @@ function renderProblems(result){
 		
 		$(problemDiv).append(problem);
 	}
-	$(problemDiv).append("<div id='score_problems_button' class='touchable'>채점하기</div>");
+	$(problemDiv).append("<div id='score_problems_button' class='touchable'>문제를 잘 풀었는지 확인해보세요. </div>");
 	$("#problem_div").append(problemDiv);
 	
 }
@@ -713,11 +713,20 @@ $(document).ready(function(){
 	$(document).on("click","#score_problems_button",function(e){
 		var i,j, problem = $(".problem");
 		var list = new Array();
-		
+		var sum = 80;
 		for(i=0;i<problem.length;i++){
 			var problem_id = $(".problem").eq(i).find("input[type='radio']").attr("name");
+			
+			if(i!=0){
+				sum += ($(".problem").eq(i).css("height").replaceAll("px","")-0)+40;
+			}
+			
 			if(!$("input[name='"+problem_id+"']").is(":checked")){
 				alert("["+(i+1)+"] 문제를 체크해야합니다.");
+				$("#s2s1container").animate({
+					"scrollTop":sum+"px"
+				},300,"linear",function(){});
+				
 				return false;
 			}
 			var obj = new Object();

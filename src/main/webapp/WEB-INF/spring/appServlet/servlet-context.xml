@@ -42,6 +42,7 @@
 
 	<mvc:interceptors>
 		<mvc:interceptor>
+			<mvc:mapping path="/articles/**"/>
 			<mvc:mapping path="/problems/**"/>
 			<mvc:mapping path="/users/**"/>
 			<beans:bean class="com.spring.restapi.interceptor.AccesstokenInterceptor"></beans:bean>

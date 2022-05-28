@@ -79,10 +79,7 @@
 						<div id="get_problems_button" class='touchable'>조회하기</div>
 					</div>
 				</div>
-        	</div>
-			<div class="slide" style="background-color:#f4f4f4;">
-				<p>dd</p>
-        	</div>          
+        	</div>        
         </div>
         <div class="section">
             <div class="slide" style="background-color:#f4f4f4">
@@ -95,32 +92,27 @@
             	</div>
             </div>
             <div class="slide" style="background-color:#f4f4f4">
-            	<form id="article_form" class="touchable">
-                    <input id="article_title" name="article_title" class="touchable" type="text" required style="padding:10px" placeholder="게시글 제목">
-                    <textarea id="article_content" name="article_content" class="touchable" required style="padding:10px" placeholder="게시글 내용"></textarea>
-                    <input id="article_write_button" class="touchable" type="button" value="글 쓰기">
-            	</form>
-            </div>
-            <div class="slide" style="background-color:#f4f4f4">
-				<div id="article_list_form" class="touchable">
-					<div id="article_list_panel" class="touchable">
-						<select id="search_flag" class="touchable">
-							<option selected value="user_id" label="ID">
-							<option value="article_title" label="제목">
-							<option value="article_content" label="내용">
-						</select>
-						<input id="article_search" name="article_search" class="touchable">
-						<input id="article_search_button" class="touchable" type="button" value="검색">
-					</div>
-					<div id="article_list_header" class="touchable">
-						<div id="id" class="touchable">ID</div>
-						<div id="title" class="touchable">제목</div>
-						<div id="date" class="touchable">날짜</div>
-					</div>
-					<div id="article_list">
-						
-					</div>
-				</div>
+            	<div id="list_article_form" class="touchable">
+            		<div id="article_search_panel" class="touchable">
+            			<select id="search_flag" class="touchable">
+            				<option selected value="user_id" label="작성자 ID" class="touchable"/>
+            				<option value="article_title" label="게시글 제목" class="touchable"/>
+            				<option value="article_content" label="게시글 내용" class="touchable"/>
+            			</select>
+            			<input id="search_content" class="touchable" placeholder="검색하고 싶은 내용을 이곳에 적어주세요.">
+            			<div id="search_article_button" class="touchable">검색하기</div>
+            		</div>
+            		<div id="article_list" class="touchable"></div>
+            		<div id="add_article_button" class="touchable" onclick="setAddArticleForm();">게시글을 작성하고 싶어요.</div>
+            	</div>
+            	<div id="add_article_form" class="touchable">
+            		<div class="subtitle touchable">게시글 제목</div>
+            		<input id="article_title" placeholder="게시글 제목은 이곳에 적어주세요." class="touchable">
+            		<div class="subtitle touchable">게시글 내용</div>
+            		<textarea rows="" cols="" id="article_content" placeholder="게시글 내용은 이곳에 적어주세요." class="touchable"></textarea>
+            		<div id="article_images" class="touchable"></div>
+            		<div id="list_article_button" class="touchable" onclick="setListArticleForm();">게시글들을 다시 보여주세요.</div>
+            	</div>
             </div>
         </div>
         <div class="section">
