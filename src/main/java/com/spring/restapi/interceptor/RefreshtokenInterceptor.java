@@ -50,23 +50,24 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 			return true;
 		}
 		
-		//액세스토큰이 없으면
+		//리프레쉬 토큰 없음
 		if(user_refreshtoken == null) {
-			setErrorMessage(response,401,"리프레쉬 토큰 없음");
+			setErrorMessage(response,401,"로그인 정보가 유효하지 않음");
 			return false;
+		//액세스 토큰 없음
 		}else if(user_accesstoken==null) {
-			setErrorMessage(response,401,"액세스 토큰 없음");
+			setErrorMessage(response,401,"로그인 정보가 유효하지 않음");
 			return false;
 		}else {
-			//로그아웃된 리프레시토큰이면
+			//로그아웃된 리프레시 토큰
 			if(RedisUtil.getData(user_refreshtoken)!=null) {
-				setErrorMessage(response,401,"로그아웃된 리프레시 토큰");
+				setErrorMessage(response,401,"로그인 정보가 유효하지 않음");
 				return false;
 			}
 			
-			//로그아웃된 액세스토큰이면
+			//로그아웃된 액세스 토큰
 			if(RedisUtil.getData(user_accesstoken)!=null) {
-				setErrorMessage(response,401,"로그아웃된 액세스 토큰");
+				setErrorMessage(response,401,"로그인 정보가 유효하지 않음");
 				return false;
 			}
 			
@@ -74,8 +75,9 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 				JwtUtil.validateToken(user_accesstoken);
 			}catch(ExpiredJwtException e) {
 
+			//위조된 액세스 토큰
 			}catch(Exception e) {
-				setErrorMessage(response,401,"위조된 액세스 토큰");
+				setErrorMessage(response,401,"로그인 정보가 유효하지 않음");
 				return false;
 			}
 			
@@ -88,7 +90,7 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 				
 				//현재 사용중이었던 액세스와 리프레시인지 확인
 				if(!access_user_id.equals(refresh_user_id)) {
-					setErrorMessage(response,401,"액세스 토큰, 리프레쉬 토큰의 소유자 ID 불일치");
+					setErrorMessage(response,401,"로그인 정보가 유효하지 않음");
 					return false;
 				}
 				
@@ -96,16 +98,19 @@ public class RefreshtokenInterceptor implements HandlerInterceptor{
 				param.put("user_id", access_user_id);
 				HashMap tokens = tokenService.getTokens(param);
 				
+				//액세스 토큰 또는 리프레쉬 토큰이 로그인에 사용한 것이 아님
 				if(!user_accesstoken.equals(tokens.get("user_accesstoken"))||!user_refreshtoken.equals(tokens.get("user_refreshtoken"))) {
-					setErrorMessage(response,401,"액세스 토큰 또는 리프레쉬 토큰이 로그인에 사용한 것이 아님");
+					setErrorMessage(response,401,"로그인 정보가 유효하지 않음");
 					return false;
 				}
 				return true;
+			//리프레쉬 토큰 유효기간 만료
 			}catch(ExpiredJwtException e) {
-				setErrorMessage(response,401,"리프레쉬 토큰 유효기간 만료");
+				setErrorMessage(response,401,"로그인 정보가 유효하지 않음");
 				return false;
+			//위조된 리프레쉬 토큰
 			}catch(Exception e) {
-				setErrorMessage(response,401,"위조된 리프레쉬 토큰");
+				setErrorMessage(response,401,"로그인 정보가 유효하지 않음");
 				return false;
 			}
 		}

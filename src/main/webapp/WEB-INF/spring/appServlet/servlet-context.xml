@@ -42,13 +42,12 @@
 
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/articles"/>
-			<mvc:mapping path="/problems"/>
-			<mvc:mapping path="/users"/>
+			<mvc:mapping path="/problems/**"/>
+			<mvc:mapping path="/users/**"/>
 			<beans:bean class="com.spring.restapi.interceptor.AccesstokenInterceptor"></beans:bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/tokens"/>
+			<mvc:mapping path="/tokens/**"/>
 			<beans:bean class="com.spring.restapi.interceptor.RefreshtokenInterceptor"></beans:bean>
 		</mvc:interceptor>
 		<mvc:interceptor>

@@ -41,34 +41,34 @@ public class AccesstokenInterceptor implements HandlerInterceptor{
 		String uri = request.getRequestURI();
 		String method = request.getMethod();
 		
-		//아래의 동작들은 토큰 없이도 동작
-		if(uri.equals("/restapi/tokens")&&method.equals("POST")) {
+		//신규 회원 가입, 회원정보 조회를 제외한 모든 GET 요청은 토큰이 필요 없음
+		if(uri.equals("/restapi/users")&&method.equals("POST")) {
 			return true;
-		}else if(uri.equals("/restapi/articles")&&method.equals("GET")) {
-			return true;
-		}else if(uri.equals("/restapi/users")&&method.equals("POST")) {
+		}else if(!uri.equals("/restapi/users")&&method.equals("GET")) {
 			return true;
 		}
 		
-		//액세스토큰이 없으면
+		//액세스 토큰 없음
 		if(user_accesstoken==null) {
-			setErrorMessage(response,401,"액세스 토큰 없음");
+			setErrorMessage(response,401,"로그인 정보가 유효하지 않음");
 			return false;
 		}else {
-			//로그아웃된 액세스토큰이면
+			//로그아웃된 액세스 토큰
 			if(RedisUtil.getData(user_accesstoken)!=null) {
-				setErrorMessage(response,401,"로그아웃된 액세스 토큰");
+				setErrorMessage(response,401,"로그인 정보가 유효하지 않음");
 				return false;
 			}
 			
 			try {
 				JwtUtil.validateToken(user_accesstoken);
 				return true;
+			//액세스 토큰 유효기간 만료
 			}catch(ExpiredJwtException e) {
-				setErrorMessage(response,401,"액세스 토큰 유효기간 만료");
+				setErrorMessage(response,401,"로그인 정보가 유효하지 않음");
 				return false;
+			//위조된 액세스 토큰
 			}catch(Exception e) {
-				setErrorMessage(response,401,"위조된 액세스 토큰");
+				setErrorMessage(response,401,"로그인 정보가 유효하지 않음");
 				return false;
 			}
 		}
