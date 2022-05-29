@@ -20,7 +20,11 @@ public class ArticleDAO {
 		}
 	}
 	
-	public List listArticles(HashMap<String,String> param){
-		return sqlSession.selectList("article.listArticles", param);
+	public int getArticlesTotal(HashMap<String,String> param){
+		return sqlSession.selectOne("article.getArticlesTotal", param);
+	}
+	
+	public List getArticles(HashMap<String,String> param){
+		return sqlSession.selectList("article.getArticles", param);
 	}
 }

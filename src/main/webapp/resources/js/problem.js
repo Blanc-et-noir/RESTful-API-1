@@ -27,22 +27,7 @@ function paging(problem_id,total,section,page){
 				paging(problem_id,total,section-1, 1);
 			})
 			.fail(function(xhr, status, error){
-				if(xhr.status==401){
-					refreshTokens()
-					.done(function(result){
-						list = result.list;
-						total = result.total;
-						
-						$(opinions).empty();
-						renderOpinions(opinions,list);
-						paging(problem_id,total,section-1, 1);
-					})
-					.fail(function(xhr, status, error){
-						alert(xhr.responseJSON.content);
-					})
-				}else{
-					alert(xhr.responseJSON.content);
-				}
+				alert(xhr.responseJSON.content);
 			})
 		})
 		$(pagebar).append(tag);
@@ -63,22 +48,7 @@ function paging(problem_id,total,section,page){
 				paging(problem_id,total,section, page);
 			})
 			.fail(function(xhr, status, error){
-				if(xhr.status==401){
-					refreshTokens()
-					.done(function(result){
-						list = result.list;
-						total = result.total;
-						
-						$(opinions).empty();
-						renderOpinions(opinions,list);
-						paging(problem_id,total,section, page);
-					})
-					.fail(function(xhr, status, error){
-						alert(xhr.responseJSON.content);
-					})
-				}else{
-					alert(xhr.responseJSON.content);
-				}
+				alert(xhr.responseJSON.content);
 			})	
 		})
 	}
@@ -101,22 +71,7 @@ function paging(problem_id,total,section,page){
 				paging(problem_id,total,section+1, 1);
 			})
 			.fail(function(xhr, status, error){
-				if(xhr.status==401){
-					refreshTokens()
-					.done(function(result){
-						list = result.list;
-						total = result.total;
-						
-						$(opinions).empty();
-						renderOpinions(opinions,list);
-						paging(problem_id,total,section+1, 1);
-					})
-					.fail(function(xhr, status, error){
-						alert(xhr.responseJSON.content);
-					})
-				}else{
-					alert(xhr.responseJSON.content);
-				}
+				alert(xhr.responseJSON.content);
 			})
 		})
 		$(pagebar).append(tag);
@@ -589,24 +544,7 @@ function openOpinionsForm(target,problem_id){
 		paging(problem_id,total,1, 1);
 	})
 	.fail(function(xhr, status, error){
-		if(xhr.status==401){
-			refreshTokens()
-			.done(function(result){
-				list = result.list;
-				total = result.total;
-				
-				$(opinions).empty();
-				
-				renderOpinions(opinions,list);
-				
-				paging(problem_id,total,section, page);
-			})
-			.fail(function(xhr, status, error){
-				alert(xhr.responseJSON.content);
-			})
-		}else{
-			alert(xhr.responseJSON.content);
-		}
+		alert(xhr.responseJSON.content);
 	})
 }
 
@@ -690,23 +628,7 @@ $(document).ready(function(){
 			renderProblems(result);
 		})
 		.fail(function(xhr, status, error){
-			if(xhr.status==401){
-				refreshTokens()
-				.done(function(){
-					getProblems()
-					.done(function(result){
-						renderProblems(result);
-					})
-					.fail(function(xhr, status, error){
-						alert(xhr.responseJSON.content);
-					})
-				})
-				.fail(function(xhr, status, error){
-					alert(xhr.responseJSON.content);
-				})
-			}else{
-				alert(xhr.responseJSON.content);
-			}
+			alert(xhr.responseJSON.content);
 		})
     });
 	

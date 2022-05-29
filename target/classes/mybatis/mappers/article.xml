@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="article">
-	<select id="listArticles" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT article_id "article_id", article_title "article_title", article_content "article_content", DATE_FORMAT(article_date,'%Y-%m-%d %T') "article_date", article_view "article_view", user_id "user_id"
-		FROM articles
-		WHERE ${search_flag} LIKE CONCAT('%',#{article_search},'%')
+
+	<select id="getArticles" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT article_id "article_id", article_title "article_title", IF((DATEDIFF(NOW(),DATE_FORMAT(article_date,'%Y-%m-%d %T')))	<![CDATA[<]]>1,DATE_FORMAT(article_date,'%T'),DATE_FORMAT(article_date,'%Y-%m-%d')) "article_date", article_view "article_view", user_id "user_id", user_name "user_name"
+		FROM articles NATURAL JOIN users
+		WHERE ${search_flag} LIKE CONCAT('%',#{search_content},'%')
 		ORDER BY article_date DESC
+		LIMIT 5 OFFSET ${offset}
+	</select>
+	
+	<select id="getArticlesTotal" parameterType="java.util.HashMap" resultType="Integer">
+		SELECT COUNT(*) "articles_total"
+		FROM articles
+		WHERE ${search_flag} LIKE CONCAT('%',#{search_content},'%')
 	</select>
 	
 	<insert id="addArticle" parameterType="java.util.HashMap">

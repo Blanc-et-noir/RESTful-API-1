@@ -35,7 +35,10 @@ public class ArticleService {
 		
 	}
 	
-	public List listArticles(HttpServletRequest request,HashMap<String,String> param){
-		return articleDAO.listArticles(param);
+	public HashMap getArticles(HashMap param){
+		HashMap result = new HashMap();
+		result.put("articles_total", articleDAO.getArticlesTotal(param));
+		result.put("articles", articleDAO.getArticles(param));
+		return result;
 	}
 }
