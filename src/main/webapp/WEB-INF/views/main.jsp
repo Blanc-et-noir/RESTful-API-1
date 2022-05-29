@@ -30,8 +30,6 @@
     <title>CBT 웹 서비스</title>
 </head>
 <body>
-	<div id="form_cover"></div>
-	<div id="alert_cover"></div>
 	<div id="blancetnoir"><span>Made By </span><span style="color:#06d6a0">B</span><span>lanc et </span><span style="color:#ee3f5c">N</span><span>oir</span></div>
     <div id="fullpage">
         <div class="section">
@@ -143,6 +141,8 @@
 				<p>내용</p>
         	</div>     
         </div>
+        <div id="form_cover"></div>
+		<div id="alert_cover"></div>
     </div>
 </body>
 </html>

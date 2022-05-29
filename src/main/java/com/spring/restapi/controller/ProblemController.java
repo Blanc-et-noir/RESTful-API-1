@@ -140,11 +140,17 @@ public class ProblemController {
 	
 	//액세스 필요
 	@RequestMapping(value= {"/problems/{problem_id}/opinions"}, method= {RequestMethod.GET})
-	public ResponseEntity<HashMap> readOpinion(@PathVariable("problem_id") String problem_id, @RequestParam HashMap param, HttpServletRequest request){
+	public ResponseEntity<HashMap> readOpinion(@PathVariable("problem_id") String problem_id, @RequestParam HashMap<String,String> param, HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
 			param.put("user_id", JwtUtil.getData(CookieUtil.getAccesstoken(request), "user_id"));
 			param.put("problem_id", problem_id);
+			
+			int section = Integer.parseInt(param.get("section"));
+			int page = Integer.parseInt(param.get("page"));
+			
+			param.put("offset", ((section-1)*25+(page-1)*5)+"");
+			
 			
 			result = problemService.readOpinions(param);
 			result.put("flag", true);

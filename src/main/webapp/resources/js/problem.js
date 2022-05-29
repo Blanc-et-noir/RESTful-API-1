@@ -187,7 +187,7 @@ function readOpinions(problem_id){
 	var section =  $(opinions).attr("section");
 	var page =  $(opinions).attr("page");
 	return $.ajax({
-		"url":"/restapi/problems/"+problem_id+"/opinions?offset="+((section-1)*25+(page-1)*5),
+		"url":"/restapi/problems/"+problem_id+"/opinions?section="+section+"&page="+page,
 		"type":"get",
 		"dataType":"json"
 	});

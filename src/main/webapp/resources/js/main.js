@@ -11,8 +11,8 @@ function setLogin(){
 //로그아웃 상태라면 로그인, 회원가입 버튼을 렌더링
 function setLogout(){
 	$("#logout_button").remove();
-	$("body").append("<div id='loginForm_button'>로그인</div>");
-	$("body").append("<div id='joinForm_button'>회원가입</div>");
+	$("#fullpage").append("<div id='loginForm_button'>로그인</div>");
+	$("#fullpage").append("<div id='joinForm_button'>회원가입</div>");
 }
 
 function checkBytes(text, MAX_BYTES){
@@ -71,7 +71,7 @@ function openForm(form){
     	$("#form_cover").css({
     		"display":"block"
     	})
-    	$("body").append(form);
+    	$("#fullpage").append(form);
 	}
 }
 
@@ -281,9 +281,9 @@ $(document).ready(function(){
 		var innerBox = $("<div id='loginFormInnerBox'></div>");
 		var loginFormPanel = $("<div id='loginFormPanel'></div>");
 		
-		innerBox.append("<input id='user_id' class='input' name='user_id' type='text' autocomplete='off' placeholder='아이디'>");
+		innerBox.append("<div class='subtitle'>로그인 정보</div><input id='user_id' class='input' name='user_id' type='text' autocomplete='off' placeholder='아이디'>");
 		innerBox.append("<input id='user_pw' class='input' name='user_pw' type='password' autocomplete='off' placeholder='비밀번호'>");
-		innerBox.append("<p id='error_message'></p>");
+		innerBox.append("<div id='error_message'></div>");
 		
 		loginFormPanel.append("<input id='login_button' type='button' value='로그인'>");
 		loginFormPanel.append("<input id='loginFormClose_button' type='button' value='닫기' onclick='closeForm(this)'>");
@@ -304,12 +304,12 @@ $(document).ready(function(){
 		var innerBox = $("<div id='joinFormInnerBox'></div>");
 		var joinFormPanel = $("<div id='joinFormPanel'></div>");
 		
-		innerBox.append("<input id='user_id' class='input' name='user_id' type='text' autocomplete='off' placeholder='아이디'>");
+		innerBox.append("<div class='subtitle'>로그인 정보</div><input id='user_id' class='input' name='user_id' type='text' autocomplete='off' placeholder='아이디'>");
 		innerBox.append("<input id='user_pw' class='input' name='user_pw' type='password' autocomplete='off' placeholder='비밀번호'>");
 		innerBox.append("<input id='user_pw_check'class='input' name='user_pw_check' type='password' autocomplete='off' placeholder='비밀번호 확인'>");
-		innerBox.append("<input id='user_name' class='input' name='user_name' type='text' autocomplete='off' placeholder='이름'>");
+		innerBox.append("<div class='subtitle'>개인 정보</div><input id='user_name' class='input' name='user_name' type='text' autocomplete='off' placeholder='이름'>");
 		innerBox.append("<input id='user_email' class='input' name='user_email' type='text' autocomplete='off' placeholder='이메일'>");
-		innerBox.append("<select id='question_id' class='input' name='question_id'></select>");
+		innerBox.append("<div class='subtitle'>비밀번호 찾기 질문</div><select id='question_id' class='input' name='question_id'></select>");
 		innerBox.append("<input id='question_answer' class='input' name='question_answer' type='text' autocomplete='off' placeholder='비밀번호 찾기 질문의 정답'>");
 		innerBox.append("<p id='error_message'></p>");
 		
