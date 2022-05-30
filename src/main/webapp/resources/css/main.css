@@ -756,9 +756,14 @@ input[type=radio]:not(:checked) + label:hover{
 	flex-direction:row;
 	height:40px;
 }
-
 .article_header > div{
 	line-height:40px;
+	background-color:#ff8563;
+	color:white;
+}
+.article_header > div:hover{
+	line-height:40px;
+	background-color:#f96f62;
 }
 
 .article_header > div:nth-of-type(1){
@@ -782,9 +787,6 @@ input[type=radio]:not(:checked) + label:hover{
 	text-align:center;
 }
 
-.article_header> div:hover{
-	color:#ee3f5c;
-}
 
 .article_row{
 	display:flex;
@@ -821,4 +823,20 @@ input[type=radio]:not(:checked) + label:hover{
 .article_row > div:nth-of-type(4){
 	width:40px;
 	text-align:center;
+}
+
+
+.article_wrapper{
+	display:flex;
+	flex-direction:column;
+}
+
+
+.article_content{
+	resize:none;
+	padding:20px;
+}
+
+.article_content:hover{
+	background-color:#e0e0e0;
 }

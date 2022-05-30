@@ -10,6 +10,18 @@
 		LIMIT 5 OFFSET ${offset}
 	</select>
 	
+	<select id="getArticleImages" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT article_image_id "article_image_id", article_id "article_id" 
+		FROM article_images
+		WHERE article_id = #{article_id}
+	</select>
+	
+	<select id="getArticle" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT article_id "article_id", article_title "article_title",article_content "article_content", IF((DATEDIFF(NOW(),DATE_FORMAT(article_date,'%Y-%m-%d %T')))	<![CDATA[<]]>1,DATE_FORMAT(article_date,'%T'),DATE_FORMAT(article_date,'%Y-%m-%d')) "article_date", article_view "article_view", user_id "user_id", user_name "user_name", IF(user_id=#{user_id},'true','false') AS "editable"
+		FROM articles NATURAL JOIN users
+		WHERE article_id = #{article_id}
+	</select>
+	
 	<select id="getArticlesTotal" parameterType="java.util.HashMap" resultType="Integer">
 		SELECT COUNT(*) "articles_total"
 		FROM articles
@@ -20,4 +32,10 @@
 		INSERT INTO articles(article_id,article_title,article_content,user_id)
 		VALUES(NEXTVAL(article_sequence),#{article_title},#{article_content},#{user_id})
 	</insert>
+	
+	<update id="increaseArticleView" parameterType="java.util.HashMap">
+		UPDATE articles
+		SET article_view = article_view + 1
+		WHERE article_id = #{article_id}
+	</update>
 </mapper>

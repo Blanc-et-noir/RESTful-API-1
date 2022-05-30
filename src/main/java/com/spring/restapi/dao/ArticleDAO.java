@@ -27,4 +27,16 @@ public class ArticleDAO {
 	public List getArticles(HashMap<String,String> param){
 		return sqlSession.selectList("article.getArticles", param);
 	}
+	
+	public List getArticleImages(HashMap<String,String> param){
+		return sqlSession.selectList("article.getArticleImages", param);
+	}
+	
+	public HashMap getArticle(HashMap<String,String> param){
+		return sqlSession.selectOne("article.getArticle", param);
+	}
+	
+	public void increaseArticleView(HashMap<String,String> param) {
+		sqlSession.update("article.increaseArticleView", param);
+	}
 }

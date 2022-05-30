@@ -49,11 +49,15 @@ public class JwtUtil {
 	}
 	
 	//해당 토큰이 유효한지 아닌지 판단하는 메소드
-	public static boolean validateToken(String token) throws ExpiredJwtException, Exception{
-		Claims claims = null;
-		//해당 토큰이 유효한지 검증함
-		claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-		return true;
+	public static boolean validateToken(String token){
+		try {
+			Claims claims = null;
+			//해당 토큰이 유효한지 검증함
+			claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
 	}
 	
 	//해당 토큰에 첨부한 정보가 담긴 맵 객체를 얻음

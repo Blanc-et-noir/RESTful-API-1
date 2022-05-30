@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.spring.restapi.service.ArticleService;
+import com.spring.restapi.util.CookieUtil;
+import com.spring.restapi.util.JwtUtil;
 
 @Controller("articleController")
 public class ArticleController {
@@ -67,7 +70,28 @@ public class ArticleController {
 	}
 	
 	@RequestMapping(value={"/articles/{article_id}"},method={RequestMethod.GET})
-	public ResponseEntity<HashMap> getArticle(MultipartRequest mRequest, HttpServletRequest request){
-		return null;
+	public ResponseEntity<HashMap> getArticle(@PathVariable String article_id,HashMap param, HttpServletRequest request){
+		HashMap result = new HashMap();
+		try {
+			String user_accesstoken = CookieUtil.getAccesstoken(request);
+			
+			if(JwtUtil.validateToken(user_accesstoken)) {
+				param.put("user_id", JwtUtil.getData(user_accesstoken, "user_id"));
+			}else {
+				param.put("user_id", "");
+			}
+			
+			param.put("article_id", article_id);
+			
+			result = articleService.getArticle(param);
+			result.put("flag", true);
+			result.put("content", "게시글 조회 성공");
+			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			result.put("flag", false);
+			result.put("content", "게시글 목록 실패");
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}
 	}
 }

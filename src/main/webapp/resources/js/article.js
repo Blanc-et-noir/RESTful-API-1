@@ -34,6 +34,22 @@ function getArticles(section, page){
 	});
 }
 
+function getArticle(article_id){
+	if($("div.article_wrapper[value='"+article_id+"']").length!=0){
+		return
+	}
+
+	return $.ajax({
+		"url":"/restapi/articles/"+article_id,
+		"type":"get",
+		"dataType":"json",
+		"success":function(result){
+			var article = result.article;
+			renderArticle(article);
+		}
+	})
+}
+
 function renderArticles(articles){
 	$("#article_list").empty();
 	var i;
@@ -41,10 +57,16 @@ function renderArticles(articles){
 	$("#article_list").append("<div class='article_header touchable'><div class='touchable'>제목</div><div class='touchable'>작성일</div><div class='touchable'>작성자</div><div class='touchable'>조회</div></div>");
 	
 	for(i=0; i<articles.length; i++){
-		$("#article_list").append("<div class='article_row touchable'><div class='touchable'>"+articles[i].article_title+"</div><div class='touchable'>"+articles[i].article_date+"</div><div class='touchable'>"+articles[i].user_name+"(<span class='touchable' style='color:gray;'>"+" "+articles[i].user_id+" "+"</span>)</div><div class='touchable'>"+articles[i].article_view+"</div></div>");
+		$("#article_list").append("<div class='article_row touchable' onclick='getArticle("+"\""+articles[i].article_id+"\""+")' value='"+articles[i].article_id+"'><div class='touchable'>"+articles[i].article_title+"</div><div class='touchable'>"+articles[i].article_date+"</div><div class='touchable'>"+articles[i].user_name+"(<span class='touchable' style='color:gray;'>"+" "+articles[i].user_id+" "+"</span>)</div><div class='touchable'>"+articles[i].article_view+"</div></div>");
 	}
 	
 	$("#article_list").append("<div class='pagebar touchable'></div>")
+}
+
+
+
+function renderArticle(article){
+	$("div.article_row[value='"+article.article_id+"']").after("<div class='article_wrapper touchable' value='"+article.article_id+"'><textarea class='article_content touchable' readonly>"+article.article_content+"</textarea></div>");
 }
 
 function pagingArticles(total,section,page){

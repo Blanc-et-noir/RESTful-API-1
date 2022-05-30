@@ -1,7 +1,6 @@
 package com.spring.restapi.service;
 
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,6 +38,14 @@ public class ArticleService {
 		HashMap result = new HashMap();
 		result.put("articles_total", articleDAO.getArticlesTotal(param));
 		result.put("articles", articleDAO.getArticles(param));
+		return result;
+	}
+	
+	public HashMap getArticle(HashMap param) {
+		HashMap result = new HashMap();
+		result.put("article", articleDAO.getArticle(param));
+		articleDAO.increaseArticleView(param);
+		result.put("article_images", articleDAO.getArticleImages(param));
 		return result;
 	}
 }
