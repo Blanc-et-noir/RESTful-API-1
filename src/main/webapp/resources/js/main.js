@@ -51,11 +51,7 @@ function checkEmail(str) {
 }
 
 function closeForm(target){
-	$(target).parent().parent().remove();
-	$("#form_cover").css({
-		"display":"none"
-	})
-	formFlag=false;
+	$("#form_cover").remove();
 }
 
 function refreshTokens(){
@@ -66,13 +62,13 @@ function refreshTokens(){
 }
 
 function openForm(form){
-	if(formFlag==false){
-		formFlag=true;
-    	$("#form_cover").css({
-    		"display":"block"
-    	})
-    	$("#fullpage").append(form);
-	}
+	$("#fullpage").append("<div id='form_cover'></div>");
+	$("#form_cover").append(form);
+	$("#form_cover").on("click",function(e){
+		if($(e.target).attr("id")=="form_cover"){
+			closeForm();
+		}
+	});
 }
 
 function getInfo(){
@@ -172,7 +168,7 @@ $(document).ready(function(){
 		}).done(function(){
 			setLogout();
 		}).fail(function(xhr,status,error){
-			alert(xhr.responseJSON.content);
+			//alert(xhr.responseJSON.content);
 		})
 	})
 	
@@ -279,17 +275,13 @@ $(document).ready(function(){
 		})
 		var loginForm = $("<form id='loginForm'></form>");
 		var innerBox = $("<div id='loginFormInnerBox'></div>");
-		var loginFormPanel = $("<div id='loginFormPanel'></div>");
 		
 		innerBox.append("<div class='subtitle'>로그인 정보</div><input id='user_id' class='input' name='user_id' type='text' autocomplete='off' placeholder='아이디'>");
 		innerBox.append("<input id='user_pw' class='input' name='user_pw' type='password' autocomplete='off' placeholder='비밀번호'>");
 		innerBox.append("<div id='error_message'></div>");
-		
-		loginFormPanel.append("<input id='login_button' type='button' value='로그인'>");
-		loginFormPanel.append("<input id='loginFormClose_button' type='button' value='닫기' onclick='closeForm(this)'>");
+		innerBox.append("<input id='login_button' type='button' value='로그인'>");
 		
 		loginForm.append(innerBox);
-		loginForm.append(loginFormPanel);
 		
 		openForm(loginForm);
     });
@@ -302,7 +294,6 @@ $(document).ready(function(){
 		
 		var joinForm = $("<form id='joinForm'></form>");
 		var innerBox = $("<div id='joinFormInnerBox'></div>");
-		var joinFormPanel = $("<div id='joinFormPanel'></div>");
 		
 		innerBox.append("<div class='subtitle'>로그인 정보</div><input id='user_id' class='input' name='user_id' type='text' autocomplete='off' placeholder='아이디'>");
 		innerBox.append("<input id='user_pw' class='input' name='user_pw' type='password' autocomplete='off' placeholder='비밀번호'>");
@@ -312,12 +303,9 @@ $(document).ready(function(){
 		innerBox.append("<div class='subtitle'>비밀번호 찾기 질문</div><select id='question_id' class='input' name='question_id'></select>");
 		innerBox.append("<input id='question_answer' class='input' name='question_answer' type='text' autocomplete='off' placeholder='비밀번호 찾기 질문의 정답'>");
 		innerBox.append("<p id='error_message'></p>");
-		
-		joinFormPanel.append("<input id='join_button' type='button' value='회원가입'>");
-		joinFormPanel.append("<input id='joinFormClose_button' type='button' value='닫기' onclick='closeForm(this)'>");
-		
+		innerBox.append("<input id='join_button' type='button' value='회원가입'>");
+
 		joinForm.append(innerBox);
-		joinForm.append(joinFormPanel);
 		
 		//서버로부터 질문 목록을 발급받음
 		getQuestions()
@@ -328,7 +316,7 @@ $(document).ready(function(){
 			}
 		})
 		.fail(function(xhr, status, error){
-			alert(xhr.responseJSON.content);
+			//alert(xhr.responseJSON.content);
 		})
 		openForm(joinForm);
     });

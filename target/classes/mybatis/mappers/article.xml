@@ -6,7 +6,7 @@
 		SELECT article_id "article_id", article_title "article_title", IF((DATEDIFF(NOW(),DATE_FORMAT(article_date,'%Y-%m-%d %T')))	<![CDATA[<]]>1,DATE_FORMAT(article_date,'%T'),DATE_FORMAT(article_date,'%Y-%m-%d')) "article_date", article_view "article_view", user_id "user_id", user_name "user_name"
 		FROM articles NATURAL JOIN users
 		WHERE ${search_flag} LIKE CONCAT('%',#{search_content},'%')
-		ORDER BY article_date DESC
+		ORDER BY articles.article_date DESC
 		LIMIT 5 OFFSET ${offset}
 	</select>
 	

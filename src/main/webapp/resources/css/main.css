@@ -110,8 +110,8 @@ textarea:focus {
 	display:block;
 	width:300px;
 	background-color:#f4f4f4;
-	z-index:700;
-	margin:100px auto;
+	z-index:1300;
+	margin:auto;
 	padding:10px;
 }
 
@@ -128,8 +128,8 @@ textarea:focus {
 	display:block;
 	width:300px;
 	background-color:#f4f4f4;
-	z-index:700;
-	margin:100px auto;
+	z-index:1300;
+	margin:auto;
 	padding:10px;
 }
 
@@ -141,22 +141,24 @@ textarea:focus {
 
 
 #alert_cover{
+	padding:20px 0px;
+	display:flex;
 	position:fixed;
-	z-index:1000;
+	z-index:1500;
 	width:100%;
 	height:100%;
-	display:none;
-	opacity:0.5;
-	background-color:black;
+	background: rgba(0,0,0,0.2);
+	overflow:auto;
 }
 #form_cover{
+	padding:20px 0px;
+	display:flex;
 	position:fixed;
-	z-index:500;
+	z-index:1200;
 	width:100%;
 	height:100%;
-	display:none;
-	opacity:0.5;
-	background-color:black;
+	background: rgba(0,0,0,0.2);
+	overflow:auto;
 }
 #loginForm .subtitle, #joinForm .subtitle{
 	text-indent:10px;
@@ -183,13 +185,11 @@ textarea:focus {
 }
 #loginForm #error_message{
 	width:100%;
-	height:30px;
 	line-height:20px;
 	color:#ee3f5c;
 	transition:0.3s;
-	margin-bottom:10px;
 	word-wrap:break-word;
-	padding:5px;
+	padding:0px 5px;
 	font-size:8px;
 	text-align:center;
 }
@@ -201,16 +201,8 @@ textarea:focus {
 }
 
 
-#loginFormPanel{
-	display:flex;
-	width:100%;
-	height:40px;
-}
 
-
-
-
-#login_button, #loginFormClose_button{
+#login_button{
 	display:block;
 	height:40px;
 	z-index:400;
@@ -220,23 +212,12 @@ textarea:focus {
 	border-radius:5px;
 	font-size:12px;
 	transition:0.3s;
-}
-
-#login_button{
-	background-color:#06d6a0;
-	margin-right:10px;
-	width:70%;
-}
-#loginFormClose_button{
-	background-color:#ee3f5c;
-	flex:1;
+	background-color:#303134;
+	margin-top:10px;
 }
 
 #login_button:hover{
-	background-color:#02bb8b;
-}
-#loginFormClose_button:hover{
-	background-color:#c7324a;
+	background-color:#171717;
 }
 
 
@@ -257,13 +238,11 @@ textarea:focus {
 
 #joinForm #error_message{
 	width:100%;
-	height:30px;
 	line-height:20px;
 	color:#ee3f5c;
 	transition:0.3s;
-	margin-bottom:10px;
 	word-wrap:break-word;
-	padding:5px;
+	padding:0px 5px;
 	font-size:8px;
 	text-align:center;
 }
@@ -286,7 +265,7 @@ textarea:focus {
 
 
 
-#join_button, #joinFormClose_button{
+#join_button{
 	display:block;
 	height:40px;
 	z-index:400;
@@ -296,18 +275,12 @@ textarea:focus {
 	border-radius:5px;
 	font-size:12px;
 	transition:0.3s;
+	background-color:#303134;
+	margin-top:10px;
 }
-#join_button{
-	background-color:#06d6a0;
-}
-#joinFormClose_button{
-	background-color:#ee3f5c;
-}
+
 #join_button:hover{
-	background-color:#02bb8b;
-}
-#joinFormClose_button:hover{
-	background-color:#c7324a;
+	background-color:#171717;
 }
 
 .wrong{
@@ -337,31 +310,43 @@ input[type=radio]:not(:checked) + label:hover{
 	color:#007aff;
 }
 
+#card_borad_wrapper{
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  position: absolute;
+  display: flex;
+}
+
 #card_board{
-	width: 290px;
-	height: 290px;
-	position:absolute;
-	top:50%;
-	left:50%;
-	transform:translate(-50%,-50%);
+	position:relative;
+	width: 240px;
+	height: 240px;
+	margin: auto !important;
 }
 
 .card{
 	width: 100px;
 	height: 100px;
-	background-color:#06d6a0;
 	border-radius:5px;
 	position:relative;
 	padding:5px;
 	position:absolute;
 	transition:0.3s;
-}
-.card:hover{
 	background-color:white;
 }
-.card:hover p{
-	color:#06d6a0;
+
+.card:hover{
+	background-color:#06d6a0;
 }
+.card:hover p{
+	color:white;
+}
+
+
+
 .card img{
 	width:70%;
 	height:70%;
@@ -372,11 +357,11 @@ input[type=radio]:not(:checked) + label:hover{
 	transform:translate(-50%,-50%);
 }
 .card p{
+	color:#06d6a0;
 	font-weight:900;
 	font-size:10px;
 	display:block;
 	position:absolute;
-	color:white;
 	bottom:-20%;
 	width:100%;
 	height:40px;
@@ -444,11 +429,9 @@ input[type=radio]:not(:checked) + label:hover{
 
 #problems{
 	margin:0px auto !important;
-	width:90%;
-	height:80%;
+	width:100%;
 	max-width:1200px;
 	min-width:270px;
-	min-height:80px;
 	overflow-y:scroll;
 	display:flex;
 	flex-direction:column;
@@ -468,22 +451,23 @@ input[type=radio]:not(:checked) + label:hover{
 
 .problem_image{
 	margin: 10px 0px;
-	max-width:250px;
+	max-width:90%;
 }
 #problem_div{
-	margin:0px auto !important;
-	width:70%;
+	margin:50px auto 150px auto !important;
+	width:85%;
 	max-width:1500px;
 	min-width:270px;
 	min-height:80px;
 }
 #problem_form{
-	margin:20px auto !important;
+	margin:0px auto !important;
 	max-width:1200px;
 	min-width:270px;
-	width:90%;
+	width:100%;
 	display:flex;
 	flex-direction:row;
+	padding:50px 0px;
 }
 #category_id{
 	flex:1;
@@ -503,7 +487,7 @@ input[type=radio]:not(:checked) + label:hover{
 }
 
 #score_problems_button{
-	margin: 20px auto 50px auto;
+	margin: 50px auto 0px auto;
 	width:200px;
 	height:40px;
 	color:white;
@@ -627,13 +611,43 @@ input[type=radio]:not(:checked) + label:hover{
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*article ฐüทร CSS*/
+#article_form_wrapper{
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: auto;
+	position: absolute;
+	display: flex;
+}
+
 #list_article_form{
 	display:flex;
 	flex-direction:column;
 	width:80%;
 	max-width:800px;
-	margin: 50px auto 50px auto !important;
-	overflow-y:scroll;
+	margin:auto !important;
+	padding:20px 0px !important;
 }
 
 
@@ -702,9 +716,9 @@ input[type=radio]:not(:checked) + label:hover{
 #add_article_form{
 	display:none;
 	flex-direction:column;
-	width:90%;
-	max-width:600px;
-	margin: 50px auto 50px auto !important;
+	width:80%;
+	max-width:800px;
+	margin:auto !important;
 	overflow-y:scroll;
 }
 
@@ -730,24 +744,6 @@ input[type=radio]:not(:checked) + label:hover{
 .subtitle{
 	margin:10px 0px !important;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #article_list{
 	display:flex;

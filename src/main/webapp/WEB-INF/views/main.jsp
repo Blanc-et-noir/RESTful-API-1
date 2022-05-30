@@ -30,7 +30,7 @@
     <title>CBT 웹 서비스</title>
 </head>
 <body>
-	<div id="blancetnoir"><span>Made By </span><span style="color:#06d6a0">B</span><span>lanc et </span><span style="color:#ee3f5c">N</span><span>oir</span></div>
+	<div id="blancetnoir" class="touchable"><span class="touchable">Made By </span><span style="color:#06d6a0" class="touchable">B</span><span class="touchable">lanc et </span><span style="color:#ee3f5c" class="touchable">N</span><span class="touchable">oir</span></div>
     <div id="fullpage">
         <div class="section">
             <div class="slide touchable" style="background-color:#f4f4f4">
@@ -39,25 +39,28 @@
         </div>
         <div class="section">
             <div class="slide" style="background-color:#f4f4f4">
-				<div id="card_board" class="touchable">
-					<div id="move_button1" class="card touchable" style="top:20%; left:20%; transform:translate(-20%,-20%)">
-						<img class="touchable" src="${path}/resources/image/mobile.svg">
-						<p class="touchable">평가시험</p>
-					</div>
-					<div id="move_button2" class="card touchable" style="top:20%; left:80%; transform:translate(-80%,-20%)">
-						<img class="touchable" src="${path}/resources/image/people.svg">
-						<p class="touchable">커뮤니티</p>
-					</div>
-					<div id="move_button3" class="card touchable" style="top:80%; left:20%; transform:translate(-20%,-80%)">
-						<img class="touchable" src="${path}/resources/image/person.svg">
-						<p class="touchable">내 정보</p>
-					</div>
-					<div id="move_button4" class="card touchable" style="top:80%; left:80%; transform:translate(-80%,-80%)">
-						<img class="touchable" src="${path}/resources/image/project.svg">
-						<p class="touchable">고객지원</p>
-					</div>
-					<p style="position:absolute; top:95%; left:50%; transform:translate(-50%,-95%); text-align:center;">한 번의 클릭으로 간편하게!</p>
-				</div>
+            	<div id="card_borad_wrapper">
+            		<div id="card_board" class="touchable">
+						<div id="move_button1" class="card touchable" style="top:10%; left:10%; transform:translate(-10%,-10%);">
+							<img class="touchable" src="${path}/resources/image/mobile.svg">
+							<p class="touchable">평가시험</p>
+						</div>
+						<div id="move_button2" class="card touchable" style="top:10%; left:90%; transform:translate(-90%,-10%)">
+							<img class="touchable" src="${path}/resources/image/people.svg">
+							<p class="touchable">커뮤니티</p>
+						</div>
+						<div id="move_button3" class="card touchable" style="top:90%; left:10%; transform:translate(-10%,-90%);">
+							<img class="touchable" src="${path}/resources/image/person.svg">
+							<p class="touchable">내 정보</p>
+						</div>
+						<div id="move_button4" class="card touchable" style="top:90%; left:90%; transform:translate(-90%,-90%);">
+							<img class="touchable" src="${path}/resources/image/project.svg">
+							<p class="touchable">고객지원</p>
+						</div>
+						<p style="position:absolute; top:110%; left:50%; transform:translate(-50%,-110%); text-align:center;">한 번의 클릭으로 간편하게!</p>
+					</div>	
+            	</div>
+				
             </div>
         </div>
         <div class="section">
@@ -90,27 +93,30 @@
             	</div>
             </div>
             <div class="slide" style="background-color:#f4f4f4">
-            	<div id="list_article_form" class="touchable">
-            		<div id="article_search_panel" class="touchable">
-            			<select id="search_flag" class="touchable">
-            				<option selected value="user_id" label="작성자 ID" class="touchable"/>
-            				<option value="article_title" label="게시글 제목" class="touchable"/>
-            				<option value="article_content" label="게시글 내용" class="touchable"/>
-            			</select>
-            			<input id="search_content" class="touchable" placeholder="검색하고 싶은 내용을 이곳에 적어주세요.">
-            			<div id="search_article_button" class="touchable">검색하기</div>
+            	<div id="article_form_wrapper">
+            		<div id="list_article_form" class="touchable">
+            			<div id="article_search_panel" class="touchable">
+            				<select id="search_flag" class="touchable">
+            					<option selected value="user_id" label="작성자 ID" class="touchable"/>
+            					<option value="article_title" label="게시글 제목" class="touchable"/>
+            					<option value="article_content" label="게시글 내용" class="touchable"/>
+            				</select>
+            				<input id="search_content" class="touchable" placeholder="검색하고 싶은 내용을 이곳에 적어주세요.">
+            				<div id="search_article_button" class="touchable">검색하기</div>
+            			</div>
+            			<div id="article_list" class="touchable"></div>
+            			<div id="add_article_button" class="touchable" onclick="setAddArticleForm();">게시글을 작성하고 싶어요.</div>
             		</div>
-            		<div id="article_list" class="touchable"></div>
-            		<div id="add_article_button" class="touchable" onclick="setAddArticleForm();">게시글을 작성하고 싶어요.</div>
+            		<div id="add_article_form" class="touchable">
+            			<div class="subtitle touchable">게시글 제목</div>
+            			<input id="article_title" placeholder="게시글 제목은 이곳에 적어주세요." class="touchable">
+            			<div class="subtitle touchable">게시글 내용</div>
+            			<textarea rows="" cols="" id="article_content" placeholder="게시글 내용은 이곳에 적어주세요." class="touchable"></textarea>
+            			<div id="article_images" class="touchable"></div>
+            			<div id="list_article_button" class="touchable" onclick="setListArticleForm();">게시글들을 다시 보여주세요.</div>
+            		</div>
             	</div>
-            	<div id="add_article_form" class="touchable">
-            		<div class="subtitle touchable">게시글 제목</div>
-            		<input id="article_title" placeholder="게시글 제목은 이곳에 적어주세요." class="touchable">
-            		<div class="subtitle touchable">게시글 내용</div>
-            		<textarea rows="" cols="" id="article_content" placeholder="게시글 내용은 이곳에 적어주세요." class="touchable"></textarea>
-            		<div id="article_images" class="touchable"></div>
-            		<div id="list_article_button" class="touchable" onclick="setListArticleForm();">게시글들을 다시 보여주세요.</div>
-            	</div>
+            	
             </div>
         </div>
         <div class="section">
@@ -141,8 +147,6 @@
 				<p>내용</p>
         	</div>     
         </div>
-        <div id="form_cover"></div>
-		<div id="alert_cover"></div>
     </div>
 </body>
 </html>

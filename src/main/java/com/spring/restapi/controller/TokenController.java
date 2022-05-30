@@ -49,7 +49,7 @@ public class TokenController {
 			tokenService.login(param,response);
 			result.put("flag", true);
 			result.put("content", "로그인 성공");
-			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+			return new ResponseEntity<HashMap>(result,HttpStatus.CREATED);
 		}catch(InvalidIdException e) {
 			result.put("flag", false);
 			result.put("content", e.getMessage());
