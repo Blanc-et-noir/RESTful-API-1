@@ -109,6 +109,12 @@
 
 <br/>
 
+#### 게시글 관련 API
+
+#### 15. [게시글 목록 발급 요청](#/anchor15)
+
+<br/>
+
 ***
 
 <br/>
@@ -185,7 +191,7 @@ POST /restapi/tokens HTTP/1.1
 </pre>
 
 <pre>
-HTTP/1.1 200 OK
+HTTP/1.1 201 Created
 {
    flag : true,
    content : 응답 메세지
@@ -459,15 +465,6 @@ GET /restapi/problems/categories HTTP/1.1
    
 }
 
-세부사항
-
-1. 해당 API는 로그인이 필요한 기능이므로 반드시 액세스 토큰을 같이 전달해야함.
-
-2. 액세스 토큰을 갖고 해당 API를 처음 호출했을때 HTTP 401 응답을 수신하면
-   액세스 토큰이 만료되었을 수 있음.
-   
-   반드시 해당 액세스 토큰과 리프레쉬 토큰을 갖고 새로이 액세스 토큰과 리프레쉬 토큰을 재발급 받아야함.
-   새로 발급받은 액세스 토큰으로 다시 한 번 요청을 시도해야함.
 </pre>
 
 <pre>
@@ -495,7 +492,7 @@ HTTP/1.1 200 OK
 </pre>
 
 <pre>
-HTTP/1.1 401 Unauthorized
+HTTP/1.1 400 Bad Request
 {
    flag : false,
    content : 응답 메세지
@@ -529,18 +526,10 @@ GET /restapi/problems?category_id={category_id}&limit={limit} HTTP/1.1
 }
 
 세부사항
-
-1. 해당 API는 로그인이 필요한 기능이므로 반드시 액세스 토큰을 같이 전달해야함.
-
-2. 액세스 토큰을 갖고 해당 API를 처음 호출했을때 HTTP 401 응답을 수신하면
-   액세스 토큰이 만료되었을 수 있음.
    
-   반드시 해당 액세스 토큰과 리프레쉬 토큰을 갖고 새로이 액세스 토큰과 리프레쉬 토큰을 재발급 받아야함.
-   새로 발급받은 액세스 토큰으로 다시 한 번 요청을 시도해야함.
-   
-3. category_id는 문제 분류 번호
+1. category_id는 문제 분류 번호
 
-4. limit는 발급받을 문제의 수(전달하지 않거나 1이상의 정수가 아니면 기본 20문제를 발급함)
+2. limit는 발급받을 문제의 수(전달하지 않거나 1이상의 정수가 아니면 기본 20문제를 발급함)
 </pre>
 
 <pre>
@@ -654,7 +643,7 @@ HTTP/1.1 200 OK
 </pre>
 
 <pre>
-HTTP/1.1 401 Unauthorized
+HTTP/1.1 400 Bad Request
 {
    flag : false,
    content : 응답 메세지
@@ -774,7 +763,7 @@ HTTP/1.1 200 Ok
 </pre>
 
 <pre>
-HTTP/1.1 401 Unauthorized
+HTTP/1.1 400 Bad Request
 {
 
 }
@@ -851,7 +840,7 @@ HTTP/1.1 200 Ok
 </pre>
 
 <pre>
-HTTP/1.1 401 Unauthorized
+HTTP/1.1 400 Bad Request
 {
    flag : false,
    content : 응답 메세지
@@ -989,7 +978,7 @@ DELETE /restapi/problems/{problem_id}/opinions/{opinion_id} HTTP/1.1
 </pre>
 
 <pre>
-HTTP/1.1 201 Ok
+HTTP/1.1 200 Ok
 {
    flag : true,
    content : 응답 메세지
@@ -998,6 +987,59 @@ HTTP/1.1 201 Ok
 
 <pre>
 HTTP/1.1 401 Unauthorized
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+#### [API 목록으로 되돌아가기](#api_list)
+
+<br/>
+
+***
+
+<br/>
+
+<a id="/anchor15">
+   
+   ### 문제 의견 삭제 요청
+   
+</a>
+
+#### 게시글 목록 발급을 요청하는 API
+
+<br/>
+
+<pre>
+GET /restapi/articles?search_flag={search_flag}&search_content={search_content}?section={section}?page={page} HTTP/1.1
+{
+   
+}
+
+세부사항
+
+1. search_flag, search_content는 각각 검색기준, 검색내용을 나타내며
+   search_flag를 전달하지 않으면 기본적으로 user_id를 기준으로 검색하고
+   search_content를 전달하지 않으면 모든 내용을 검색함
+   
+2. section과 page는 1이상의 정수값을 필수로 전달해야하며
+   각 section은 5개의 page를, 각 page는 5개의 게시글을 담을 수 있음
+   
+</pre>
+
+<pre>
+HTTP/1.1 200 Ok
+{
+   flag : true,
+   content : 응답 메세지
+}
+</pre>
+
+<pre>
+HTTP/1.1 400 Bad Request
 {
    flag : false,
    content : 응답 메세지
