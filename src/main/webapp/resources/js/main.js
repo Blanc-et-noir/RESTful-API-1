@@ -1,4 +1,3 @@
-var formFlag = false;
 var publickey;
 
 //로그인 상태라면 로그아웃 버튼을 렌더링
@@ -216,11 +215,7 @@ $(document).ready(function(){
     		login(publickey)
     		.done(function(result){
     			setLogin();
-		    	$("#loginForm").remove();
-		    	$("#form_cover").css({
-		    		"display":"none"
-		    	})
-		    	formFlag=false;
+    			$("#form_cover").remove();
     		})
     		.fail(function(xhr, status, error){
         		$("#user_id").addClass("wrong");
@@ -272,11 +267,7 @@ $(document).ready(function(){
     		var publickey = result.publickey;
     		join(publickey)
     		.done(function(result){
-		    	$("#joinForm").remove();
-		    	$("#form_cover").css({
-		    		"display":"none"
-		    	})
-		    	formFlag=false;
+		    	$("#form_cover").remove();
     		})
     		.fail(function(xhr, status, error){
         		$("#error_message").text(xhr.responseJSON.content);
@@ -288,9 +279,6 @@ $(document).ready(function(){
     });
 	
     $(document).on("click","#menu_login",function(e){
-		$("#form_cover").css({
-			"display":"block"
-		})
 		var loginForm = $("<form id='loginForm'></form>");
 		var innerBox = $("<div id='loginFormInnerBox'></div>");
 		
@@ -305,11 +293,7 @@ $(document).ready(function(){
     });
     
     //회원가입창 렌더링
-    $(document).on("click","#menu_join",function(e){
-		$("#form_cover").css({
-			"display":"block"
-		})
-		
+    $(document).on("click","#menu_join",function(e){		
 		var joinForm = $("<form id='joinForm'></form>");
 		var innerBox = $("<div id='joinFormInnerBox'></div>");
 		
@@ -334,7 +318,7 @@ $(document).ready(function(){
 			}
 		})
 		.fail(function(xhr, status, error){
-			//alert(xhr.responseJSON.content);
+			openAlert(xhr.responseJSON.content);
 		})
 		openForm(joinForm);
     });
