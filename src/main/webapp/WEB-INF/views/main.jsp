@@ -30,7 +30,6 @@
     <title>CBT 웹 서비스</title>
 </head>
 <body>
-	<div id="blancetnoir" class="touchable"><span class="touchable">Made By </span><span style="color:#06d6a0" class="touchable">B</span><span class="touchable">lanc et </span><span style="color:#ee3f5c" class="touchable">N</span><span class="touchable">oir</span></div>
     <div id="fullpage">
         <div class="section">
             <div class="slide touchable" style="background-color:#f4f4f4">
@@ -146,6 +145,23 @@
 			<div class="slide" style="background-color:#f4f4f4">
 				<p>내용</p>
         	</div>     
+        </div>
+        <div id='menu_bar' class='touchable'>
+        	<div id='menu_home' class='menu touchable'>
+        		<img class='menu_image touchable'  src="${path}/resources/image/home.svg">
+        	</div>
+        	<div id='menu_join' class='menu touchable'>
+        		<img class='menu_image touchable' src="${path}/resources/image/join.svg">
+        	</div>
+        	<div id='menu_info' class='menu touchable'>
+        		<img class='menu_image touchable' src="${path}/resources/image/info.svg">
+        	</div>
+        	<div id='menu_login' class='menu touchable'>
+        		<img class='menu_image touchable' src="${path}/resources/image/login.svg">
+        	</div>
+        	<div id='menu_logout' class='menu touchable'>
+        		<img class='menu_image touchable' src="${path}/resources/image/logout.svg">
+        	</div>
         </div>
     </div>
 </body>

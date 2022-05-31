@@ -27,7 +27,7 @@ function paging(problem_id,total,section,page){
 				paging(problem_id,total,section-1, 1);
 			})
 			.fail(function(xhr, status, error){
-				//alert(xhr.responseJSON.content);
+				openAlert(xhr.responseJSON.content);
 			})
 		})
 		$(pagebar).append(tag);
@@ -48,7 +48,7 @@ function paging(problem_id,total,section,page){
 				paging(problem_id,total,section, page);
 			})
 			.fail(function(xhr, status, error){
-				//alert(xhr.responseJSON.content);
+				openAlert(xhr.responseJSON.content);
 			})	
 		})
 	}
@@ -71,7 +71,7 @@ function paging(problem_id,total,section,page){
 				paging(problem_id,total,section+1, 1);
 			})
 			.fail(function(xhr, status, error){
-				//alert(xhr.responseJSON.content);
+				openAlert(xhr.responseJSON.content);
 			})
 		})
 		$(pagebar).append(tag);
@@ -196,10 +196,10 @@ function deleteOpinion(target, problem_id,opinion_id){
 					paging(problem_id,total,section, page);
 				})
 				.fail(function(xhr, status, error){
-					//alert(xhr.responseJSON.content);
+					openAlert(xhr.responseJSON.content);
 				})
 			}else{
-				//alert(xhr.responseJSON.content);
+				openAlert(xhr.responseJSON.content);
 			}
 		})
 	})
@@ -240,22 +240,22 @@ function deleteOpinion(target, problem_id,opinion_id){
 								paging(problem_id,total,1, 1);
 							})
 							.fail(function(xhr, status, error){
-								//alert(xhr.responseJSON.content);
+								openAlert(xhr.responseJSON.content);
 							})
 						}else{
-							//alert(xhr.responseJSON.content);
+							openAlert(xhr.responseJSON.content);
 						}
 					})
 				})
 				.fail(function(xhr, status, error){
-					//alert(xhr.responseJSON.content);
+					openAlert(xhr.responseJSON.content);
 				})
 			})
 			.fail(function(xhr, status, error){
-				//alert(xhr.responseJSON.content);
+				openAlert(xhr.responseJSON.content);
 			})
 		}else{
-			//alert(xhr.responseJSON.content);
+			openAlert(xhr.responseJSON.content);
 		}
 	});
 }
@@ -301,10 +301,10 @@ function updateOpinion(target, problem_id,opinion_id){
 					paging(problem_id,total,section, page);
 				})
 				.fail(function(xhr, status, error){
-					//alert(xhr.responseJSON.content);
+					openAlert(xhr.responseJSON.content);
 				})
 			}else{
-				//alert(xhr.responseJSON.content);
+				openAlert(xhr.responseJSON.content);
 			}
 		})
 	})
@@ -348,22 +348,22 @@ function updateOpinion(target, problem_id,opinion_id){
 								paging(problem_id,total,1, 1);
 							})
 							.fail(function(xhr, status, error){
-								//alert(xhr.responseJSON.content);
+								openAlert(xhr.responseJSON.content);
 							})
 						}else{
-							//alert(xhr.responseJSON.content);
+							openAlert(xhr.responseJSON.content);
 						}
 					})
 				})
 				.fail(function(xhr, status, error){
-					//alert(xhr.responseJSON.content);
+					openAlert(xhr.responseJSON.content);
 				})
 			})
 			.fail(function(xhr, status, error){
-				//alert(xhr.responseJSON.content);
+				openAlert(xhr.responseJSON.content);
 			})
 		}else{
-			//alert(xhr.responseJSON.content);
+			openAlert(xhr.responseJSON.content);
 		}
 	});
 }
@@ -407,10 +407,10 @@ function renderOpinions(opinions,list){
 function registerOpinion(target, problem_id){
 	var opinion_content = $(target).parent().find(".opinion_input").val();
 	if(!checkBytes(opinion_content,600)){
-		//alert("한글로 200자, 영어로 600자 이하만 작성 가능합니다.");
+		openAlert("한글로 200자, 영어로 600자 이하만 작성 가능합니다.");
 		return;
 	}else if(opinion_content.length<10){
-		//alert("최소 10자이상 작성해야합니다.");
+		openAlert("최소 10자이상 작성해야합니다.");
 		return;
 	}
 	
@@ -449,10 +449,10 @@ function registerOpinion(target, problem_id){
 					paging(problem_id,total,1, 1);
 				})
 				.fail(function(xhr, status, error){
-					//alert(xhr.responseJSON.content);
+					openAlert(xhr.responseJSON.content);
 				})
 			}else{
-				//alert(xhr.responseJSON.content);
+				openAlert(xhr.responseJSON.content);
 			}
 		})		
 	})
@@ -488,23 +488,23 @@ function registerOpinion(target, problem_id){
 								paging(problem_id,total,section, page);
 							})
 							.fail(function(xhr, status, error){
-								//alert(xhr.responseJSON.content);
+								openAlert(xhr.responseJSON.content);
 							})
 						}else{
-							//alert(xhr.responseJSON.content);
+							openAlert(xhr.responseJSON.content);
 						}
 					})
 					
 				})
 				.fail(function(xhr, status, error){
-					//alert(xhr.responseJSON.content);
+					openAlert(xhr.responseJSON.content);
 				})
 			})
 			.fail(function(xhr, status, error){
-				//alert(xhr.responseJSON.content);
+				openAlert(xhr.responseJSON.content);
 			})
 		}else{
-			//alert(xhr.responseJSON.content);
+			openAlert(xhr.responseJSON.content);
 		}
 	})
 }
@@ -544,7 +544,7 @@ function openOpinionsForm(target,problem_id){
 		paging(problem_id,total,1, 1);
 	})
 	.fail(function(xhr, status, error){
-		//alert(xhr.responseJSON.content);
+		openAlert(xhr.responseJSON.content);
 	})
 }
 
@@ -619,7 +619,7 @@ $(document).ready(function(){
 			$("#category_id").append("<option value='"+categories[i].category_id+"' label='"+categories[i].category_name+"'></option>")
 		}
 	}).fail(function(xhr, status, error){
-		//alert(xhr.responseJSON.content);
+		openAlert(xhr.responseJSON.content);
 	})
 	
 	$(document).on("click","#get_problems_button",function(e){
@@ -628,7 +628,7 @@ $(document).ready(function(){
 			renderProblems(result);
 		})
 		.fail(function(xhr, status, error){
-			//alert(xhr.responseJSON.content);
+			openAlert(xhr.responseJSON.content);
 		})
     });
 	
@@ -644,7 +644,7 @@ $(document).ready(function(){
 			}
 			
 			if(!$("input[name='"+problem_id+"']").is(":checked")){
-				//alert("["+(i+1)+"] 문제를 체크해야합니다.");
+				openAlert("["+(i+1)+"] 문제를 체크해야합니다.");
 				$("#s2s1container").animate({
 					"scrollTop":sum+"px"
 				},300,"linear",function(){});
@@ -659,7 +659,7 @@ $(document).ready(function(){
 		
 		sendSolution(list)
 		.done(function(result){
-			//alert("[ "+(result.right_score)+" / "+(result.right_score+result.wrong_score)+" ] \n percentage : "+result.percentage);
+			openAlert("[ "+(result.right_score)+" / "+(result.right_score+result.wrong_score)+" ] \n percentage : "+result.percentage);
 			
 			var right_problems = result.right_problems;
 			var wrong_problems = result.wrong_problems;
@@ -698,7 +698,7 @@ $(document).ready(function(){
 				.done(function(result){
 					sendSolution(list)
 					.done(function(result){
-						//alert("[ "+(result.right_score)+" / "+(result.right_score+result.wrong_score)+" ] \n percentage : "+result.percentage);
+						openAlert("[ "+(result.right_score)+" / "+(result.right_score+result.wrong_score)+" ] \n percentage : "+result.percentage);
 						
 						var right_problems = result.right_problems;
 						var wrong_problems = result.wrong_problems;
@@ -724,14 +724,14 @@ $(document).ready(function(){
 						$("#score_problems_button").remove();
 					})
 					.fail(function(xhr, status, error){
-						//alert(xhr.responseJSON.content);
+						openAlert(xhr.responseJSON.content);
 					})
 				})
 				.fail(function(xhr, status, error){
-					//alert(xhr.responseJSON.content);
+					openAlert(xhr.responseJSON.content);
 				});
 			}else{
-				//alert(xhr.responseJSON.content);
+				openAlert(xhr.responseJSON.content);
 			}
 		})
     });

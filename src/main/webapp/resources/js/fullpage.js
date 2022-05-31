@@ -690,7 +690,12 @@ $.fn.extend({
         });
         $(document).on("click",".return_button",function(){
         	movePage(1,0);
-        });  
+        });
+        
+        $(document).on("click","#menu_home",function(){
+        	movePage(0,0);
+        });
+        
         function moveUp(){
             var currentSection = $(".activeSection");
             var sectionIndex = $(".activeSection").index();

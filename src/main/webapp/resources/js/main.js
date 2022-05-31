@@ -3,16 +3,20 @@ var publickey;
 
 //로그인 상태라면 로그아웃 버튼을 렌더링
 function setLogin(){
-	$("#loginForm_button").remove();
-	$("#joinForm_button").remove();
-	$("body").append("<div id='logout_button'>로그아웃</div>");
+	$("#menu_login").css({"display":"none"});
+	$("#menu_join").css({"display":"none"});
+
+	$("#menu_logout").css({"display":"block"});
+	$("#menu_info").css({"display":"block"});
 }
 
 //로그아웃 상태라면 로그인, 회원가입 버튼을 렌더링
 function setLogout(){
-	$("#logout_button").remove();
-	$("#fullpage").append("<div id='loginForm_button'>로그인</div>");
-	$("#fullpage").append("<div id='joinForm_button'>회원가입</div>");
+	$("#menu_logout").css({"display":"none"});
+	$("#menu_info").css({"display":"none"});
+	
+	$("#menu_login").css({"display":"block"});
+	$("#menu_join").css({"display":"block"});
 }
 
 function checkBytes(text, MAX_BYTES){
@@ -69,6 +73,20 @@ function openForm(form){
 			closeForm();
 		}
 	});
+}
+
+function openAlert(message){
+	$("#fullpage").append("<div id='alert_cover' class='touchable'></div>");
+	$("#alert_cover").append("<div id='alert_box' class='touchable'><div id='alert_message' class='touchable'>"+message+"</div></div>");
+	$("#alert_cover").on("click",function(e){
+		if($(e.target).attr("id")=="alert_cover"){
+			closeAlert();
+		}
+	});
+}
+
+function closeAlert(){
+	$("#alert_cover").remove();
 }
 
 function getInfo(){
@@ -161,14 +179,14 @@ $(document).ready(function(){
 	})
 	
 	//로그아웃 이벤트 처리
-	$(document).on("click","#logout_button",function(){
+	$(document).on("click","#menu_logout",function(){
 		$.ajax({
 			"url":"/restapi/tokens",
 			"type":"delete"
 		}).done(function(){
 			setLogout();
 		}).fail(function(xhr,status,error){
-			//alert(xhr.responseJSON.content);
+			openAlert(xhr.responseJSON.content);
 		})
 	})
 	
@@ -269,7 +287,7 @@ $(document).ready(function(){
     	})
     });
 	
-    $(document).on("click","#loginForm_button",function(e){
+    $(document).on("click","#menu_login",function(e){
 		$("#form_cover").css({
 			"display":"block"
 		})
@@ -287,7 +305,7 @@ $(document).ready(function(){
     });
     
     //회원가입창 렌더링
-    $(document).on("click","#joinForm_button",function(e){
+    $(document).on("click","#menu_join",function(e){
 		$("#form_cover").css({
 			"display":"block"
 		})
