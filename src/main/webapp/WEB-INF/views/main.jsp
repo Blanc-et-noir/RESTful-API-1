@@ -7,8 +7,7 @@
 	<c:set var="path" value="${pageContext.request.contextPath}"/>
     <meta charset="UTF-8">
     <meta content="IE=edge">
-
-	<link rel="manifest" href="${path}/resources/json/manifest.json">
+	
     <!-- 모바일용웹 -->
 	<meta name="viewport" content="initial-scale=1 width=device-width, height=device-height" />
 	
@@ -26,6 +25,7 @@
     <script src="${path}/resources/js/article.js"></script>
     <script src="${path}/resources/js/problem.js"></script>
 
+	<link rel="icon" type="image/x-icon" href="${path}/resources/image/favicon.ico">
     <link rel="stylesheet" href="${path}/resources/css/main.css">
     <title>CBT 웹 서비스</title>
 </head>
