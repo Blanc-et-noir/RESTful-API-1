@@ -120,7 +120,7 @@ function updateCancelOpinion(target){
 
 function getProblems(){
 	return $.ajax({
-		"url":"/restapi/problems?category_id="+$("#category_id").val(),
+		"url":"/restapi/problems?category_id="+$("#category_id").val()+"&limit=20",
 		"type":"get",
 		"dataType":"json"
 	});
@@ -647,7 +647,7 @@ $(document).ready(function(){
 				openAlert("["+(i+1)+"] 문제를 체크해야합니다.");
 				$("#s2s1container").animate({
 					"scrollTop":sum+"px"
-				},300,"linear",function(){});
+				},0,"linear",function(){});
 				
 				return false;
 			}

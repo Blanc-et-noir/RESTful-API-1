@@ -60,12 +60,13 @@ textarea:focus {
 	margin:auto !important;
 	flex:1;
 	position:relative;
-	background-color:#D0D0D0;
+	background-color:black;
 	padding:10px !important;
+	opacity:0.35
 }
 
 .menu:hover{
-	background-color:#C0C0C0;
+	opacity:0.5
 }
 
 .menu_image{
@@ -512,8 +513,9 @@ input[type=radio]:not(:checked) + label:hover{
 	max-width:90%;
 }
 #problem_div{
-	margin:50px auto 150px auto !important;
-	width:85%;
+	margin:0 auto !important;
+	padding:100px 0px !important;
+	width:80%;
 	max-width:1500px;
 	min-width:270px;
 	min-height:80px;
@@ -697,6 +699,7 @@ input[type=radio]:not(:checked) + label:hover{
 	overflow: auto;
 	position: absolute;
 	display: flex;
+	padding:100px 0px !important;
 }
 
 #list_article_form{

@@ -139,8 +139,7 @@ function join(publickey){
 	})
 }
 
-function myFullFunction() {
-
+function scaleup() {
 	var docElm = document.documentElement;
 	if (docElm.requestFullscreen) {
 		docElm.requestFullscreen();
@@ -151,6 +150,28 @@ function myFullFunction() {
 	else if (docElm.webkitRequestFullScreen) {
 		docElm.webkitRequestFullScreen();
 	}
+	$("#menu_scaleup").css({
+		"display":"none"
+	});
+	$("#menu_scaledown").css({
+		"display":"block"
+	})
+}
+
+function scaledown() {
+	if(document.exitFullscreen) {
+		document.exitFullscreen();
+	} else if(document.mozCancelFullScreen) {
+	    document.mozCancelFullScreen();
+	} else if(document.webkitExitFullscreen) {
+		document.webkitExitFullscreen();
+	}
+	$("#menu_scaledown").css({
+		"display":"none"
+	});
+	$("#menu_scaleup").css({
+		"display":"block"
+	})
 }
 
 $(document).ready(function(){
@@ -158,7 +179,8 @@ $(document).ready(function(){
 	var fullpage = $("#fullpage").initialize({});
 	
 	//임시주석처리
-	//$(document).on("click","#fullpage",myFullFunction);
+	$(document).on("click","#menu_scaleup",scaleup);
+	$(document).on("click","#menu_scaledown",scaledown);
 	
 	//로그인 인증 여부를 검사하여 초기에 렌더링
 	getInfo().done(function(result){

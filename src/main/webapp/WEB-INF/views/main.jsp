@@ -150,6 +150,12 @@
         	<div id='menu_home' class='menu touchable'>
         		<img class='menu_image touchable'  src="${path}/resources/image/home.svg">
         	</div>
+        	<div id='menu_scaleup' class='menu touchable'>
+        		<img class='menu_image touchable' src="${path}/resources/image/scaleup.svg">
+        	</div>
+        	<div id='menu_scaledown' class='menu touchable' style="display:none">
+        		<img class='menu_image touchable' src="${path}/resources/image/scaledown.svg">
+        	</div>
         	<div id='menu_join' class='menu touchable'>
         		<img class='menu_image touchable' src="${path}/resources/image/join.svg">
         	</div>
