@@ -1,6 +1,7 @@
 package com.spring.restapi.controller;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,7 +26,23 @@ public class ArticleController {
 	
 	@RequestMapping(value={"/articles"},method={RequestMethod.POST})
 	public ResponseEntity<HashMap> addArticle(MultipartRequest mRequest, HttpServletRequest request){
-		return null;
+		HashMap<String,String> param = new HashMap<String,String>();
+		HashMap result = new HashMap();
+		try {
+			param.put("user_id", JwtUtil.getData(CookieUtil.getAccesstoken(request), "user_id"));
+			param.put("article_id", UUID.randomUUID().toString());
+			
+			articleService.addArticle(mRequest, param);
+			
+			result.put("true", true);
+			result.put("content", "게시글 작성 성공");
+			return new ResponseEntity<HashMap>(result,HttpStatus.CREATED);
+		}catch(Exception e) {
+			e.printStackTrace();
+			result.put("flag", false);
+			result.put("content", "게시글 작성 실패");
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@RequestMapping(value={"/articles"},method={RequestMethod.GET})

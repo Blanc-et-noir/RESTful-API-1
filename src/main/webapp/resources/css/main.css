@@ -778,7 +778,7 @@ input[type=radio]:not(:checked) + label:hover{
 	display:none;
 	flex-direction:column;
 	width:80%;
-	max-width:800px;
+	max-width:600px;
 	margin:auto !important;
 	overflow-y:scroll;
 }
@@ -900,4 +900,63 @@ input[type=radio]:not(:checked) + label:hover{
 
 .article_content:hover{
 	background-color:#e0e0e0;
+}
+
+
+
+
+
+
+
+
+
+
+
+#article_images{
+	width:100%;
+	display:flex;
+	flex-wrap : wrap;
+	background-color:white;
+	border-radius:5px;
+}
+
+#article_images_add_button{
+	margin-top:20px !important;
+	height:40px;
+	border-radius:5px;
+	text-align:center;
+	color:white;
+	line-height:40px;
+	background-color:#303134;
+	display:block;
+}
+
+#article_images_add_button:hover{
+	background-color:#53555a;
+}
+
+.article_image{
+	max-width:100px;
+	max-height:100px;
+	position:relative;
+}
+.article_image > img{
+	width:100%;
+	height:100%;
+	display:block;
+	position:relative;
+}
+.article_image_delete_button{
+	position:absolute;
+	top:0%;
+	z-index:400;
+	width:15px;
+	height:15px;
+	text-align:center;
+	line-height:15px;
+	background-color:#ee3f5c;
+	color:white;
+}
+.article_image_delete_button:hover{
+	background-color:#bb3148;
 }

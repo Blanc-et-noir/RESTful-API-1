@@ -1,18 +1,18 @@
 package com.spring.restapi.service;
 
 import java.util.HashMap;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.spring.restapi.dao.ArticleDAO;
 import com.spring.restapi.exception.article.FailedToAddArticleException;
-import com.spring.restapi.util.CookieUtil;
-import com.spring.restapi.util.JwtUtil;
 
 @Transactional(propagation=Propagation.REQUIRED,rollbackFor={
 		FailedToAddArticleException.class,
@@ -24,14 +24,18 @@ public class ArticleService {
 	@Autowired
 	private ArticleDAO articleDAO;
 
-	public void addArticle(HttpServletRequest request,HashMap<String,String> param) throws FailedToAddArticleException, Exception {
-		String user_accesstoken = CookieUtil.getAccesstoken(request);
-		String user_id = JwtUtil.getData(user_accesstoken, "user_id");
+	public void addArticle(MultipartRequest mRequest,HashMap<String,String> param) throws FailedToAddArticleException, Exception {		
 		
-		param.put("user_id", user_id);
+		Iterator<String> itor =  mRequest.getFileNames();
+				
+		//articleDAO.addArticle(param);
 		
-		articleDAO.addArticle(param);
+		while(itor.hasNext()) {
+			String filename = itor.next();
+			System.out.println(mRequest.getFile(filename).getOriginalFilename());
+		}
 		
+		//articleDAO.addArticleImages(param);
 	}
 	
 	public HashMap getArticles(HashMap param){

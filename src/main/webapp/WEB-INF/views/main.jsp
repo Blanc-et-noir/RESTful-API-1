@@ -111,8 +111,14 @@
             			<input id="article_title" placeholder="게시글 제목은 이곳에 적어주세요." class="touchable">
             			<div class="subtitle touchable">게시글 내용</div>
             			<textarea rows="" cols="" id="article_content" placeholder="게시글 내용은 이곳에 적어주세요." class="touchable"></textarea>
+            			<div class="subtitle touchable">게시글 이미지</div>
             			<div id="article_images" class="touchable"></div>
+            			<label id="article_images_add_button" class="touchable">
+            				<input id="article_images_input" type="file" multiple style="display:none;">
+            				이미지 등록
+            			</label>
             			<div id="list_article_button" class="touchable" onclick="setListArticleForm();">게시글들을 다시 보여주세요.</div>
+            			<div id="send_article_button" class="touchable">게시글등록</div>
             		</div>
             	</div>
             	
