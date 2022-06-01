@@ -1,5 +1,5 @@
 var section=1, page=1;
-var file_array, index=0;
+var file_map, index=0;
 
 function setAddArticleForm(){
 	$("#add_article_form").css({
@@ -116,35 +116,35 @@ function pagingArticles(total,section,page){
 }
 
 function removeImages(idx){
-	file_array.splice(idx,1);
+	file_map.delete(idx);
 	$(".article_image[value='"+idx+"']").remove();
 }
 
 
 function addImages(e){
 	var i;
-	var files = e.target.files;
+	var myfiles = e.target.files;
 	
-	for(i=0; i<files.length; i++){
-		var reader = new FileReader();
-		reader.readAsDataURL(files[i]);
+	for(i=0; i<myfiles.length; i++){
+		(function(i){
+			var reader = new FileReader();
+			reader.readAsDataURL(myfiles[i]);
+			reader.onload = function(event){
+				$("#article_images").append("<div class='article_image touchable' value='"+index+"'><div class='article_image_delete_button touchable' onclick='removeImages("+index+")'>✖</div><img class='touchable' src='"+event.target.result+"'></div>");
+				file_map.set(index,myfiles[i]);
+				index=index+1;
+			}
+		}(i))
 		
-		reader.onload = function(event){
-			$("#article_images").append("<div class='article_image touchable' value='"+index+"'><div class='article_image_delete_button touchable' onclick='removeImages("+index+")'>✖</div><img class='touchable' src='"+event.target.result+"'></div>");
-			file_array.push(files[index]);
-			index=index+1;
-		}
-	}
+	}	
 }
 
 function addArticle(article_title, article_content){
-	var i;
+	var key;
 	var formData = new FormData();
-	
-	formData.append("article_image_count",file_array.length);
-	
-	for(i=0; i<file_array.length; i++){
-		formData.append("article_image_"+i,file_array[i]);
+
+	for([key, value] of file_map){
+		formData.append("article_image_"+key,file_map.get(key));
 	}
 	
 	return $.ajax({
@@ -155,9 +155,11 @@ function addArticle(article_title, article_content){
 		"dataType":"json",
 		"data":formData,
 		"success":function(result){
-			file_array = new Array();
+			file_map = new Map();
 			index = 0;
+			$(".article_image").remove();
 			openAlert(result.content);
+			
 		},
 		"error":function(xhr, status, error){
 			openAlert(xhr.responseJSON.content);
@@ -166,7 +168,7 @@ function addArticle(article_title, article_content){
 }
 
 $(document).ready(function(){
-	file_array = new Array();
+	file_map = new Map();
 	
 	getArticles(section,page);
 	
