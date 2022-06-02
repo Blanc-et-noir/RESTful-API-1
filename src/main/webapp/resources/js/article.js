@@ -1,6 +1,8 @@
 var section=1, page=1;
 var file_map, index=0;
 
+var send_article_flag = false;
+
 function setAddArticleForm(){
 	$("#add_article_form").css({
 		"display":"flex"
@@ -139,6 +141,9 @@ function addImages(e){
 }
 
 function addArticle(){
+	if(send_article_flag){
+		return;
+	}
 	var key;
 	var formData = new FormData();
 
@@ -167,6 +172,9 @@ function addArticle(){
 		},
 		"error":function(xhr, status, error){
 			openAlert(xhr.responseJSON.content);
+		},
+		"complete":function(){
+			send_article_flag = false;
 		}
 	})
 }
