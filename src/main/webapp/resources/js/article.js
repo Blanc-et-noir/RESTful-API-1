@@ -135,14 +135,16 @@ function addImages(e){
 				index=index+1;
 			}
 		}(i))
-		
 	}	
 }
 
-function addArticle(article_title, article_content){
+function addArticle(){
 	var key;
 	var formData = new FormData();
 
+	formData.append("article_title",$("#article_title").val());
+	formData.append("article_content",$("#article_content").val());
+	
 	for([key, value] of file_map){
 		formData.append("article_image_"+key,file_map.get(key));
 	}
@@ -157,6 +159,8 @@ function addArticle(article_title, article_content){
 		"success":function(result){
 			file_map = new Map();
 			index = 0;
+			$("#article_title").val("");
+			$("#article_content").val("");
 			$(".article_image").remove();
 			openAlert(result.content);
 			
@@ -179,6 +183,6 @@ $(document).ready(function(){
 	$("#fullpage").on("click","#send_article_button",function(e){
 		var article_title = $("#article_title").val();
 		var article_content = $("#article_content").val();
-		addArticle(article_title, article_content);
+		addArticle();
 	});
 })

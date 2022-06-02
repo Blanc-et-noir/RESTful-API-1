@@ -30,7 +30,13 @@
 	
 	<insert id="addArticle" parameterType="java.util.HashMap">
 		INSERT INTO articles(article_id,article_title,article_content,user_id)
-		VALUES(NEXTVAL(article_sequence),#{article_title},#{article_content},#{user_id})
+		VALUES(#{article_id},#{article_title},#{article_content},#{user_id})
+	</insert>
+	
+	<insert id="addArticleImages" parameterType="java.util.HashMap">
+		INSERT INTO article_images
+		VALUES
+		<foreach collection="article_images" separator="," item="article_image">(#{article_image.article_image_id},#{article_id})</foreach>
 	</insert>
 	
 	<update id="increaseArticleView" parameterType="java.util.HashMap">

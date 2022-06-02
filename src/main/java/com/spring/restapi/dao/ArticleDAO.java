@@ -39,4 +39,8 @@ public class ArticleDAO {
 	public void increaseArticleView(HashMap<String,String> param) {
 		sqlSession.update("article.increaseArticleView", param);
 	}
+	
+	public void addArticleImages(HashMap param) {
+		sqlSession.insert("article.addArticleImages", param);
+	}
 }

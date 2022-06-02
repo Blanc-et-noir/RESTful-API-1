@@ -25,14 +25,14 @@ public class ArticleController {
 	private ArticleService articleService;
 	
 	@RequestMapping(value={"/articles"},method={RequestMethod.POST})
-	public ResponseEntity<HashMap> addArticle(MultipartRequest mRequest, HttpServletRequest request){
-		HashMap<String,String> param = new HashMap<String,String>();
+	public ResponseEntity<HashMap> addArticle(@RequestParam HashMap param, MultipartRequest mRequest, HttpServletRequest request){
 		HashMap result = new HashMap();
+		System.out.println(request.getServletContext().getRealPath(""));
 		try {
 			param.put("user_id", JwtUtil.getData(CookieUtil.getAccesstoken(request), "user_id"));
 			param.put("article_id", UUID.randomUUID().toString());
 			
-			articleService.addArticle(mRequest, param);
+			articleService.addArticle(request.getServletContext().getRealPath(""),mRequest, param);
 			
 			result.put("true", true);
 			result.put("content", "게시글 작성 성공");

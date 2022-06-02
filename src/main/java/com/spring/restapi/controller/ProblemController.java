@@ -29,7 +29,7 @@ public class ProblemController {
 	@Autowired
 	ProblemService problemService;
 	
-	private static final String IMAGE_BASE_PATH = "//home//tomcat9//webapps//restapi_files//problem_images//"; 
+	private static final String IMAGE_BASE_PATH = ".//restapi_files//problem_images//"; 
 	
 	//액세스 필요
 	@RequestMapping(value= {"/problems"}, method= {RequestMethod.GET})
@@ -174,7 +174,7 @@ public class ProblemController {
 		HashMap result = new HashMap();
 		try {
 			String extension = "png";
-			String path = IMAGE_BASE_PATH+problem_id+"//"+problem_image_name+"."+extension;
+			String path = request.getServletContext().getRealPath("") + IMAGE_BASE_PATH+problem_id+"//"+problem_image_name+"."+extension;
 			
 			File file = new File(path);
 			
