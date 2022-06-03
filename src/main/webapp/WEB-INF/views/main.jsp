@@ -110,15 +110,15 @@
             			<div class="subtitle touchable">게시글 제목</div>
             			<input id="article_title" placeholder="게시글 제목은 이곳에 적어주세요." class="touchable">
             			<div class="subtitle touchable">게시글 내용</div>
-            			<textarea rows="" cols="" id="article_content" placeholder="게시글 내용은 이곳에 적어주세요." class="touchable"></textarea>
+            			<textarea rows="1" cols="1" id="article_content" placeholder="게시글 내용은 이곳에 적어주세요." class="touchable"></textarea>
             			<div class="subtitle touchable">게시글 이미지</div>
             			<div id="article_images" class="touchable"></div>
             			<label id="article_images_add_button" class="touchable">
-            				<input id="article_images_input" type="file" multiple style="display:none;">
-            				이미지 등록
+            				<input id="article_images_input" type="file" multiple style="display:none;" accept=".gif, .jpg, .png">
+            				이미지 첨부
             			</label>
-            			<div id="list_article_button" class="touchable" onclick="setListArticleForm();">게시글들을 다시 보여주세요.</div>
             			<div id="send_article_button" class="touchable">게시글등록</div>
+            			<div id="list_article_button" class="touchable" onclick="setListArticleForm();">게시글들을 다시 보여주세요.</div>
             		</div>
             	</div>
             	
@@ -155,24 +155,31 @@
         <div id='menu_bar' class='touchable'>
         	<div id='menu_home' class='menu touchable'>
         		<img class='menu_image touchable'  src="${path}/resources/image/home.svg">
+        		<p>홈화면</p>
         	</div>
         	<div id='menu_scaleup' class='menu touchable'>
         		<img class='menu_image touchable' src="${path}/resources/image/scaleup.svg">
+        		<p>전체화면</p>
         	</div>
         	<div id='menu_scaledown' class='menu touchable' style="display:none">
         		<img class='menu_image touchable' src="${path}/resources/image/scaledown.svg">
+        		<p>기본화면</p>
         	</div>
         	<div id='menu_join' class='menu touchable'>
         		<img class='menu_image touchable' src="${path}/resources/image/join.svg">
+        		<p>회원가입</p>
         	</div>
         	<div id='menu_info' class='menu touchable'>
         		<img class='menu_image touchable' src="${path}/resources/image/info.svg">
+        		<p>내 정보</p>
         	</div>
         	<div id='menu_login' class='menu touchable'>
         		<img class='menu_image touchable' src="${path}/resources/image/login.svg">
+        		<p>로그인</p>
         	</div>
         	<div id='menu_logout' class='menu touchable'>
         		<img class='menu_image touchable' src="${path}/resources/image/logout.svg">
+        		<p>로그아웃</p>
         	</div>
         </div>
     </div>

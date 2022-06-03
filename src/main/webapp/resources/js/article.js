@@ -63,13 +63,14 @@ function renderArticles(articles){
 		$("#article_list").append("<div class='article_row touchable' onclick='getArticle("+"\""+articles[i].article_id+"\""+")' value='"+articles[i].article_id+"'><div class='touchable'>"+articles[i].article_title+"</div><div class='touchable'>"+articles[i].article_date+"</div><div class='touchable'>"+articles[i].user_name+"(<span class='touchable' style='color:gray;'>"+" "+articles[i].user_id+" "+"</span>)</div><div class='touchable'>"+articles[i].article_view+"</div></div>");
 	}
 	
-	$("#article_list").append("<div class='pagebar touchable'></div>")
+	$("#article_list").append("<div class='pagebar touchable'></div>");
 }
 
 
 
 function renderArticle(article){
 	$("div.article_row[value='"+article.article_id+"']").after("<div class='article_wrapper touchable' value='"+article.article_id+"'><textarea class='article_content touchable' readonly>"+article.article_content+"</textarea></div>");
+	$(".article_content").keydown();
 }
 
 function pagingArticles(total,section,page){
@@ -141,9 +142,9 @@ function addImages(e){
 }
 
 function addArticle(){
-	if(send_article_flag){
-		return;
-	}
+	
+	send_article_flag = true;
+	
 	var key;
 	var formData = new FormData();
 
@@ -179,6 +180,15 @@ function addArticle(){
 	})
 }
 
+function resizeArticleContent(article_content){
+	$(article_content).css({
+		"height" : (1)+"px"
+	})
+	$(article_content).css({
+		"height" : (12+article_content.scrollHeight)+"px"
+	})
+}
+
 $(document).ready(function(){
 	file_map = new Map();
 	
@@ -188,9 +198,22 @@ $(document).ready(function(){
 		addImages(e);
 	});
 	
+	$("#fullpage").on("keydown","#article_content",function(e){
+		resizeArticleContent(this);
+	});
+	
+	$("#fullpage").on("keydown",".article_content",function(e){
+		resizeArticleContent(this);
+	});
+	
 	$("#fullpage").on("click","#send_article_button",function(e){
+		if(send_article_flag){
+			return;
+		}
+		
 		var article_title = $("#article_title").val();
 		var article_content = $("#article_content").val();
+		
 		addArticle();
 	});
 })

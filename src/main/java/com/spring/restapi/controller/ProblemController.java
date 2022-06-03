@@ -150,8 +150,7 @@ public class ProblemController {
 			int page = Integer.parseInt(param.get("page"));
 			
 			param.put("offset", ((section-1)*25+(page-1)*5)+"");
-			
-			
+
 			result = problemService.readOpinions(param);
 			result.put("flag", true);
 			result.put("content", "´ñ±Û ÀÐ±â ¼º°ø");
@@ -219,9 +218,6 @@ public class ProblemController {
 			result.put("categories", problemService.getCategories(param));
 			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
 		}catch(Exception e) {
-			result.put("cause", e.getCause());
-			result.put("stack", e.getStackTrace());
-			result.put("message", e.getMessage());
 			result.put("flag", false);
 			result.put("content", "¹®Á¦ Á¤º¸ È¹µæ ½ÇÆÐ");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
