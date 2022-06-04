@@ -208,6 +208,7 @@ $(document).ready(function(){
 			setLogout();
 		}).fail(function(xhr,status,error){
 			openAlert(xhr.responseJSON.content);
+			setLogout();
 		})
 	})
 	

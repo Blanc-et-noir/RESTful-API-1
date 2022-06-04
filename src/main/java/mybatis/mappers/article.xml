@@ -11,7 +11,7 @@
 	</select>
 	
 	<select id="getArticleImages" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT article_image_id "article_image_id", article_id "article_id" 
+		SELECT article_image_id "article_image_id",article_image_extension "article_image_extension", article_id "article_id" 
 		FROM article_images
 		WHERE article_id = #{article_id}
 	</select>
@@ -36,7 +36,7 @@
 	<insert id="addArticleImages" parameterType="java.util.HashMap">
 		INSERT INTO article_images
 		VALUES
-		<foreach collection="article_images" separator="," item="article_image">(#{article_image.article_image_id},#{article_id})</foreach>
+		<foreach collection="article_images" separator="," item="article_image">(#{article_image.article_image_id},#{article_image.article_image_extension},#{article_id})</foreach>
 	</insert>
 	
 	<update id="increaseArticleView" parameterType="java.util.HashMap">

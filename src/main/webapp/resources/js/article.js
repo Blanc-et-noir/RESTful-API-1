@@ -2,6 +2,11 @@ var section=1, page=1;
 var file_map, index=0;
 
 var send_article_flag = false;
+var modify_article_flag = false;
+
+var file_maps;
+var indexs;
+var removed_file_ids;
 
 function setAddArticleForm(){
 	$("#add_article_form").css({
@@ -29,6 +34,17 @@ function getArticles(section, page){
 		"success":function(result){
 			var articles = result.articles;
 			var articles_total = result.articles_total;
+			var i;
+			
+			file_maps = new Array(articles.length);
+			removed_file_ids = new Array(articles.length);
+			
+			for(i=0;i<file_maps.length; i++){
+				file_maps[i] = new Map();
+				removed_file_ids[i] = new Map();
+			}
+			
+			indexs = new Array(articles.length);
 			
 			renderArticles(articles);
 			
@@ -37,18 +53,24 @@ function getArticles(section, page){
 	});
 }
 
-function getArticle(article_id){
-	if($("div.article_wrapper[value='"+article_id+"']").length!=0){
-		return
+function getArticle(article_header){
+
+	var article_wrapper = $(article_header).parent();
+	var article_body = $(article_wrapper).find(".article_body");
+	var article_images = $(article_wrapper).find(".article_images");
+	var article_comments = $(article_wrapper).find(".article_comments");
+	
+	if($(article_body).find("*").length!=0){
+		return;
 	}
 
 	return $.ajax({
-		"url":"/restapi/articles/"+article_id,
+		"url":"/restapi/articles/"+$(article_wrapper).attr("value"),
 		"type":"get",
 		"dataType":"json",
 		"success":function(result){
 			var article = result.article;
-			renderArticle(article);
+			renderArticle(article_wrapper, article);
 		}
 	})
 }
@@ -57,10 +79,30 @@ function renderArticles(articles){
 	$("#article_list").empty();
 	var i;
 	
-	$("#article_list").append("<div class='article_header touchable'><div class='touchable'>제목</div><div class='touchable'>작성일</div><div class='touchable'>작성자</div><div class='touchable'>조회</div></div>");
+	$("#article_list").append("<div id='article_header' class='touchable'><div class='touchable'>제목</div><div class='touchable'>작성일</div><div class='touchable'>작성자</div><div class='touchable'>조회</div></div>");
 	
 	for(i=0; i<articles.length; i++){
-		$("#article_list").append("<div class='article_row touchable' onclick='getArticle("+"\""+articles[i].article_id+"\""+")' value='"+articles[i].article_id+"'><div class='touchable'>"+articles[i].article_title+"</div><div class='touchable'>"+articles[i].article_date+"</div><div class='touchable'>"+articles[i].user_name+"(<span class='touchable' style='color:gray;'>"+" "+articles[i].user_id+" "+"</span>)</div><div class='touchable'>"+articles[i].article_view+"</div></div>");
+		var article_wrapper = $("<div class='article_wrapper touchable' value='"+articles[i].article_id+"'></div>");
+		var article_header = $("<div class='article_header touchable' onclick='getArticle(this)'></div>");
+		
+		$(article_header).append("<input readonly class='article_title touchable' value='"+articles[i].article_title+"'><div class='touchable'>"+articles[i].article_date+"</div><div class='touchable'>"+articles[i].user_name+"(<span class='touchable' style='color:gray;'>"+" "+articles[i].user_id+" "+"</span>)</div><div class='touchable'>"+articles[i].article_view+"</div>");
+		
+		var article_body = $("<div class='article_body touchable'></div>");
+		var article_images = $("<div class='article_images touchable'></div>");
+		var article_comments = $("<div class='article_comments touchable'></div>");
+		
+		$(article_wrapper).append(article_header);
+		$(article_wrapper).append(article_body);
+		$(article_wrapper).append(article_images);
+		
+		(function(i){
+			var article_edit_panel = $("<div class='article_edit_panel touchable'><div class='edit_article_button' onclick='editArticle(this)'>수정하기</div><label class='add_article_image_label'><input class='add_article_image_input' type='file' multiple onchange='changeImages(this,"+i+")'></label><div class='delete_article_button' onclick='deleteArticle(this)'>삭제하기</div><div class='confirm_article_button' onclick='confirmArticle(this,"+i+")'>수정완료하기</div><div class='cancel_article_button' onclick='cancelArticle(this)'>취소하기</div></div>");
+			$(article_wrapper).append(article_edit_panel);
+		}(i))
+		
+		$(article_wrapper).append(article_comments);
+		
+		$("#article_list").append(article_wrapper);
 	}
 	
 	$("#article_list").append("<div class='pagebar touchable'></div>");
@@ -68,8 +110,20 @@ function renderArticles(articles){
 
 
 
-function renderArticle(article){
-	$("div.article_row[value='"+article.article_id+"']").after("<div class='article_wrapper touchable' value='"+article.article_id+"'><textarea class='article_content touchable' readonly>"+article.article_content+"</textarea></div>");
+function renderArticle(article_wrapper, article){
+	$(article_wrapper).find(".article_body").append("<textarea readonly class='article_content touchable'>"+article.article_content+"</textarea>");
+	
+	var i;
+	var fidx = $(article_wrapper).index()-1;
+	
+	for(i=0; i<article.article_images.length; i++){
+		$(article_wrapper).find(".article_images").append("<div class='article_image touchable' value='"+i+"'><div value='"+article.article_images[i].article_image_id+"' class='existing article_image_delete_button touchable' onclick='removeImageFromFilemaps(this,"+fidx+","+i+")'>✖</div><img class='touchable' src='/restapi/articles/"+article.article_id+"/images/"+article.article_images[i].article_image_id+"?article_image_extension="+article.article_images[i].article_image_extension+"'></div>");
+		indexs[fidx] = indexs[fidx]+1;
+	}
+	
+	
+	$(article_wrapper).find(".article_edit_panel").css({"display":"flex"});
+
 	$(".article_content").keydown();
 }
 
@@ -118,11 +172,30 @@ function pagingArticles(total,section,page){
 	$(pagebar).find(".page"+page).addClass("viewd");
 }
 
-function removeImages(idx){
+function removeImageFromFilemap(idx){
 	file_map.delete(idx);
-	$(".article_image[value='"+idx+"']").remove();
+	$("#article_images .article_image[value='"+idx+"']").remove();
 }
 
+function removeImageFromFilemaps(article_image_delete_button,fidx,idx){
+	
+	if($(".article_wrapper").eq(fidx).find(".confirm_article_button").css("display")=="none"){
+		return;
+	}
+	
+	if($(article_image_delete_button).hasClass("existing")){
+		removed_file_ids[fidx].set(idx,$(article_image_delete_button).attr("value"));
+	}else{
+		file_maps[fidx].delete(idx);
+	}
+	
+	$(".article_images").eq(fidx).find(".article_image[value='"+idx+"']").remove();
+}
+
+function removeImage(idx){
+	file_map.delete(idx);
+	$("#article_images .article_image[value='"+idx+"']").remove();
+}
 
 function addImages(e){
 	var i;
@@ -133,9 +206,122 @@ function addImages(e){
 			var reader = new FileReader();
 			reader.readAsDataURL(myfiles[i]);
 			reader.onload = function(event){
-				$("#article_images").append("<div class='article_image touchable' value='"+index+"'><div class='article_image_delete_button touchable' onclick='removeImages("+index+")'>✖</div><img class='touchable' src='"+event.target.result+"'></div>");
+				$("#article_images").append("<div class='article_image touchable' value='"+index+"'><div class='article_image_delete_button touchable' onclick='removeImageFromFilemap("+index+")'>✖</div><img class='touchable' src='"+event.target.result+"'></div>");
 				file_map.set(index,myfiles[i]);
 				index=index+1;
+			}
+		}(i))
+	}	
+}
+
+function editArticle(edit_article_button){
+	var article_edit_panel = $(edit_article_button).parent();
+	var delete_article_button = $(article_edit_panel).find(".delete_article_button");
+	var confirm_article_button = $(article_edit_panel).find(".confirm_article_button");
+	var cancel_article_button = $(article_edit_panel).find(".cancel_article_button");
+	var add_article_image_label = $(article_edit_panel).find(".add_article_image_label");
+	var article_wrapper = $(article_edit_panel).parent();
+	
+	$(edit_article_button).css({"display":"none"});
+	$(delete_article_button).css({"display":"none"});
+	$(confirm_article_button).css({"display":"block"});
+	$(cancel_article_button).css({"display":"block"});
+	$(add_article_image_label).css({"display":"block"});
+	
+	$(article_wrapper).find(".article_title").prop("readonly",false);
+	$(article_wrapper).find(".article_content").prop("readonly",false);
+}
+
+function cancelArticle(cancel_article_button){
+	var article_edit_panel = $(cancel_article_button).parent();
+	var edit_article_button = $(article_edit_panel).find(".edit_article_button");
+	var confirm_article_button = $(article_edit_panel).find(".confirm_article_button");
+	var delete_article_button = $(article_edit_panel).find(".delete_article_button");
+	var add_article_image_label = $(article_edit_panel).find(".add_article_image_label");
+	var article_wrapper = $(article_edit_panel).parent();
+	
+	$(edit_article_button).css({"display":"block"});
+	$(delete_article_button).css({"display":"block"});
+	$(confirm_article_button).css({"display":"none"});
+	$(cancel_article_button).css({"display":"none"});
+	$(add_article_image_label).css({"display":"none"});
+	
+	$(article_wrapper).find(".article_title").prop("readonly",true);
+	$(article_wrapper).find(".article_content").prop("readonly",true);
+}
+
+function confirmArticle(confirm_article_button, fidx){
+	if(modify_article_flag){
+		return;
+	}
+	
+	console.log(confirm_article_button);
+	
+	modify_article_flag = true;
+	
+	var formData = new FormData();
+	
+	
+	for([key, value] of removed_file_ids[fidx]){
+		formData.append("removed_file_ids",value);
+		console.log(key+" : "+value);
+	}
+	
+	console.log("==========");
+	
+	for([key, value] of file_maps[fidx]){
+		console.log(key+" : "+value);
+		formData.append("article_image_"+key,file_maps[fidx].get(key));
+	}
+
+	return $.ajax({
+		"url":"/restapi/articles/"+$(confirm_article_button).parent().parent().attr("value"),
+		"type":"post",
+		"processData":false,
+		"contentType":false,
+		"dataType":"json",
+		"data":formData,
+		"success":function(result){
+			openAlert(result.content);
+			
+			var article_edit_panel = $(confirm_article_button).parent();
+			var delete_article_button = $(article_edit_panel).find(".delete_article_button");
+			var edit_article_button = $(article_edit_panel).find(".edit_article_button");
+			var cancel_article_button = $(article_edit_panel).find(".cancel_article_button");
+			var add_article_image_label = $(article_edit_panel).find(".add_article_image_label");
+			var article_wrapper = $(article_edit_panel).parent();
+			
+			$(edit_article_button).css({"display":"block"});
+			$(delete_article_button).css({"display":"block"});
+			$(confirm_article_button).css({"display":"none"});
+			$(cancel_article_button).css({"display":"none"});
+			$(add_article_image_label).css({"display":"none"});
+			
+			file_maps[fidx] = new Map();
+			indexs[fidx] = 0;
+			removed_file_ids[fidx] = new Map();
+		},
+		"error":function(xhr, status, error){
+			openAlert(xhr.responseJSON.content);
+		},
+		"complete":function(){
+			modify_article_flag = false;
+		}
+	})
+}
+
+function changeImages(add_article_image_input, fidx){
+	var i;
+	var myfiles = add_article_image_input.files;
+	
+	for(i=0; i<myfiles.length; i++){
+		(function(i){
+			var reader = new FileReader();
+			reader.readAsDataURL(myfiles[i]);
+			reader.onload = function(event){
+				$(".article_images").eq(fidx).append("<div class='article_image touchable' value='"+indexes[fidx]+"'><div class='article_image_delete_button touchable' onclick='removeImageFromFilemaps(this,"+fidx+","+indexes[fidx]+")'>✖</div><img class='touchable' src='"+event.target.result+"'></div>");
+				file_map.set(index,myfiles[i]);
+				indexes[fidx]=index[fidx]+1;
 			}
 		}(i))
 	}	

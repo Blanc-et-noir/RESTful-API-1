@@ -169,11 +169,11 @@ public class ProblemController {
 	
 	//액세스 필요
 	@RequestMapping(value= {"/problems/{problem_id}/images/{problem_image_name}"}, method= {RequestMethod.GET})
-	public void getImage(@PathVariable("problem_id") String problem_id,@PathVariable("problem_image_name") String problem_image_name, HttpServletRequest request, HttpServletResponse response){
+	public void getImage(@PathVariable("problem_id") String problem_id,@PathVariable("problem_image_name") String problem_image_id, HttpServletRequest request, HttpServletResponse response){
 		HashMap result = new HashMap();
 		try {
 			String extension = "png";
-			String path = request.getServletContext().getRealPath("") + IMAGE_BASE_PATH+problem_id+"//"+problem_image_name+"."+extension;
+			String path = request.getServletContext().getRealPath("") + IMAGE_BASE_PATH+problem_id+"//"+problem_image_id+"."+extension;
 			
 			File file = new File(path);
 			
@@ -183,11 +183,13 @@ public class ProblemController {
 				return;
 			}else {
 				response.setHeader("Cache-Control", "no-cache");
-				response.addHeader("Content-disposition", "attachment; fileName="+problem_image_name+"."+extension);		
+				response.addHeader("Content-disposition", "attachment; fileName="+problem_image_id+"."+extension);
+				
 				FileInputStream in = new FileInputStream(file);
+				OutputStream out = response.getOutputStream();
 				
 				byte[] buffer = new byte[1024*1024*10];
-				OutputStream out = response.getOutputStream();
+				
 				while(true) {
 					int len = in.read(buffer);
 					if(len==-1) {

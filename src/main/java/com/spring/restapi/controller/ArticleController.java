@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.spring.restapi.service.ArticleService;
@@ -81,13 +83,29 @@ public class ArticleController {
 		return null;
 	}
 	
-	@RequestMapping(value={"/articles/{article_id}"},method={RequestMethod.PUT})
-	public ResponseEntity<HashMap> updateArticle(MultipartRequest mRequest, HttpServletRequest request){
-		return null;
+	@RequestMapping(value={"/articles/{article_id}"},method={RequestMethod.POST})
+	public ResponseEntity<HashMap> updateArticle(@PathVariable("article_id") String article_id, MultipartRequest mRequest, HttpServletRequest request){
+		HashMap result = new HashMap();
+		try {
+			HashMap param = new HashMap();
+			param.put("user_id", JwtUtil.getData(CookieUtil.getAccesstoken(request), "user_id"));
+			param.put("article_id", UUID.randomUUID().toString());
+			
+			articleService.modifyArticle(request.getServletContext().getRealPath(""),mRequest,request, param);
+			
+			result.put("flag", true);
+			result.put("content", "게시글 수정 성공");
+			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			result.put("flag", false);
+			result.put("content", "게시글 수정 실패");
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@RequestMapping(value={"/articles/{article_id}"},method={RequestMethod.GET})
-	public ResponseEntity<HashMap> getArticle(@PathVariable String article_id,HashMap param, HttpServletRequest request){
+	public ResponseEntity<HashMap> getArticle(@PathVariable("article_id") String article_id,HashMap param, HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
 			String user_accesstoken = CookieUtil.getAccesstoken(request);
@@ -109,6 +127,29 @@ public class ArticleController {
 			result.put("flag", false);
 			result.put("content", "게시글 목록 실패");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value={"/articles/{article_id}/images/{article_image_id}"},method={RequestMethod.GET})
+	public void getArticleImage(@PathVariable("article_id") String article_id,@PathVariable("article_image_id") String article_image_id, @RequestParam HashMap param, HttpServletRequest request,HttpServletResponse response){
+		HashMap result = new HashMap();
+		try {
+			
+			System.out.println(article_image_id);
+			
+			param.put("article_id",article_id);
+			param.put("article_image_id",article_image_id);
+
+			articleService.getArticleImage(request,response,param);
+			
+			result.put("flag", true);
+			result.put("content", "게시글 이미지 조회 성공");
+			return;
+		}catch(Exception e) {
+			e.printStackTrace();
+			result.put("flag", false);
+			result.put("content", "게시글 이미지 조회 실패");
+			return;
 		}
 	}
 }
