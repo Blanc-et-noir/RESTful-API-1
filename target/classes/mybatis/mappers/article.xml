@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="article">
 
+	<select id="isEditableArticle" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM articles
+		WHERE article_id = #{article_id} AND user_id = #{user_id}
+	</select>
+
 	<select id="getArticles" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT article_id "article_id", article_title "article_title", IF((DATEDIFF(NOW(),DATE_FORMAT(article_date,'%Y-%m-%d %T')))	<![CDATA[<]]>1,DATE_FORMAT(article_date,'%T'),DATE_FORMAT(article_date,'%Y-%m-%d')) "article_date", article_view "article_view", user_id "user_id", user_name "user_name"
 		FROM articles NATURAL JOIN users
@@ -44,4 +50,23 @@
 		SET article_view = article_view + 1
 		WHERE article_id = #{article_id}
 	</update>
+	
+	<update id="updateArticle" parameterType="java.util.HashMap">
+		UPDATE articles
+		SET article_title = #{article_title}, article_content = #{article_content}
+		WHERE article_id = #{article_id}
+	</update>
+	
+	<insert id="insertArticleImages">
+		INSERT INTO article_images
+		VALUES
+		<foreach collection="add_file_ids" separator="," item="article_image">(#{article_image.article_image_id},#{article_image.article_image_extension},#{article_id})</foreach>
+	</insert>
+	
+	
+	<delete id="deleteArticleImages">
+		DELETE FROM article_images
+		WHERE article_image_id IN 
+		<foreach collection="remove_file_ids" separator="," open="(" close=")" item="article_image_id">#{article_image_id}</foreach>
+	</delete>
 </mapper>

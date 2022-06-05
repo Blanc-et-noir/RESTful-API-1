@@ -84,14 +84,14 @@ public class ArticleController {
 	}
 	
 	@RequestMapping(value={"/articles/{article_id}"},method={RequestMethod.POST})
-	public ResponseEntity<HashMap> updateArticle(@PathVariable("article_id") String article_id, MultipartRequest mRequest, HttpServletRequest request){
+	public ResponseEntity<HashMap> updateArticle(@RequestParam HashMap<String,String> param,@PathVariable("article_id") String article_id, MultipartRequest mRequest, HttpServletRequest request){
 		HashMap result = new HashMap();
 		try {
-			HashMap param = new HashMap();
+			param.put("article_id", article_id);
 			param.put("user_id", JwtUtil.getData(CookieUtil.getAccesstoken(request), "user_id"));
-			param.put("article_id", UUID.randomUUID().toString());
+			param.put("contextPath", request.getServletContext().getRealPath(""));
 			
-			articleService.modifyArticle(request.getServletContext().getRealPath(""),mRequest,request, param);
+			articleService.modifyArticle(mRequest,request, param);
 			
 			result.put("flag", true);
 			result.put("content", "게시글 수정 성공");

@@ -43,4 +43,29 @@ public class ArticleDAO {
 	public void addArticleImages(HashMap param) {
 		sqlSession.insert("article.addArticleImages", param);
 	}
+	
+	
+	public void isEditableArticle(HashMap param) throws Exception {
+		if(sqlSession.selectOne("article.isEditableArticle",param) == null) {
+			throw new Exception();
+		}
+	}
+	
+	public void updateArticle(HashMap<String,String> param) throws Exception {
+		if(sqlSession.update("article.updateArticle", param)==0) {
+			throw new Exception();
+		}
+	}
+	
+	public void insertArticleImages(HashMap param) throws Exception {
+		if(sqlSession.insert("article.insertArticleImages", param)==0) {
+			throw new Exception();
+		}
+	}
+	
+	public void deleteArticleImages(HashMap param) throws Exception {
+		if(sqlSession.delete("article.deleteArticleImages", param)==0) {
+			throw new Exception();
+		}
+	}
 }

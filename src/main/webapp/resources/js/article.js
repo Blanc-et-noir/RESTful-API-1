@@ -10,6 +10,7 @@ var modify_article_flag = false;
 var file_maps;
 var indexs;
 var removed_file_ids;
+var removed_file_extensions;
 
 function setAddArticleForm(){
 	$("#add_article_form").css({"display":"flex"});
@@ -33,10 +34,12 @@ function getArticles(section, page,search_flag, search_content){
 			
 			file_maps = new Array(articles.length);
 			removed_file_ids = new Array(articles.length);
+			removed_file_extensions = new Array(articles.length);
 			
 			for(i=0;i<file_maps.length; i++){
 				file_maps[i] = new Map();
 				removed_file_ids[i] = new Map();
+				removed_file_extensions[i] = new Map();
 			}
 			
 			indexs = new Array(articles.length);
@@ -120,7 +123,7 @@ function renderArticle(article_wrapper, article){
 	var fidx = $(article_wrapper).index()-1;
 	
 	for(i=0; i<article.article_images.length; i++){
-		$(article_wrapper).find(".article_images").append("<div class='article_image touchable' value='"+i+"'><div value='"+article.article_images[i].article_image_id+"' class='existing article_image_delete_button touchable' onclick='removeImageFromFilemaps(this,"+fidx+","+i+")'>✖</div><img class='touchable' src='/restapi/articles/"+article.article_id+"/images/"+article.article_images[i].article_image_id+"?article_image_extension="+article.article_images[i].article_image_extension+"'></div>");
+		$(article_wrapper).find(".article_images").append("<div class='article_image touchable' value='"+i+"'><div value='"+article.article_images[i].article_image_id+"' class='existing article_image_delete_button touchable' extension='"+article.article_images[i].article_image_extension+"' onclick='removeImageFromFilemaps(this,"+fidx+","+i+")'>✖</div><img class='touchable' src='/restapi/articles/"+article.article_id+"/images/"+article.article_images[i].article_image_id+"?article_image_extension="+article.article_images[i].article_image_extension+"'></div>");
 		indexs[fidx] = indexs[fidx]+1;
 	}
 	
@@ -188,6 +191,7 @@ function removeImageFromFilemaps(article_image_delete_button,fidx,idx){
 	
 	if($(article_image_delete_button).hasClass("existing")){
 		removed_file_ids[fidx].set(idx,$(article_image_delete_button).attr("value"));
+		removed_file_extensions[fidx].set(idx,$(article_image_delete_button).attr("extension"));
 	}else{
 		file_maps[fidx].delete(idx);
 	}
@@ -261,10 +265,16 @@ function confirmArticle(confirm_article_button, fidx){
 	modify_article_flag = true;
 	
 	var formData = new FormData();
-	
+
+	formData.append("article_title",$(confirm_article_button).closest(".article_wrapper").find(".article_title").val());
+	formData.append("article_content",$(confirm_article_button).closest(".article_wrapper").find(".article_content").val());
 	
 	for([key, value] of removed_file_ids[fidx]){
 		formData.append("removed_file_ids",value);
+	}
+	
+	for([key, value] of removed_file_extensions[fidx]){
+		formData.append("removed_file_extensions",value);
 	}
 	
 	for([key, value] of file_maps[fidx]){
@@ -300,6 +310,7 @@ function confirmArticle(confirm_article_button, fidx){
 			file_maps[fidx] = new Map();
 			indexs[fidx] = 0;
 			removed_file_ids[fidx] = new Map();
+			removed_file_extensions[fidx] = new Map();
 		},
 		"error":function(xhr, status, error){
 			openAlert(xhr.responseJSON.content);
