@@ -33,7 +33,7 @@ import com.spring.restapi.exception.article.FailedToAddArticleException;
 public class ArticleService {
 	@Autowired
 	private ArticleDAO articleDAO;
-	private static final String IMAGE_BASE_PATH = "restapi_files\\article_images\\";
+	private static final String IMAGE_BASE_PATH = "restapi_files"+File.separator+"article_images"+File.separator;
 	
 	private static String getExtension(MultipartFile mf) {
 		String[] str = mf.getOriginalFilename().split("\\.");
@@ -71,7 +71,7 @@ public class ArticleService {
 			MultipartFile  mf = (MultipartFile) hm.get("article_image_file");
 			String article_image_id = (String) hm.get("article_image_id");
 			String article_id = (String) param.get("article_id");
-			File file = new File(contextPath+IMAGE_BASE_PATH+article_id+"\\"+article_image_id+"."+getExtension(mf));
+			File file = new File(contextPath+IMAGE_BASE_PATH+article_id+File.separator+article_image_id+"."+getExtension(mf));
 			
 			if(!file.exists()) {
 				file.mkdirs();
@@ -147,7 +147,7 @@ public class ArticleService {
 			String article_image_id = (String) hm.get("article_image_id");
 			
 					
-			mf.transferTo(new File(contextPath+IMAGE_BASE_PATH+article_id+"\\"+article_image_id+"."+getExtension(mf)));
+			mf.transferTo(new File(contextPath+IMAGE_BASE_PATH+article_id+File.separator+article_image_id+"."+getExtension(mf)));
 		}
 		
 		Iterator<String> itor_id = remove_file_ids.iterator();
@@ -156,7 +156,7 @@ public class ArticleService {
 		while(itor_id.hasNext()&&itor_extension.hasNext()) {
 			String id = itor_id.next();
 			String extension = itor_extension.next();
-			File file = new File(contextPath+IMAGE_BASE_PATH+article_id+"\\"+id+"."+extension);
+			File file = new File(contextPath+IMAGE_BASE_PATH+article_id+File.separator+id+"."+extension);
 			if(file.exists()) {
 				file.delete();
 			}
@@ -183,7 +183,7 @@ public class ArticleService {
 	
 	public void getArticleImage(HttpServletRequest request,HttpServletResponse response, HashMap param) throws IOException{
 		int len;
-		String path = request.getServletContext().getRealPath("") + IMAGE_BASE_PATH+param.get("article_id")+"\\"+param.get("article_image_id")+"."+param.get("article_image_extension");
+		String path = request.getServletContext().getRealPath("") + IMAGE_BASE_PATH+param.get("article_id")+File.separator+param.get("article_image_id")+"."+param.get("article_image_extension");
 		File file = new File(path);
 
 		if(!file.exists()) {

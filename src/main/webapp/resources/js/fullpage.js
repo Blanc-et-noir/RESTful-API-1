@@ -242,9 +242,9 @@ $.fn.extend({
                 }
             }
             $("#verticalNav").css({
-                "right": "0%",
+                "right": "10px",
                 "top": "50%",
-                "transform": "translate(-50%, -50%)",
+                "transform": "translate(-50%, 0%)",
                 "position":"fixed",
                 "display":"flex",
                 "flex-direction":"column",
@@ -281,7 +281,7 @@ $.fn.extend({
             }
             $("#horizontalNav").css({
                 "left": "50%",
-                "bottom": "0%",
+                "bottom": "10px",
                 "position":"fixed",
                 "display":"flex",
                 "flex-direction":"row",

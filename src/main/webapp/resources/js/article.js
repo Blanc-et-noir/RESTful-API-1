@@ -35,14 +35,14 @@ function getArticles(section, page,search_flag, search_content){
 			file_maps = new Array(articles.length);
 			removed_file_ids = new Array(articles.length);
 			removed_file_extensions = new Array(articles.length);
+			indexs = new Array(articles.length);
 			
 			for(i=0;i<file_maps.length; i++){
 				file_maps[i] = new Map();
 				removed_file_ids[i] = new Map();
 				removed_file_extensions[i] = new Map();
+				indexs[i] = 0;
 			}
-			
-			indexs = new Array(articles.length);
 			
 			renderArticles(articles);
 			
@@ -102,7 +102,7 @@ function renderArticles(articles){
 		$(article_wrapper).append(article_images);
 		
 		(function(i){
-			var article_edit_panel = $("<div class='article_edit_panel touchable'><div class='edit_article_button touchable' onclick='editArticle(this)'>수정</div><label class='add_article_image_label touchable'><input class='add_article_image_input touchable' type='file' multiple onchange='changeImages(this,"+i+")'></label><div class='delete_article_button touchable' onclick='deleteArticle(this)'>삭제</div><div class='confirm_article_button touchable' onclick='confirmArticle(this,"+i+")'>반영</div><div class='cancel_article_button touchable' onclick='cancelArticle(this)'>취소</div></div>");
+			var article_edit_panel = $("<div class='article_edit_panel touchable'><div class='edit_article_button touchable' onclick='editArticle(this)'>수정</div><div class='delete_article_button touchable' onclick='deleteArticle(this)'>삭제</div><div class='confirm_article_button touchable' onclick='confirmArticle(this,"+i+")'>반영</div><div class='cancel_article_button touchable' onclick='cancelArticle(this)'>취소</div><label class='add_article_images_button touchable'>파일<input class='article_images_input touchable' type='file' multiple accept='.gif, .jpg, .png' onchange='modifyArticleImages(this,"+i+")'/></label></div>");
 			$(article_wrapper).append(article_edit_panel);
 		}(i))
 		
@@ -211,12 +211,14 @@ function addImages(e){
 	for(i=0; i<myfiles.length; i++){
 		(function(i){
 			var reader = new FileReader();
-			reader.readAsDataURL(myfiles[i]);
+			
 			reader.onload = function(event){
 				$("#article_images").append("<div class='article_image touchable' value='"+index+"'><div class='article_image_delete_button touchable' onclick='removeImageFromFilemap("+index+")'>✖</div><img class='touchable' src='"+event.target.result+"'></div>");
 				file_map.set(index,myfiles[i]);
 				index=index+1;
 			}
+			
+			reader.readAsDataURL(myfiles[i]);
 		}(i))
 	}	
 }
@@ -226,14 +228,14 @@ function editArticle(edit_article_button){
 	var delete_article_button = $(article_edit_panel).find(".delete_article_button");
 	var confirm_article_button = $(article_edit_panel).find(".confirm_article_button");
 	var cancel_article_button = $(article_edit_panel).find(".cancel_article_button");
-	var add_article_image_label = $(article_edit_panel).find(".add_article_image_label");
+	var add_article_images_button = $(article_edit_panel).find(".add_article_images_button");
 	var article_wrapper = $(article_edit_panel).parent();
 	
 	$(edit_article_button).css({"display":"none"});
 	$(delete_article_button).css({"display":"none"});
 	$(confirm_article_button).css({"display":"block"});
 	$(cancel_article_button).css({"display":"block"});
-	$(add_article_image_label).css({"display":"block"});
+	$(add_article_images_button).css({"display":"block"});
 	
 	$(article_wrapper).find(".article_title").prop("readonly",false);
 	$(article_wrapper).find(".article_content").prop("readonly",false);
@@ -244,14 +246,14 @@ function cancelArticle(cancel_article_button){
 	var edit_article_button = $(article_edit_panel).find(".edit_article_button");
 	var confirm_article_button = $(article_edit_panel).find(".confirm_article_button");
 	var delete_article_button = $(article_edit_panel).find(".delete_article_button");
-	var add_article_image_label = $(article_edit_panel).find(".add_article_image_label");
+	var add_article_images_button = $(article_edit_panel).find(".add_article_images_button");
 	var article_wrapper = $(article_edit_panel).parent();
 	
 	$(edit_article_button).css({"display":"block"});
 	$(delete_article_button).css({"display":"block"});
 	$(confirm_article_button).css({"display":"none"});
 	$(cancel_article_button).css({"display":"none"});
-	$(add_article_image_label).css({"display":"none"});
+	$(add_article_images_button).css({"display":"none"});
 	
 	$(article_wrapper).find(".article_title").prop("readonly",true);
 	$(article_wrapper).find(".article_content").prop("readonly",true);
@@ -295,14 +297,14 @@ function confirmArticle(confirm_article_button, fidx){
 			var delete_article_button = $(article_edit_panel).find(".delete_article_button");
 			var edit_article_button = $(article_edit_panel).find(".edit_article_button");
 			var cancel_article_button = $(article_edit_panel).find(".cancel_article_button");
-			var add_article_image_label = $(article_edit_panel).find(".add_article_image_label");
+			var add_article_images_button = $(article_edit_panel).find(".add_article_images_button");
 			var article_wrapper = $(article_edit_panel).parent();
 			
 			$(edit_article_button).css({"display":"block"});
 			$(delete_article_button).css({"display":"block"});
 			$(confirm_article_button).css({"display":"none"});
 			$(cancel_article_button).css({"display":"none"});
-			$(add_article_image_label).css({"display":"none"});
+			$(add_article_images_button).css({"display":"none"});
 			
 			$(article_wrapper).find(".article_title").prop("readonly",true);
 			$(article_wrapper).find(".article_content").prop("readonly",true);
@@ -330,9 +332,9 @@ function changeImages(add_article_image_input, fidx){
 			var reader = new FileReader();
 			reader.readAsDataURL(myfiles[i]);
 			reader.onload = function(event){
-				$(".article_images").eq(fidx).append("<div class='article_image touchable' value='"+indexes[fidx]+"'><div class='article_image_delete_button touchable' onclick='removeImageFromFilemaps(this,"+fidx+","+indexes[fidx]+")'>✖</div><img class='touchable' src='"+event.target.result+"'></div>");
+				$(".article_images").eq(fidx).append("<div class='article_image touchable' value='"+indexs[fidx]+"'><div class='article_image_delete_button touchable' onclick='removeImageFromFilemaps(this,"+fidx+","+indexs[fidx]+")'>✖</div><img class='touchable' src='"+event.target.result+"'></div>");
 				file_map.set(index,myfiles[i]);
-				indexes[fidx]=index[fidx]+1;
+				indexs[fidx]=indexs[fidx]+1;
 			}
 		}(i))
 	}	
@@ -389,6 +391,29 @@ function resizeArticleContent(article_content){
 	$(article_content).css({
 		"height" : (12+article_content.scrollHeight)+"px"
 	})
+}
+
+function modifyArticleImages(article_images_input,fidx){
+	var article_wrapper = $(article_images_input).closest(".article_wrapper")
+	var article_images = $(article_wrapper).find(".article_images");
+	var myFiles = article_images_input.files;
+	
+	var i;
+	
+	for(i=0; i<myFiles.length; i++){
+		
+		(function(i, indexs){
+			
+			var fileReader = new FileReader();
+			fileReader.onload = function(e){
+				$(article_images).append("<div class='article_image touchable' value='"+indexs[fidx]+"'><div class='article_image_delete_button touchable' onclick='removeImageFromFilemaps(this,"+fidx+","+indexs[fidx]+")'>✖</div><img class='touchable' src='"+e.target.result+"'></div>");
+				file_maps[fidx].set(indexs[fidx],myFiles[i]);
+				indexs[fidx] = indexs[fidx]+1;
+			};
+			
+			fileReader.readAsDataURL(myFiles[i]);
+		}(i, indexs));
+	}
 }
 
 $(document).ready(function(){
