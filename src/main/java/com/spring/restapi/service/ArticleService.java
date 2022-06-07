@@ -14,6 +14,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -23,12 +24,16 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.spring.restapi.dao.ArticleDAO;
 import com.spring.restapi.exception.article.FailedToAddArticleException;
+import com.spring.restapi.exception.article.NotFoundArticleException;
+import com.spring.restapi.exception.article.NotMatchedUserIdException;
 
 @Transactional(propagation=Propagation.REQUIRED,rollbackFor={
-		FailedToAddArticleException.class,
-		Exception.class
-		}
-)
+	FailedToAddArticleException.class,
+	Exception.class,
+	NotMatchedUserIdException.class,
+	NotFoundArticleException.class,
+	IOException.class
+})
 @Service("articleService")
 public class ArticleService {
 	@Autowired
@@ -204,6 +209,35 @@ public class ArticleService {
 			in.close();
 			out.close();
 			return;
+		}
+	}
+	
+	public void deleteArticle(HashMap<String,String> param) throws NotMatchedUserIdException, NotFoundArticleException, IOException, Exception {
+		//1. 게시글이 존재하는지 확인
+		HashMap<String,String> article = articleDAO.getArticle(param);
+
+		if(article == null) {
+			throw new NotFoundArticleException();
+		}
+		
+		//2. 게시글이 자신이 작성한 것인지 확인
+		if(!article.get("user_id").equals(param.get("user_id"))) {
+			throw new NotMatchedUserIdException();
+		}
+		
+		//3. 해당 게시글의 댓글들을 모두 삭제, 댓글기능은 아직 구현하지 않음
+		//articleDAO.deleteAllComments(param);
+		
+		//4. 해당 게시글을 삭제
+		articleDAO.deleteArticle(param);
+		
+		//5. 해당 게시글의 이미지들 삭제
+		articleDAO.deleteAllArticleImages(param);
+		
+		//6. 해당 게시글의 실제 이미지 폴더 삭제
+		File folder = new File(param.get("contextPath")+IMAGE_BASE_PATH+File.separator+param.get("article_id"));
+		if(folder.exists()) {
+			FileUtils.deleteDirectory(folder);
 		}
 	}
 }

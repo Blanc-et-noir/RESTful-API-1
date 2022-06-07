@@ -6,6 +6,7 @@ var search_flag = "user_id";
 
 var send_article_flag = false;
 var modify_article_flag = false;
+var delete_article_flag = false;
 
 var file_maps;
 var indexs;
@@ -414,6 +415,35 @@ function modifyArticleImages(article_images_input,fidx){
 			fileReader.readAsDataURL(myFiles[i]);
 		}(i, indexs));
 	}
+}
+
+function deleteArticle(delete_article_button){
+	var article_wrapper = $(delete_article_button).closest(".article_wrapper");
+	
+	if(delete_article_flag){
+		return;
+	}
+	
+	delete_article_flag = true;
+	
+	return $.ajax({
+		"url":"/restapi/articles/"+$(article_wrapper).attr("value"),
+		"type":"delete",
+		"dataType":"json",
+		"success":function(result){
+			section = 1;
+			page = 1;
+			getArticles(section, page, search_flag, search_content);
+			
+			openAlert(result.content);
+		},
+		"error":function(xhr, status, error){
+			openAlert(xhr.responseJSON.content);
+		},
+		"complete":function(){
+			delete_article_flag = false;
+		}
+	})
 }
 
 $(document).ready(function(){

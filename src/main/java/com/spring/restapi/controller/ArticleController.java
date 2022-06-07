@@ -1,5 +1,6 @@
 package com.spring.restapi.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
+import com.spring.restapi.exception.article.NotFoundArticleException;
+import com.spring.restapi.exception.article.NotMatchedUserIdException;
 import com.spring.restapi.service.ArticleService;
 import com.spring.restapi.util.CookieUtil;
 import com.spring.restapi.util.JwtUtil;
@@ -29,7 +32,6 @@ public class ArticleController {
 	@RequestMapping(value={"/articles"},method={RequestMethod.POST})
 	public ResponseEntity<HashMap> addArticle(@RequestParam HashMap param, MultipartRequest mRequest, HttpServletRequest request){
 		HashMap result = new HashMap();
-		System.out.println(request.getServletContext().getRealPath(""));
 		try {
 			param.put("user_id", JwtUtil.getData(CookieUtil.getAccesstoken(request), "user_id"));
 			param.put("article_id", UUID.randomUUID().toString());
@@ -79,8 +81,36 @@ public class ArticleController {
 	}
 	
 	@RequestMapping(value={"/articles/{article_id}"},method={RequestMethod.DELETE})
-	public ResponseEntity<HashMap> deleteArticle(MultipartRequest mRequest, HttpServletRequest request){
-		return null;
+	public ResponseEntity<HashMap> deleteArticle(@PathVariable String article_id, @RequestParam HashMap param, HttpServletRequest request){
+		HashMap result = new HashMap();
+		try {
+			param.put("user_id", JwtUtil.getData(CookieUtil.getAccesstoken(request),"user_id"));
+			param.put("article_id", article_id);
+			param.put("contextPath", request.getServletContext().getRealPath(""));
+			
+			articleService.deleteArticle(param);
+			
+			result.put("flag", true);
+			result.put("content", "게시글 삭제 성공");
+			return new ResponseEntity<HashMap>(result,HttpStatus.OK);		
+		}catch(NotMatchedUserIdException e) {
+			result.put("flag", false);
+			result.put("content", e.getMessage());
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);	
+		}catch(NotFoundArticleException e) {
+			result.put("flag", false);
+			result.put("content", e.getMessage());
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);	
+		}catch(IOException e) {
+			result.put("flag", false);
+			result.put("content", "이미지 파일을 삭제하는 도중 문제가 발생했습니다.");
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);	
+		}catch(Exception e) {
+			e.printStackTrace();
+			result.put("flag", false);
+			result.put("content", "게시글 삭제 실패");
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@RequestMapping(value={"/articles/{article_id}"},method={RequestMethod.POST})
@@ -133,10 +163,7 @@ public class ArticleController {
 	@RequestMapping(value={"/articles/{article_id}/images/{article_image_id}"},method={RequestMethod.GET})
 	public void getArticleImage(@PathVariable("article_id") String article_id,@PathVariable("article_image_id") String article_image_id, @RequestParam HashMap param, HttpServletRequest request,HttpServletResponse response){
 		HashMap result = new HashMap();
-		try {
-			
-			System.out.println(article_image_id);
-			
+		try {			
 			param.put("article_id",article_id);
 			param.put("article_image_id",article_image_id);
 

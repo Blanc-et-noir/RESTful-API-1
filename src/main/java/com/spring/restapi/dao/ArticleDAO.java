@@ -63,9 +63,21 @@ public class ArticleDAO {
 		}
 	}
 	
-	public void deleteArticleImages(HashMap param) throws Exception {
-		if(sqlSession.delete("article.deleteArticleImages", param)==0) {
-			throw new Exception();
-		}
+	public void deleteArticleImages(HashMap param){
+		sqlSession.delete("article.deleteArticleImages", param);
+	}
+
+	/* 아직 댓글기능은 구현하지 않음
+	public void deleteAllComments(HashMap<String, String> param) {
+		sqlSession.delete("article.deleteAllComments",param);
+	}
+	*/
+	
+	public void deleteArticle(HashMap<String, String> param) {
+		sqlSession.delete("article.deleteArticle",param);
+	}
+
+	public void deleteAllArticleImages(HashMap<String, String> param) {
+		sqlSession.delete("article.deleteAllArticleImages",param);
 	}
 }

@@ -506,7 +506,7 @@ input[type=radio]:not(:checked) + label:hover{
 #problems{
 	margin:0px auto !important;
 	width:100%;
-	max-width:1200px;
+	max-width:800px;
 	min-width:270px;
 	overflow-y:scroll;
 	display:flex;
@@ -539,7 +539,7 @@ input[type=radio]:not(:checked) + label:hover{
 }
 #problem_form{
 	margin:0px auto !important;
-	max-width:1200px;
+	max-width:800px;
 	min-width:270px;
 	width:100%;
 	display:flex;
