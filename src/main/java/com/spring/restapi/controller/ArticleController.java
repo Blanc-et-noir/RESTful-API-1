@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.spring.restapi.exception.article.NotFoundArticleException;
@@ -124,12 +123,20 @@ public class ArticleController {
 			articleService.modifyArticle(mRequest,request, param);
 			
 			result.put("flag", true);
-			result.put("content", "게시글 수정 성공");
+			result.put("content", "게시글 수정에 성공했습니다.");
 			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+		}catch(NotFoundArticleException e) {
+			result.put("flag", false);
+			result.put("content", e.getMessage());
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}catch(NotMatchedUserIdException e) {
+			result.put("flag", false);
+			result.put("content", e.getMessage());
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}catch(Exception e) {
 			e.printStackTrace();
 			result.put("flag", false);
-			result.put("content", "게시글 수정 실패");
+			result.put("content", "게시글 수정에 실패했습니다.");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}
 	}

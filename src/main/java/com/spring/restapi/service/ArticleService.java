@@ -23,12 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.spring.restapi.dao.ArticleDAO;
-import com.spring.restapi.exception.article.FailedToAddArticleException;
 import com.spring.restapi.exception.article.NotFoundArticleException;
 import com.spring.restapi.exception.article.NotMatchedUserIdException;
 
 @Transactional(propagation=Propagation.REQUIRED,rollbackFor={
-	FailedToAddArticleException.class,
 	Exception.class,
 	NotMatchedUserIdException.class,
 	NotFoundArticleException.class,
@@ -45,7 +43,7 @@ public class ArticleService {
 		return str[str.length-1];
 	}
 	
-	public void addArticle(String contextPath, MultipartRequest mRequest,HashMap param) throws FailedToAddArticleException, Exception {		
+	public void addArticle(String contextPath, MultipartRequest mRequest,HashMap param) throws Exception {		
 		
 		Iterator<String> itor =  mRequest.getFileNames();
 				
@@ -86,16 +84,24 @@ public class ArticleService {
 		}
 	}
 	
-	public void modifyArticle(MultipartRequest mRequest,HttpServletRequest request, HashMap param) throws Exception{
+	public void modifyArticle(MultipartRequest mRequest,HttpServletRequest request, HashMap param) throws NotFoundArticleException, NotMatchedUserIdException, Exception{
 		Iterator<String> itor = mRequest.getFileNames();
 
-		//1. 보유한 액세스토큰으로 게시글 수정이 가능한지 파악
-		articleDAO.isEditableArticle(param);
+		//1. 해당 게시글이 존재하는지 확인.
+		HashMap article = articleDAO.getArticle(param);
+		if(article==null) {
+			throw new NotFoundArticleException();
+		}
 		
-		//2. 수정이 가능하다면 게시글 제목, 내용 수정
+		//2. 게시글이 자신이 작성한 것인지 확인.
+		if(!article.get("user_id").equals(param.get("user_id"))) {
+			throw new NotMatchedUserIdException();
+		}
+		
+		//3. 수정이 가능하다면 게시글 제목, 내용 수정
 		articleDAO.updateArticle(param);
 		
-		//3. 게시글 수정에 성공했으면 새로 추가된 파일, 삭제할 파일 정보를 전처리후  게시글 이미지 정보 또한 수정
+		//4. 게시글 수정에 성공했으면 새로 추가된 파일, 삭제할 파일 정보를 전처리후  게시글 이미지 정보 또한 수정.
 		
 		List<HashMap> add_file_ids =  new LinkedList<HashMap>();
 		
@@ -141,7 +147,7 @@ public class ArticleService {
 			articleDAO.deleteArticleImages(param);
 		}
 
-		//4. DB수정이 완료됐으면, 앞서 전처리한 정보로 실제로 파일을 제거할 파일 제거 및 업로드할 파일 업로드
+		//4. DB수정이 완료됐으면, 앞서 전처리한 정보로 실제로 파일을 제거할 파일 제거 및 업로드할 파일 업로드.
 		
 		String article_id = (String) param.get("article_id");
 		String contextPath = (String) param.get("contextPath");
@@ -150,8 +156,7 @@ public class ArticleService {
 			MultipartFile mf = (MultipartFile) hm.get("article_image_file");
 			
 			String article_image_id = (String) hm.get("article_image_id");
-			
-					
+		
 			mf.transferTo(new File(contextPath+IMAGE_BASE_PATH+article_id+File.separator+article_image_id+"."+getExtension(mf)));
 		}
 		
@@ -175,9 +180,13 @@ public class ArticleService {
 		return result;
 	}
 	
-	public HashMap getArticle(HashMap param) {
+	public HashMap getArticle(HashMap param) throws NotFoundArticleException{
 		HashMap result = new HashMap();
 		HashMap article = articleDAO.getArticle(param);
+		
+		if(article == null) {
+			throw new NotFoundArticleException();
+		}
 		
 		articleDAO.increaseArticleView(param);
 		article.put("article_images", articleDAO.getArticleImages(param));
@@ -213,28 +222,28 @@ public class ArticleService {
 	}
 	
 	public void deleteArticle(HashMap<String,String> param) throws NotMatchedUserIdException, NotFoundArticleException, IOException, Exception {
-		//1. 게시글이 존재하는지 확인
+		//1. 게시글이 존재하는지 확인.
 		HashMap<String,String> article = articleDAO.getArticle(param);
 
 		if(article == null) {
 			throw new NotFoundArticleException();
 		}
 		
-		//2. 게시글이 자신이 작성한 것인지 확인
+		//2. 게시글이 자신이 작성한 것인지 확인.
 		if(!article.get("user_id").equals(param.get("user_id"))) {
 			throw new NotMatchedUserIdException();
 		}
 		
-		//3. 해당 게시글의 댓글들을 모두 삭제, 댓글기능은 아직 구현하지 않음
+		//3. 해당 게시글의 댓글들을 모두 삭제, 댓글기능은 아직 구현하지 않음.
 		//articleDAO.deleteAllComments(param);
 		
 		//4. 해당 게시글을 삭제
 		articleDAO.deleteArticle(param);
 		
-		//5. 해당 게시글의 이미지들 삭제
+		//5. 해당 게시글의 이미지들 삭제.
 		articleDAO.deleteAllArticleImages(param);
 		
-		//6. 해당 게시글의 실제 이미지 폴더 삭제
+		//6. 해당 게시글의 실제 이미지 폴더 삭제.
 		File folder = new File(param.get("contextPath")+IMAGE_BASE_PATH+File.separator+param.get("article_id"));
 		if(folder.exists()) {
 			FileUtils.deleteDirectory(folder);

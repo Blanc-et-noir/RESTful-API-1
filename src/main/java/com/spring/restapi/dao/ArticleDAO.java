@@ -7,17 +7,13 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.spring.restapi.exception.article.FailedToAddArticleException;
-
 @Repository("articleDAO")
 public class ArticleDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public void addArticle(HashMap<String,String> param) throws FailedToAddArticleException {
-		if(sqlSession.insert("article.addArticle",param)==0) {
-			throw new FailedToAddArticleException();
-		}
+	public void addArticle(HashMap<String,String> param){
+		sqlSession.insert("article.addArticle",param);
 	}
 	
 	public int getArticlesTotal(HashMap<String,String> param){
@@ -51,16 +47,12 @@ public class ArticleDAO {
 		}
 	}
 	
-	public void updateArticle(HashMap<String,String> param) throws Exception {
-		if(sqlSession.update("article.updateArticle", param)==0) {
-			throw new Exception();
-		}
+	public void updateArticle(HashMap<String,String> param){
+		sqlSession.update("article.updateArticle", param);
 	}
 	
-	public void insertArticleImages(HashMap param) throws Exception {
-		if(sqlSession.insert("article.insertArticleImages", param)==0) {
-			throw new Exception();
-		}
+	public void insertArticleImages(HashMap param){
+		sqlSession.insert("article.insertArticleImages", param);
 	}
 	
 	public void deleteArticleImages(HashMap param){
