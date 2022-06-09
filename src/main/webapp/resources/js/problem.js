@@ -127,13 +127,11 @@ function getProblems(){
 }
 
 function sendSolution(list){
-	var obj = new Object();
-	obj.list = list;
 	return $.ajax({
 		"url":"/restapi/users/records",
 		"type":"post",
 		"contentType": "application/json;",
-		"data":JSON.stringify(obj)
+		"data":JSON.stringify(list)
 	});
 }
 
@@ -653,7 +651,7 @@ $(document).ready(function(){
 			}
 			var obj = new Object();
 			obj.problem_id = problem_id ;
-			obj.answer_id = $("input[name='"+problem_id+"']:checked").val();
+			obj.choice_id = $("input[name='"+problem_id+"']:checked").val();
 			list.push(obj);
 		}
 		
@@ -735,4 +733,4 @@ $(document).ready(function(){
 			}
 		})
     });
-}) 
+})

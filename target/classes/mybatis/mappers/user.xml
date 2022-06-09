@@ -27,7 +27,7 @@
 	<insert id="insertRecords" parameterType="java.util.HashMap">
 		INSERT INTO records(problem_id,choice_id,user_id) VALUES
 		<foreach collection="list" item="item" separator=",">
-			(#{item.problem_id},#{item.answer_id},#{item.user_id})
+			(#{item.problem_id},#{item.choice_id},#{user_id})
 		</foreach>
 	</insert>
 </mapper>

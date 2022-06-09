@@ -13,12 +13,10 @@ import com.spring.restapi.dao.ProblemDAO;
 import com.spring.restapi.exception.problem.InvalidOpinionIdException;
 import com.spring.restapi.exception.problem.InvalidProblemIdException;
 import com.spring.restapi.exception.problem.InvalidUserIdException;
-import com.spring.restapi.exception.user.UnableToInsertRecordsException;
 
 @Service("problemService")
 @Transactional(propagation=Propagation.REQUIRED,rollbackFor={
 		Exception.class,
-		UnableToInsertRecordsException.class,
 		InvalidProblemIdException.class,
 		InvalidOpinionIdException.class,
 		InvalidUserIdException.class

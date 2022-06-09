@@ -66,14 +66,15 @@
 		LIMIT 5 OFFSET ${offset}
 	</select>
 	
-	<select id="getChoicesInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	<select id="getRightChoices" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT *
 		FROM choices
 		<where>
-			<foreach collection="list" item="item" open="(problem_id,choice_id) IN(" separator="," close=")">
-				(#{item.problem_id},#{item.answer_id})
+			<foreach collection="list" item="item" open="problem_id IN(" separator="," close=")">
+				#{item.problem_id}
 			</foreach>
 		</where>
+		AND choice_yn = 'Y'
 	</select>
 	
 	<update id="updateOpinion" parameterType="java.util.HashMap">
