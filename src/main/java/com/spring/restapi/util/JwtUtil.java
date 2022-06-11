@@ -49,16 +49,10 @@ public class JwtUtil {
 	}
 	
 	//클라이언트로부터 전달받은 해당 토큰이 위조되었는지 아닌지 판단함.
-	public static boolean validateToken(String token){
+	public static void validateToken(String token){
 		//1. 해당 JWT 토큰에 문제가 있는지 판단함.
-		try {
-			Claims claims = null;
-			claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-			return true;
-		//2. 기타 예외가 발생한 경우.
-		}catch(Exception e) {
-			return false;
-		}
+		Claims claims = null;
+		claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
 	}
 	
 	//클라이언트로부터 전달받은 해당 토큰에 저장된 정보를 얻음.

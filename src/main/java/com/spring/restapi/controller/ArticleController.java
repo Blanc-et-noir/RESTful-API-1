@@ -147,12 +147,13 @@ public class ArticleController {
 		try {
 			String user_accesstoken = CookieUtil.getAccesstoken(request);
 			
-			if(JwtUtil.validateToken(user_accesstoken)) {
+			try {
+				JwtUtil.validateToken(user_accesstoken);
 				param.put("user_id", JwtUtil.getData(user_accesstoken, "user_id"));
-			}else {
+			}catch(Exception e) {
 				param.put("user_id", "");
 			}
-			
+
 			param.put("article_id", article_id);
 			
 			result = articleService.getArticle(param);

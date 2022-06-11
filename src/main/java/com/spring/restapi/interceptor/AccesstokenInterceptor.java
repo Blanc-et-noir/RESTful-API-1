@@ -43,6 +43,8 @@ public class AccesstokenInterceptor implements HandlerInterceptor{
 		String uri = request.getRequestURI();
 		String method = request.getMethod();
 
+		
+		
 		//1. 신규 회원가입 요청시에는 액세스 토큰이 필요없음.
 		if(uri.equals("/restapi/users")&&method.equals("POST")) {
 			return true;
