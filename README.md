@@ -755,9 +755,9 @@ HTTP/1.1 401 Unauthorized
 
 <pre>
 GET /restapi/problems/{problem_id}/images/{problem_image_name}
-Accept: image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
-Accept-Encoding: gzip, deflate
-Accept-Language: ko,en;q=0.9,en-US;q=0.8
+Accept : image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Accept-Encoding : gzip, deflate
+Accept-Language : ko,en;q=0.9,en-US;q=0.8
 {
    
 }
