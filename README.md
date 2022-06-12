@@ -1044,7 +1044,35 @@ GET /restapi/articles?search_flag={search_flag}&search_content={search_content}?
 HTTP/1.1 200 Ok
 {
    flag : true,
-   content : 응답 메세지
+   content : 응답 메세지,
+   articles : [
+      {
+         article_id : 게시글 ID,
+         article_title : 게시글 제목,
+         article_date : 게시글 작성 날짜,
+         article_view : 게시글 조회수,
+         user_id : 작성자 ID,
+         user_name : 작성자 이름
+      },
+      {
+         article_id : 게시글 ID,
+         article_title : 게시글 제목,
+         article_date : 게시글 작성 날짜,
+         article_view : 게시글 조회수,
+         user_id : 작성자 ID,
+         user_name : 작성자 이름
+      },
+      {
+         article_id : 게시글 ID,
+         article_title : 게시글 제목,
+         article_date : 게시글 작성 날짜,
+         article_view : 게시글 조회수,
+         user_id : 작성자 ID,
+         user_name : 작성자 이름
+      },
+                  ....
+   ],
+   articles_total : 게시글 총 개수
 }
 </pre>
 
@@ -1082,7 +1110,7 @@ Content-Type : multipart/form-data
 {
    article_title : 게시글 제목,
    article_content : 게시글 내용,
-   article_image_files : [	Multipart File, Multipart File, Multipart File]
+   article_image_files : [ Multipart File, Multipart File, Multipart File ]
 }   
 </pre>
 
@@ -1094,6 +1122,73 @@ HTTP/1.1 201 Created
 }
 </pre>
 
+<pre>
+HTTP/1.1 400 Bad Request
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+#### [API 목록으로 되돌아가기](#api_list)
+
+<br/>
+
+***
+
+<br/>
+
+<a id="/anchor17">
+   
+   ### 게시글 조회 요청
+   
+</a>
+
+#### 게시글 조회를 요청하는 API
+
+<br/>
+
+<pre>
+GET /restapi/articles/{article_id} HTTP/1.1
+{
+
+}   
+</pre>
+
+<pre>
+HTTP/1.1 200 Ok
+{
+   flag : true,
+   content : 응답 메세지,
+   article_id : 게시글 ID,
+   article_title : 게시글 제목,
+   article_content : 게시글 내용,
+   article_date : 게시글 작성 날짜,
+   article_view : 게시글 조회수,
+   article_images : [
+      {
+         article_id : 게시글 ID,
+         article_image_id : 게시글 이미지 ID,
+         article_image_extension : 게시글 이미지 확장자 
+      },
+      {
+         article_id : 게시글 ID,
+         article_image_id : 게시글 이미지 ID,
+         article_image_extension : 게시글 이미지 확장자
+      },
+      {
+         article_id : 게시글 ID,
+         article_image_id : 게시글 이미지 ID,
+         article_image_extension : 게시글 이미지 확장자 
+      }
+   ],
+   user_id : 작성자 ID,
+   user_name : 작성자 이름,
+   editable : true 또는 false
+}
+</pre>
 <pre>
 HTTP/1.1 400 Bad Request
 {
