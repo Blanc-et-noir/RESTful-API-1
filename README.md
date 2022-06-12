@@ -113,6 +113,16 @@
 
 #### 15. [게시글 목록 발급 요청](#/anchor15)
 
+#### 16. [게시글 작성 요청](#/anchor16)
+
+#### 17. [게시글 조회 요청](#/anchor17)
+
+#### 18. [게시글 삭제 요청](#/anchor18)
+
+#### 19. [게시글 수정 요청](#/anchor19)
+
+#### 20. [게시글 이미지 조회 요청](#/anchor20)
+
 <br/>
 
 ***
@@ -1005,7 +1015,7 @@ HTTP/1.1 401 Unauthorized
 
 <a id="/anchor15">
    
-   ### 문제 의견 삭제 요청
+   ### 게시글 목록 발급 요청
    
 </a>
 
@@ -1032,6 +1042,52 @@ GET /restapi/articles?search_flag={search_flag}&search_content={search_content}?
 
 <pre>
 HTTP/1.1 200 Ok
+{
+   flag : true,
+   content : 응답 메세지
+}
+</pre>
+
+<pre>
+HTTP/1.1 400 Bad Request
+{
+   flag : false,
+   content : 응답 메세지
+}
+</pre>
+
+<br/>
+
+#### [API 목록으로 되돌아가기](#api_list)
+
+<br/>
+
+***
+
+<br/>
+
+<a id="/anchor16">
+   
+   ### 게시글 작성 요청
+   
+</a>
+
+#### 게시글 작성을 요청하는 API
+
+<br/>
+
+<pre>
+POST /restapi/articles HTTP/1.1
+Content-Type : multipart/form-data
+{
+   article_title : 게시글 제목,
+   article_content : 게시글 내용,
+   article_image_files : [	Multipart File, Multipart File, Multipart File]
+}   
+</pre>
+
+<pre>
+HTTP/1.1 201 Created
 {
    flag : true,
    content : 응답 메세지
