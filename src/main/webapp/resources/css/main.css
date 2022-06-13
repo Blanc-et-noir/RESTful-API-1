@@ -840,12 +840,11 @@ input[type=radio]:not(:checked) + label:hover{
 }
 #article_header > div{
 	line-height:40px;
-	background-color:#6c63ff;
-	color:white;
+	color:black;
 	font-weight:900;
 }
 #article_header > div:hover{
-	background-color:#564fcc;
+	color:#ee3f5c;
 }
 
 #article_header > div:nth-of-type(1){
@@ -923,13 +922,13 @@ input[type=radio]:not(:checked) + label:hover{
 	display:flex;
 	flex-direction:column;
 	overflow:hidden;
-	border-top:1px solid #6c63ff;
+	border-top:1px solid gray;
 }
 
 
 #article_list > div:nth-last-of-type(2){
-	border-top:1px solid #6c63ff;
-	border-bottom:1px solid #6c63ff;
+	border-top:1px solid gray;
+	border-bottom:1px solid gray;
 	border-bottom-left-radius:5px;
 	border-bottom-right-radius:5px;
 	overflow:hidden;
@@ -1054,17 +1053,16 @@ input[type=radio]:not(:checked) + label:hover{
 }
 .article_edit_panel > div, .article_edit_panel > label{
 	padding:5px 10px !important;
-	background-color:#6c63ff;
-	color:white;
+	color:gray;
 	text-align:center;
-	margin:0px 5px;
+	margin:0px 10px;
 	border-radius:5px;
 }
  .article_edit_panel > label{
  	display:none;
  }
 .article_edit_panel > div:hover, .article_edit_panel > label:hover{
-	background-color:#564fcc;
+	color:#ee3f5c;
 }
 
 .add_article_images_button{
