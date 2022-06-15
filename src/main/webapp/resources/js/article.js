@@ -352,7 +352,7 @@ function addArticle(){
 	formData.append("article_content",$("#article_content").val());
 	
 	for([key, value] of file_map){
-		formData.append("article_image_"+key,file_map.get(key));
+		formData.append("article_image_files",file_map.get(key));
 	}
 	
 	return $.ajax({
@@ -362,23 +362,6 @@ function addArticle(){
 		"contentType":false,
 		"dataType":"json",
 		"data":formData,
-		"success":function(result){
-			file_map = new Map();
-			index = 0;
-			$("#article_title").val("");
-			$("#article_content").val("");
-			$(".article_image").remove();
-			
-			section = 1;
-			page = 1;
-			
-			openAlert(result.content);
-			setListArticleForm();
-			getArticles(section,page,search_flag,search_content);						
-		},
-		"error":function(xhr, status, error){
-			openAlert(xhr.responseJSON.content);
-		},
 		"complete":function(){
 			send_article_flag = false;
 		}
@@ -471,7 +454,57 @@ $(document).ready(function(){
 		var article_title = $("#article_title").val();
 		var article_content = $("#article_content").val();
 		
-		addArticle();
+		addArticle()
+		.done(function(result){
+			file_map = new Map();
+			index = 0;
+			$("#article_title").val("");
+			$("#article_content").val("");
+			$(".article_image").remove();
+			
+			section = 1;
+			page = 1;
+			
+			index=0;
+			map = new Map();
+			
+			openAlert(result.content);
+			setListArticleForm();
+			getArticles(section,page,search_flag,search_content);
+		})
+		.fail(function(xhr, status, error){
+			if(xhr.status==401){
+				refreshTokens()
+				.done(function(result){
+					addArticle()
+					.done(function(result){
+						file_map = new Map();
+						index = 0;
+						$("#article_title").val("");
+						$("#article_content").val("");
+						$(".article_image").remove();
+						
+						section = 1;
+						page = 1;
+						
+						index=0;
+						map = new Map();
+						
+						openAlert(result.content);
+						setListArticleForm();
+						getArticles(section,page,search_flag,search_content);
+					})
+					.fail(function(xhr, status, error){
+						openAlert(xhr.responseJSON.content);
+					})
+				})
+				.fail(function(xhr, status, error){
+					openAlert(xhr.responseJSON.content);
+				})
+			}else{
+				openAlert(xhr.responseJSON.content);
+			}
+		})
 	});
 	
 	$("#fullpage").on("click","#search_article_button",function(e){

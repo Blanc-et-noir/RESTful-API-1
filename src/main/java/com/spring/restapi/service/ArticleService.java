@@ -45,16 +45,16 @@ public class ArticleService {
 	
 	public void addArticle(String contextPath, MultipartRequest mRequest,HashMap param) throws Exception {		
 		
-		Iterator<String> itor =  mRequest.getFileNames();
+		
 				
 		articleDAO.addArticle(param);
 		
 		Queue<HashMap> list = new LinkedList<HashMap>();
+		List<MultipartFile> files = mRequest.getFiles("article_image_files");
+		Iterator<MultipartFile> itor = files.iterator();
 		
-		while(itor.hasNext()) {
-			String filename = itor.next();
-			MultipartFile mf = mRequest.getFile(filename);
-			
+		while(itor.hasNext()) {		
+			MultipartFile mf = itor.next();
 			HashMap hm = new HashMap();
 			hm.put("article_image_file", mf);
 			hm.put("article_image_id", UUID.randomUUID().toString());
