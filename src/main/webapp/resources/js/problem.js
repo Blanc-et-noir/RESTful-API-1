@@ -1,3 +1,5 @@
+var score_problem_flag = false;
+
 function paging(problem_id,total,section,page){
 	var opinions =  $("#problem_"+problem_id).find(".opinions");
 	var max_section = Math.ceil(total/25);
@@ -127,6 +129,7 @@ function getProblems(){
 }
 
 function sendSolution(list){
+	score_problem_flag = true;
 	return $.ajax({
 		"url":"/restapi/users/records",
 		"type":"post",
@@ -634,6 +637,11 @@ $(document).ready(function(){
 		var i,j, problem = $(".problem");
 		var list = new Array();
 		var sum = 80;
+		
+		if(score_problem_flag){
+			return;
+		}
+		
 		for(i=0;i<problem.length;i++){
 			var problem_id = $(".problem").eq(i).find("input[type='radio']").attr("name");
 			
@@ -688,7 +696,7 @@ $(document).ready(function(){
 			
 			$("#score_problems_button").remove();
 			
-			
+			score_problem_flag = false;
 		})
 		.fail(function(xhr, status, error){
 			if(xhr.status==401){
@@ -720,17 +728,22 @@ $(document).ready(function(){
 						})
 						
 						$("#score_problems_button").remove();
+						score_problem_flag = false;
 					})
 					.fail(function(xhr, status, error){
 						openAlert(xhr.responseJSON.content);
+						score_problem_flag = false;
 					})
 				})
 				.fail(function(xhr, status, error){
 					openAlert(xhr.responseJSON.content);
+					score_problem_flag = false;
 				});
 			}else{
 				openAlert(xhr.responseJSON.content);
+				score_problem_flag = false;
 			}
+			score_problem_flag = false;
 		})
     });
 })

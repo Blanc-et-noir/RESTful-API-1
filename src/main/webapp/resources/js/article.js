@@ -316,7 +316,51 @@ function confirmArticle(confirm_article_button, fidx){
 			removed_file_extensions[fidx] = new Map();
 		},
 		"error":function(xhr, status, error){
-			openAlert(xhr.responseJSON.content);
+			if(xhr.status==401){
+				refreshTokens()
+				.done(function(result){
+					$.ajax({
+						"url":"/restapi/articles/"+$(confirm_article_button).parent().parent().attr("value"),
+						"type":"post",
+						"processData":false,
+						"contentType":false,
+						"dataType":"json",
+						"data":formData,
+						"success":function(result){
+							openAlert(result.content);
+							
+							var article_edit_panel = $(confirm_article_button).parent();
+							var delete_article_button = $(article_edit_panel).find(".delete_article_button");
+							var edit_article_button = $(article_edit_panel).find(".edit_article_button");
+							var cancel_article_button = $(article_edit_panel).find(".cancel_article_button");
+							var add_article_images_button = $(article_edit_panel).find(".add_article_images_button");
+							var article_wrapper = $(article_edit_panel).parent();
+							
+							$(edit_article_button).css({"display":"block"});
+							$(delete_article_button).css({"display":"block"});
+							$(confirm_article_button).css({"display":"none"});
+							$(cancel_article_button).css({"display":"none"});
+							$(add_article_images_button).css({"display":"none"});
+							
+							$(article_wrapper).find(".article_title").prop("readonly",true);
+							$(article_wrapper).find(".article_content").prop("readonly",true);
+							
+							file_maps[fidx] = new Map();
+							indexs[fidx] = 0;
+							removed_file_ids[fidx] = new Map();
+							removed_file_extensions[fidx] = new Map();
+						},
+						"error":function(xhr, status, error){
+							openAlert(xhr.responseJSON.content);
+						}
+					})
+				})
+				.fail(function(xhr, status, error){
+					openAlert(xhr.responseJSON.content);
+				})
+			}else{
+				openAlert(xhr.responseJSON.content);
+			}
 		},
 		"complete":function(){
 			modify_article_flag = false;
@@ -421,7 +465,31 @@ function deleteArticle(delete_article_button){
 			openAlert(result.content);
 		},
 		"error":function(xhr, status, error){
-			openAlert(xhr.responseJSON.content);
+			if(xhr.status==401){
+				refreshTokens()
+				.done(function(result){
+					$.ajax({
+						"url":"/restapi/articles/"+$(article_wrapper).attr("value"),
+						"type":"delete",
+						"dataType":"json",
+						"success":function(result){
+							section = 1;
+							page = 1;
+							getArticles(section, page, search_flag, search_content);
+							
+							openAlert(result.content);
+						},
+						"error":function(xhr, status, error){
+							openAlert(xhr.responseJSON.content);
+						}
+					})
+				})
+				.fail(function(xhr, status, error){
+					openAlert(xhr.responseJSON.content);
+				})
+			}else{
+				openAlert(xhr.responseJSON.content);
+			}
 		},
 		"complete":function(){
 			delete_article_flag = false;

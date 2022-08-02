@@ -305,129 +305,11 @@ $.fn.extend({
             });
         }
 
-        function setTouchPanel(){
-            $(document).off("click","#upTouchPanel",moveUp);
-            $(document).off("click","#downTouchPanel",moveDown);
-            $(document).off("click","#leftTouchPanel",moveLeft);
-            $(document).off("click","#rightTouchPanel",moveRight);
-            $("#touchPanel").remove();
-            var currentSection = $(".activeSection");
-            var currentSlide = $(".activeSection .activeSlide");
-            $("#fullpage").append("<ul id='touchPanel'/>");
-            $("#touchPanel").css({
-                "text-decoration": "none",
-                "list-style": "none",
-                "margin":"0px",
-                "padding":"0px"
-            })
-
-            //UP Panel
-            if(currentSection.prev(".section").length != 0 ){
-                $("#touchPanel").append("<a id='upTouchPanel'></a>");
-                $("#upTouchPanel").css({
-                    "display":"block",
-                    "position":"fixed",
-                    "width":"100%",
-                    "height":settings.touchPanelVerticalSize,
-                    "top":"0%",
-                    "opacity":settings.touchPanelOpacity
-                });
-                $("#upTouchPanel").hover(function(){
-                    $(this).css({
-                        "background-color":settings.touchPanelColor
-                    })
-                },function(){
-                    $(this).css({
-                        "background-color":"transparent"
-                    })
-                })
-                $(document).on("click","#upTouchPanel",moveUp);
-            }
-
-            //DOWN Panel
-            if(currentSection.next(".section").length != 0 ){
-                $("#touchPanel").append("<a id='downTouchPanel'></a>");
-                $("#downTouchPanel").css({
-                    "display":"block",
-                    "position":"fixed",
-                    "width":"100%",
-                    "height":settings.touchPanelVerticalSize,
-                    "bottom":"0%",
-                    "opacity":settings.touchPanelOpacity
-                });
-                $("#downTouchPanel").hover(function(){
-                    $(this).css({
-                        "background-color":settings.touchPanelColor
-                    })
-                },function(){
-                    $(this).css({
-                        "background-color":"transparent"
-                    })
-                })
-                $(document).on("click","#downTouchPanel",moveDown);
-            }
-
-            //LEFT Panel
-            if(currentSlide.prev(".slide").length != 0 ){
-                $("#touchPanel").append("<a id='leftTouchPanel'></a>");
-                $("#leftTouchPanel").css({
-                    "display":"block",
-                    "position":"fixed",
-                    "width":settings.touchPanelHorizontalSize,
-                    "height":"100%",
-                    "top":"50%",
-                    "left":"0%",
-                    "transform": "translate(-0%,-50%)",
-                    "opacity":settings.touchPanelOpacity
-                });
-                $("#leftTouchPanel").hover(function(){
-                    $(this).css({
-                        "background-color":settings.touchPanelColor
-                    })
-                },function(){
-                    $(this).css({
-                        "background-color":"transparent"
-                    })
-                })
-                $(document).on("click","#leftTouchPanel",moveLeft);
-            }
-
-            //RIGHT Panel
-            if(currentSlide.next(".slide").length != 0 ){
-                $("#touchPanel").append("<a id='rightTouchPanel'></a>");
-                $("#rightTouchPanel").css({
-                    "display":"block",
-                    "position":"fixed",
-                    "width":settings.touchPanelHorizontalSize,
-                    "height":"100%",
-                    "top":"50%",
-                    "left":"100%",
-                    "transform": "translate(-100%,-50%)",
-                    "opacity":settings.touchPanelOpacity
-
-                });
-                $("#rightTouchPanel").hover(function(){
-                    $(this).css({
-                        "background-color":settings.touchPanelColor
-                    })
-                },function(){
-                    $(this).css({
-                        "background-color":"transparent"
-                    })
-                })
-                $(document).on("click","#rightTouchPanel",moveRight);
-            }
-        }
-
         setInitialCSS();
         setVerticalNavigator();
         setHorizontalNavigator();
         $(window).resize(reLayout);
 
-        if(settings.touchMove == true){
-            setTouchPanel();
-        }
-        
         function setInitialCSS(){
             $("*").css({
                 "margin": "0px",
@@ -659,9 +541,7 @@ $.fn.extend({
                     reLayout();
                     setVerticalNavigator();
                     setHorizontalNavigator();
-                    if(settings.touchMove == true){
-                        setTouchPanel();
-                    }
+
                     if(settings.afterSectionLoad == undefined){
     
                     }else{
@@ -724,9 +604,7 @@ $.fn.extend({
                     reLayout();
                     setVerticalNavigator();
                     setHorizontalNavigator();
-                    if(settings.touchMove == true){
-                        setTouchPanel();
-                    }
+
                     if(settings.afterSectionLoad == undefined){
     
                     }else{
@@ -769,9 +647,7 @@ $.fn.extend({
                     reLayout();
                     setVerticalNavigator();
                     setHorizontalNavigator();
-                    if(settings.touchMove == true){
-                        setTouchPanel();
-                    }
+
                     if(settings.afterSectionLoad == undefined){
 
                     }else{
@@ -814,9 +690,7 @@ $.fn.extend({
                     reLayout();
                     setVerticalNavigator();
                     setHorizontalNavigator();
-                    if(settings.touchMove == true){
-                        setTouchPanel();
-                    }
+
                     if(settings.afterSlideLoad == undefined){
 
                     }else{
@@ -859,9 +733,7 @@ $.fn.extend({
                         reLayout();
                         setVerticalNavigator();
                         setHorizontalNavigator();
-                        if(settings.touchMove == true){
-                            setTouchPanel();
-                        }
+
                         if(settings.afterSlideLoad == undefined){
 
                         }else{
