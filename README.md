@@ -63,7 +63,35 @@
 
 <br/>
 
+### 서비스 동작
 
+<details>
+<summary>화면전환</summary>
+
+<br>
+
+![스와이핑](https://user-images.githubusercontent.com/83106564/182387491-f253b16b-c332-49d4-a335-6948ed7f4150.gif)
+
+</details>
+
+
+<details>
+<summary>회원가입</summary>
+
+<br>
+
+![회원가입1](https://user-images.githubusercontent.com/83106564/182387874-4847edb8-0b3a-42b4-be88-3c65da584ed1.gif)
+![회원가입2](https://user-images.githubusercontent.com/83106564/182389533-30dfe3c8-cce8-409f-a095-b9e76dea6738.gif)
+
+</details>
+
+<details>
+<summary>로그인</summary>
+
+<br>
+
+![로그인](https://user-images.githubusercontent.com/83106564/182390499-730dd4a3-2ea8-43a4-be67-e0f2e3a883f3.gif)
+</details>
 
 <a id="api_list">
    
