@@ -113,14 +113,18 @@ public class UserController {
 			String user_accesstoken = CookieUtil.getAccesstoken(request);
 			
 			//3. 해당 액세스 토큰으로부터 사용자 정보및 토큰 남은 유효시간을 추출함.
-			HashMap map = new HashMap();
-			map.put("user_id", JwtUtil.getData(user_accesstoken, "user_id"));
-			map.put("user_accesstoken_exp", (JwtUtil.getExpiration(user_accesstoken)/1000)+"초");
+			HashMap user = new HashMap();
+			user.put("user_id", JwtUtil.getData(user_accesstoken, "user_id"));
+			user.put("user_accesstoken_exp", (JwtUtil.getExpiration(user_accesstoken)/1000)+"초");
+			
+			HashMap param = new HashMap();
+			param.put("user_id", JwtUtil.getData(user_accesstoken, "user_id"));
+			user = userService.readUserInfo(param);
 			
 			//4. 해당 액세스 토큰의 정보를 클라이언트에게 전달함.
-			result.put("user", map);
+			result.put("user", user);
 			result.put("flag", true);
-			result.put("content", "로그인 정보가 필요한 기능 사용 성공\n요청자 ID : "+JwtUtil.getData(user_accesstoken, "user_id")+"\n액세스 토큰의 잔여 시간 : "+(JwtUtil.getExpiration(user_accesstoken)/1000)+"초");
+			result.put("content", "회원정보 조회 성공");
 			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
 		//5. 기타 예외가 발생한 경우.
 		}catch(Exception e) {

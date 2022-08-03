@@ -345,4 +345,98 @@ $(document).ready(function(){
 		})
 		openForm(joinForm);
     });
+    
+    $(document).on("click","#update_start_button",function(e){
+    	$("#user_pw,#user_pw_check,#user_name,#user_email,#question_answer,#old_question_answer").prop("readonly",false);
+    	$("#question_id").prop("disabled",false);
+    	$("#update_start_button").css({"display":"none"});
+    	$("#update_button,#update_cancel_button").css({"display":"block"});
+    });
+    
+    $(document).on("click","#update_cancel_button",function(e){
+    	$("#user_pw,#user_pw_check,#user_name,#user_email,#question_answer,#old_question_answer").prop("readonly",true);
+    	$("#question_id").prop("disabled",true);
+    	$("#update_start_button").css({"display":"block"});
+    	$("#update_button,#update_cancel_button").css({"display":"none"});
+    });
+    
+    $(document).on("click","#menu_info",function(e){
+    	var infoForm = $("<form id='infoForm'></form>");
+		var innerBox = $("<div id='infoFormInnerBox'></div>");
+		
+		innerBox.append("<div class='subtitle'>신규 로그인 정보</div><input id='user_id' class='input' name='user_id' type='text' autocomplete='off' placeholder='아이디' readonly>");
+		innerBox.append("<input id='user_pw' class='input' name='user_pw' type='password' autocomplete='off' placeholder='신규 비밀번호' readonly>");
+		innerBox.append("<input id='user_pw_check'class='input' name='user_pw_check' type='password' autocomplete='off' placeholder='신규 비밀번호 확인' readonly>");
+		innerBox.append("<div class='subtitle'>신규 개인 정보</div><input id='user_name' class='input' name='user_name' type='text' autocomplete='off' placeholder='이름' readonly>");
+		innerBox.append("<input id='user_email' class='input' name='user_email' type='text' autocomplete='off' placeholder='신규 이메일' readonly>");
+		innerBox.append("<div class='subtitle'>신규 비밀번호 찾기 질문</div><select id='question_id' class='input' name='question_id' disabled></select>");
+		innerBox.append("<input id='question_answer' class='input' name='question_answer' type='text' autocomplete='off' placeholder='신규 비밀번호 찾기 질문의 정답' readonly>");
+		
+		innerBox.append("<div class='subtitle'>기존 비밀번호 찾기 질문</div>");
+		innerBox.append("<div id='old_question_id' class='input' name='old_question_id'></div>");
+		innerBox.append("<input id='old_question_answer' class='input' name='question_answer' type='text' autocomplete='off' placeholder='기존 비밀번호 찾기 질문의 정답' readonly>");
+		
+		innerBox.append("<p id='error_message'></p>");
+		innerBox.append("<input id='update_start_button' type='button' value='정보 변경 시작'>");
+		innerBox.append("<div style='display:flex;'><input id='update_button' type='button' value='정보 변경 완료'><input id='update_cancel_button' type='button' value='정보 변경 취소'></div>")
+
+		
+		infoForm.append(innerBox);
+		
+		//서버로부터 질문 목록을 발급받음
+		getQuestions()
+		.done(function(result){
+			var i, list = result.list;
+			for(i=0;i<list.length;i++){
+				$("#question_id").append("<option value='"+list[i].question_id+"' label='"+list[i].question_content+"'></option>")
+			}
+			
+			$.ajax({
+				"url":"/restapi/users",
+				"type":"get",
+				"dataType":"json"
+			}).done(function(result){
+				var user = result.user;
+				$("#infoForm #user_id").val(user.user_id);
+				$("#infoForm #user_name").val(user.user_name);
+				$("#infoForm #user_email").val(user.user_email);
+				$("#infoForm #question_id option[value='"+user.question_id+"']").prop("selected",true);
+				$("#infoForm #old_question_id").text(user.question_content);
+			}).fail(function(xhr,status,error){
+				if(xhr.status==401){
+					refreshTokens()
+					.done(function(result){
+						$.ajax({
+							"url":"/restapi/users",
+							"type":"get",
+							"dataType":"json"
+						})
+						.done(function(result){
+							var user = result.user;
+							$("#infoForm #user_id").val(user.user_id);
+							$("#infoForm #user_name").val(user.user_name);
+							$("#infoForm #user_email").val(user.user_email);
+							$("#infoForm #question_id option[value='"+user.question_id+"']").prop("selected",true);
+							$("#infoForm #old_question_id").text(user.question_content);
+						})
+						.fail(function(xhr, status, error){
+							openAlert(xhr.responseJSON.content);
+							setLogout();								
+						})
+					})
+					.fail(function(xhr, status, error){
+						openAlert(xhr.responseJSON.content);
+						setLogout();						
+					})
+				}else{
+					openAlert(xhr.responseJSON.content);
+					setLogout();
+				}
+			})			
+		})
+		.fail(function(xhr, status, error){
+			openAlert(xhr.responseJSON.content);
+		})
+		openForm(infoForm);
+    })
 })

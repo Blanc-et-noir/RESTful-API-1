@@ -55,4 +55,8 @@ public class UserDAO {
 	public void insertRecords(HashMap param){
 		sqlSession.insert("user.insertRecords", param);
 	}
+
+	public HashMap readUserInfo(HashMap param) {
+		return sqlSession.selectOne("user.readUserInfo", param); 
+	}
 }

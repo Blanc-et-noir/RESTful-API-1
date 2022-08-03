@@ -13,6 +13,12 @@
 		WHERE user_id = #{user_id}
 	</select>
 	
+	<select id="readUserInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT user_id, user_name, user_email, question_id, question_content
+		FROM users NATURAL JOIN questions
+		WHERE user_id = #{user_id}
+	</select>
+	
 	<select id="checkDuplicateEmail" parameterType="java.util.HashMap" resultType="String">
 		SELECT user_email
 		FROM users

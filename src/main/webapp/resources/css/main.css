@@ -182,7 +182,7 @@ select option{
 	width:100%;
 }
 
-#joinForm{
+#joinForm, #infoForm{
 	border-radius:5px;
 	overflow:hidden;
 	position:relative;
@@ -194,7 +194,7 @@ select option{
 	padding:10px;
 }
 
-#joinFormInnerBox{
+#joinFormInnerBox, #infoFormInnerBox{
 	display:flex;
 	flex-direction:column;
 	width:100%;
@@ -303,7 +303,22 @@ select option{
 
 
 
-#joinForm #user_id,#joinForm #user_pw, #joinForm #user_pw_check, #joinForm #user_name, #joinForm #user_email, #joinForm #question_id, #joinForm #question_answer{
+#joinForm #user_id,
+#joinForm #user_pw, 
+#joinForm #user_pw_check, 
+#joinForm #user_name, 
+#joinForm #user_email, 
+#joinForm #question_id, 
+#joinForm #question_answer,
+#infoForm #user_id,
+#infoForm #user_pw, 
+#infoForm #user_pw_check, 
+#infoForm #user_name, 
+#infoForm #user_email, 
+#infoForm #question_id, 
+#infoForm #question_answer,
+#infoForm #old_question_id,
+#infoForm #old_question_answer{
 	width:100%;
 	height:40px;
 	text-indent:20px;
@@ -314,7 +329,8 @@ select option{
 	transition:0.3s;
 }
 
-#joinForm #error_message{
+#joinForm #error_message, 
+#infoForm #error_message{
 	width:100%;
 	line-height:20px;
 	color:#ee3f5c;
@@ -325,25 +341,52 @@ select option{
 	text-align:center;
 }
 
-#joinForm #user_id, #joinForm #user_name, #joinForm #question_id{
+#joinForm #user_id, 
+#joinForm #user_name, 
+#joinForm #question_id,
+#infoForm #user_id, 
+#infoForm #user_name, 
+#infoForm #question_id,
+#infoForm #old_question_id{
 	border-top-left-radius:5px;
 	border-top-right-radius:5px;
 }
 
-#joinForm #user_pw_check, #joinForm #user_email, #joinForm #question_answer{
+#joinForm #user_pw_check, 
+#joinForm #user_email, 
+#joinForm #question_answer,
+#infoForm #user_pw_check, 
+#infoForm #user_email, 
+#infoForm #question_answer,
+#infoForm #old_question_answer{
 	border-bottom-left-radius:5px;
 	border-bottom-right-radius:5px;
 	margin-bottom:10px;
 }
 
-#joinForm #user_id:focus,#joinForm #user_pw:focus, #joinForm #user_pw_check:focus, #joinForm #user_name:focus, #joinForm #user_email:focus, #joinForm #question_id:focus, #joinForm #question_answer:focus{
+#joinForm #user_id:focus,
+#joinForm #user_pw:focus, 
+#joinForm #user_pw_check:focus, 
+#joinForm #user_name:focus, 
+#joinForm #user_email:focus, 
+#joinForm #question_id:focus, 
+#joinForm #question_answer:focus,
+#infoForm #user_id:focus,
+#infoForm #user_pw:focus, 
+#infoForm #user_pw_check:focus, 
+#infoForm #user_name:focus, 
+#infoForm #user_email:focus, 
+#infoForm #question_id:focus, 
+#infoForm #question_answer:focus,
+#infoForm #old_question_id:focus,
+#infoForm #old_question_answer:focus{
 	border : 2px solid #06d6a0;
 	text-indent : 30px;
 }
 
 
 
-#join_button{
+#join_button,#update_button,#update_cancel_button,#update_start_button{
 	display:block;
 	height:40px;
 	z-index:400;
@@ -357,7 +400,7 @@ select option{
 	margin-top:10px;
 }
 
-#join_button:hover{
+#join_button:hover, #update_button:hover,#update_cancel_button:hover,#update_start_button:hover{
 	background-color:#171717;
 }
 
@@ -370,7 +413,10 @@ select option{
 	color:#ee3f5c !important;
 }
 
-
+#update_button, #update_cancel_button{
+	flex:1;
+	display:none;
+}
 
 
 input[type=radio]{

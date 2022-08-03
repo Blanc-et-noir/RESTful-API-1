@@ -90,7 +90,7 @@ public class TokenService {
 		
 		String user_accesstoken = JwtUtil.createToken(user, JwtUtil.accesstokenMaxAge);
 		String user_refreshtoken = JwtUtil.createToken(user, JwtUtil.refreshtokenMaxAge);
-		
+
 		//7. 사용자가 발급받은 액세스, 리프레쉬 토큰을 DB에 저장함. 추후에 액세스, 리프레쉬 토큰이 정말로 해당 회원이 발급받은 것인지 확인하기 위함.
 		param.put("user_accesstoken", user_accesstoken);
 		param.put("user_refreshtoken", user_refreshtoken);
@@ -120,6 +120,9 @@ public class TokenService {
 		//4. 클라이언트의 액세스, 리프레쉬 토큰이 담긴 쿠키를 삭제함.
 		response.addCookie(CookieUtil.createCookie("user_accesstoken","removed","/restapi",0));
 		response.addCookie(CookieUtil.createCookie("user_refreshtoken","removed","/restapi/tokens",0));
+		
+		//5. 현재 사용중인 토큰들을 블랙리스트에 추가함.
+		
 	}
 	
 	//해당 사용자가 현재 사용중인 토큰정보를 얻음.

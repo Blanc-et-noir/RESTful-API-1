@@ -102,4 +102,10 @@ public class UserService {
 	public List getQuestions() throws Exception{
 		return userDAO.getQuestions();
 	}
+
+	public HashMap readUserInfo(HashMap param) {
+		HashMap user = userDAO.readUserInfo(param);
+		
+		return user;
+	}
 }
