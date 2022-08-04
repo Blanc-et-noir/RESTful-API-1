@@ -284,18 +284,19 @@ select option{
 	display:block;
 	height:40px;
 	z-index:400;
-	color:white;
+	color:gray;
 	text-align:center;
 	line-height:40px;
 	border-radius:5px;
-	font-size:12px;
+	font-size:10px;
 	transition:0.3s;
-	background-color:#303134;
 	margin-top:10px;
+	font-weight:900;
+	background-color:#f4f4f4;
 }
 
 #login_button:hover{
-	background-color:#171717;
+	color:#06d6a0;
 }
 
 
@@ -390,18 +391,18 @@ select option{
 	display:block;
 	height:40px;
 	z-index:400;
-	color:white;
+	color:gray;
 	text-align:center;
 	line-height:40px;
-	border-radius:5px;
-	font-size:12px;
+	font-size:10px;
 	transition:0.3s;
-	background-color:#303134;
 	margin-top:10px;
+	font-weight:900;
+	background-color:#f4f4f4;
 }
 
 #join_button:hover, #update_button:hover,#update_cancel_button:hover,#update_start_button:hover{
-	background-color:#171717;
+
 }
 
 .wrong{
@@ -418,6 +419,13 @@ select option{
 	display:none;
 }
 
+#update_cancel_button:hover{
+	color:#ee3f5c;
+}
+
+#update_start_button:hover, #update_button:hover, #join_button:hover{
+	color:#06d6a0;
+}
 
 input[type=radio]{
 	display:none;

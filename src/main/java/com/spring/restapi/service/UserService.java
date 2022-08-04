@@ -9,17 +9,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.spring.restapi.dao.TokenDAO;
 import com.spring.restapi.dao.UserDAO;
 import com.spring.restapi.encrypt.RSA2048;
 import com.spring.restapi.encrypt.SHA;
 import com.spring.restapi.exception.user.DuplicateEmailException;
 import com.spring.restapi.exception.user.DuplicateIdException;
+import com.spring.restapi.exception.user.NotCorrectQuestionAnswerException;
 import com.spring.restapi.util.RedisUtil;
 
 @Transactional(propagation=Propagation.REQUIRED,rollbackFor={
 		Exception.class,
 		DuplicateIdException.class,
-		DuplicateEmailException.class
+		DuplicateEmailException.class,
+		NotCorrectQuestionAnswerException.class
 		}
 )
 @Service("userService")
@@ -28,6 +31,8 @@ public class UserService {
 	private RedisUtil redisUtil;
 	@Autowired
 	private UserDAO userDAO;
+	@Autowired
+	private TokenDAO tokenDAO;
 	
 	//클라이언트로부터 받은 정보를 바탕으로 DB에 새로운 회원정보를 등록함.
 	public void join(HashMap<String,String> param) throws DuplicateIdException, DuplicateEmailException, Exception{
@@ -107,5 +112,40 @@ public class UserService {
 		HashMap user = userDAO.readUserInfo(param);
 		
 		return user;
+	}
+
+	public void updateInfo(HashMap param) throws NotCorrectQuestionAnswerException, Exception {
+		HashMap user  = userDAO.readUserInfo(param);
+		
+		String user_salt = tokenDAO.getSalt(param);
+		
+		//3. 해당 사용자가 전달한 공개키에 대한 비밀키를 얻음.
+		String privatekey = (String) RedisUtil.getData((String) param.get("publickey"));
+		
+		System.out.println(user_salt);
+		System.out.println((String) param.get("publickey"));
+		System.out.println(privatekey);
+		System.out.println((String)param.get("old_question_answer"));
+		
+		String old_question_answer = SHA.DSHA512(RSA2048.decrypt((String)(param.get("old_question_answer")),privatekey).replaceAll(" ", ""),user_salt);
+		if(!old_question_answer.equals((String)user.get("question_answer"))){
+			throw new NotCorrectQuestionAnswerException();
+		}
+		
+		String new_user_salt = SHA.getSalt();
+		
+		if(param.get("user_pw")!=null&&param.get("question_id")!=null&&param.get("question_answer")!=null) {
+			System.out.println("비번:"+(String)param.get("user_pw"));
+			System.out.println("비밀키:"+privatekey);
+			System.out.println("설트:"+new_user_salt);
+			String user_pw = SHA.DSHA512(RSA2048.decrypt((String)param.get("user_pw"),privatekey).replaceAll(" ", ""),new_user_salt);
+			
+			String question_answer = SHA.DSHA512(RSA2048.decrypt((String)param.get("question_answer"),privatekey).replaceAll(" ", ""),new_user_salt);
+			param.put("user_pw", user_pw);
+			param.put("question_answer", question_answer);
+			param.put("user_salt", new_user_salt);
+		}
+		
+		userDAO.updateInfo(param);
 	}
 }

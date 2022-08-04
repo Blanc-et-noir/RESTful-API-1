@@ -14,7 +14,7 @@
 	</select>
 	
 	<select id="readUserInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT user_id, user_name, user_email, question_id, question_content
+		SELECT user_id, user_name, user_email, question_id, question_content, question_answer
 		FROM users NATURAL JOIN questions
 		WHERE user_id = #{user_id}
 	</select>
@@ -36,4 +36,20 @@
 			(#{item.problem_id},#{item.choice_id},#{user_id})
 		</foreach>
 	</insert>
+	
+	<update id="updateInfo" parameterType="java.util.HashMap">
+		UPDATE users
+		<set>
+			<if test="user_name != null">
+				user_name = #{user_name},
+			</if>
+			<if test="user_email != null">
+				user_email = #{user_email},
+			</if>
+			<if test="user_pw != null and question_id != null and question_answer != null and user_salt != null">
+				user_pw = #{user_pw},question_id = #{question_id}, question_answer = #{question_answer}, user_salt = #{user_salt}
+			</if>
+		</set>
+		WHERE user_id = #{user_id}
+	</update>
 </mapper>

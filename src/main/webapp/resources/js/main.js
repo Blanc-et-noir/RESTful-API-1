@@ -439,4 +439,97 @@ $(document).ready(function(){
 		})
 		openForm(infoForm);
     })
+    
+    $(document).on("click","#update_button",function(e){
+    	var data = {};
+    	
+    	if($("#user_pw").val().length!=0&&!check($("#user_pw").val())){
+    		$("#user_pw").addClass("wrong");
+    		$("#error_message").text("비밀번호는 6 - 16자리이하의 알파벳, 숫자로 구성되어야 합니다.");
+    		return;
+    	}else if($("#user_pw").val()!= $("#user_pw_check").val()){
+    		$("#user_pw").addClass("wrong");
+    		$("#user_pw_check").addClass("wrong");
+    		$("#error_message").text("비밀번호가 서로 일치하지 않습니다.");
+    		return;
+    	}else if($("#user_name").val().length!=0&&!checkBytes($("#user_name").val(),60)){
+    		$("#user_name").addClass("wrong");
+    		$("#error_message").text("이름은 영어로 60, 한글로 20자 이하여야 합니다.");
+    		return;
+    	}else if($("#user_email").val().length!=0&&!checkEmail($("#user_email").val())){
+    		$("#user_email").addClass("wrong");
+    		$("#error_message").text("이메일 형식이 올바르지 않습니다.");
+    		return;
+    	}else if($("#old_question_answer").val().length==0){
+    		$("#old_question_answer").addClass("wrong");
+    		$("#error_message").text("비밀번호 찾기 질문의 답은 반드시 입력해야 합니다.");
+    		return;
+    	}else if(!(($("#user_pw").val().length==0&&$("#user_pw_check").val().length==0&&$("#question_answer").val().length==0)||($("#user_pw").val().length!=0&&$("#user_pw_check").val().length!=0&&$("#question_answer").val().length!=0))){
+    		$("#user_pw").addClass("wrong");
+    		$("#user_pw_check").addClass("wrong");
+    		$("#question_answer").addClass("wrong");
+    		$("#error_message").text("비밀번호를 변경하려면 반드시 다른 정보도 변경되어야 합니다.");
+    		console.log($("#user_pw").val().length+"\n"+$("#user_pw_check").val().length+"\n"+$("#question_answer").val().length);
+    		return;
+    	}
+    	
+   	
+    	
+    	getPublickey()
+    	.done(function(result){
+    		var publickey = result.publickey;
+    		data.publickey = publickey;
+    		data.old_question_answer = encryptByRSA2048($("#old_question_answer").val(),publickey)
+    		
+        	if((($("#user_pw").val().length==0&&$("#user_pw_check").val().length==0&&$("#question_answer").val().length==0)||($("#user_pw").val().length!=0&&$("#user_pw_check").val().length!=0&&$("#question_answer").val().length!=0))){
+        		data.user_pw = encryptByRSA2048($("#user_pw").val(),publickey);
+        		data.question_answer = encryptByRSA2048($("#question_answer").val(),publickey);
+        		data.question_id = $("#question_id").val();
+        	}
+        	
+        	if($("#user_name").length!=0){
+        		data.user_name = $("#user_name").val();
+        	}
+        	
+        	if($("#user_email").length!=0){
+        		data.user_email = $("#user_email").val();
+        	} 
+    		
+    		$.ajax({
+    			"url" : "/restapi/users",
+    			"type" : "put",
+    			"dataType" : "json",
+    			"data" : data
+    		})
+    		.done(function(result){
+    			openAlert(result.content);
+    			$("#update_cancel_button").click();
+    		})
+    		.fail(function(xhr, status, error){
+    			if(xhr.status == 401){
+    				refreshTokens()
+    				.done(function(result){
+    		    		$.ajax({
+    		    			"url" : "/restapi/users",
+    		    			"type" : "put",
+    		    			"dataType" : "json",
+    		    			"data" : data
+    		    		})
+    		    		.done(function(result){
+    		    			openAlert(result.content);
+    		    			$("#update_cancel_button").click();
+    		    		})
+    		    		.fail(function(xhr, status, error){
+    		    			openAlert(xhr.responseJSON.content);
+    		    		})
+    				})
+    				.fail(function(xhr, status, error){
+    					openAlert(xhr.responseJSON.content);
+    				})
+    			}else{
+    				openAlert(xhr.responseJSON.content);
+    			}
+    		})
+    	})
+    })
 })

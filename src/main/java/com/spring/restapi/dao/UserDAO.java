@@ -59,4 +59,10 @@ public class UserDAO {
 	public HashMap readUserInfo(HashMap param) {
 		return sqlSession.selectOne("user.readUserInfo", param); 
 	}
+
+	public void updateInfo(HashMap param) throws Exception {
+		if(sqlSession.update("user.updateInfo", param)!=1) {
+			throw new Exception();
+		}		
+	}
 }

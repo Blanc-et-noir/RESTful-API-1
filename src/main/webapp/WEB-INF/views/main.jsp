@@ -49,12 +49,12 @@
 							<p class="touchable">커뮤니티</p>
 						</div>
 						<div id="move_button3" class="card touchable" style="top:90%; left:10%; transform:translate(-10%,-90%);">
-							<img class="touchable" src="${path}/resources/image/person.svg">
-							<p class="touchable">내 정보</p>
-						</div>
-						<div id="move_button4" class="card touchable" style="top:90%; left:90%; transform:translate(-90%,-90%);">
 							<img class="touchable" src="${path}/resources/image/project.svg">
 							<p class="touchable">고객지원</p>
+						</div>
+						<div id="move_button4" class="card touchable" style="top:90%; left:90%; transform:translate(-90%,-90%);">
+							<img class="touchable" src="${path}/resources/image/person.svg">							
+							<p class="touchable">서비스 정보</p>
 						</div>
 						<p style="position:absolute; top:110%; left:50%; transform:translate(-50%,-110%); text-align:center;">한 번의 클릭으로 간편하게!</p>
 					</div>	
@@ -128,10 +128,10 @@
             <div class="slide" style="background-color:#f4f4f4">
             	<div class="intro_box">
             		<div class="card touchable return_button" style="top:50%; left:5%; transform:translate(-5%,-50%)">
-						<img class="touchable" src="${path}/resources/image/person.svg">
-						<p class="touchable">내 정보</p>
+						<img class="touchable" src="${path}/resources/image/project.svg">
+						<p class="touchable">고객지원</p>
 					</div>
-					<p class="description touchable">회원님의 정보가 궁금하신가요?<br>여기에 다양한 정보가 있습니다.</p>
+					<p class="description touchable">도움이 필요하신가요?<br>신속하게 문제를 해결해드립니다.</p>
             	</div>
             </div>
 			<div class="slide" style="background-color:#f4f4f4">
@@ -142,10 +142,10 @@
             <div class="slide" style="background-color:#f4f4f4">
             	<div class="intro_box">
             		<div class="card touchable return_button" style="top:50%; left:5%; transform:translate(-5%,-50%)">
-						<img class="touchable" src="${path}/resources/image/project.svg">
-						<p class="touchable">고객지원</p>
+						<img class="touchable" src="${path}/resources/image/person.svg">
+						<p class="touchable">서비스 정보</p>
 					</div>
-					<p class="description touchable">도움이 필요하신가요?<br>신속하게 문제를 해결해드립니다.</p>
+					<p class="description touchable">서비스 정보가 필요하신가요?<br>여기에 다양한 정보가 있습니다.</p>
             	</div>
             </div>
 			<div class="slide" style="background-color:#f4f4f4">

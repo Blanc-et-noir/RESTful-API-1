@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.spring.restapi.encrypt.RSA2048;
 import com.spring.restapi.exception.user.DuplicateEmailException;
 import com.spring.restapi.exception.user.DuplicateIdException;
+import com.spring.restapi.exception.user.NotCorrectQuestionAnswerException;
 import com.spring.restapi.service.UserService;
 import com.spring.restapi.util.CookieUtil;
 import com.spring.restapi.util.JwtUtil;
@@ -128,8 +129,39 @@ public class UserController {
 			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
 		//5. 기타 예외가 발생한 경우.
 		}catch(Exception e) {
+			e.printStackTrace();
 			result.put("flag", false);
-			result.put("content", "조회 실패");
+			result.put("content", "회원정보 조회 실패");
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	//해당 액세스 토큰의 소유자 정보를 변경함
+	@RequestMapping(value= {"/users"}, method={RequestMethod.PUT})
+	public ResponseEntity<HashMap> updateInfo(HttpServletRequest request, @RequestParam HashMap param){
+		HashMap result = new HashMap();
+		//1. 기타 예외가 발생한 경우.
+		try {
+			//2. 해당 클라이언트의 액세스 토큰을 얻음.
+			String user_accesstoken = CookieUtil.getAccesstoken(request);
+			
+			param.put("user_id", JwtUtil.getData(user_accesstoken, "user_id"));
+			userService.updateInfo(param);
+			
+			//4. 해당 액세스 토큰의 정보를 클라이언트에게 전달함.
+			result.put("flag", true);
+			result.put("content", "회원정보 변경 성공");
+			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
+		//5. 기타 예외가 발생한 경우.
+		}catch(NotCorrectQuestionAnswerException e) {
+			e.printStackTrace();
+			result.put("flag", false);
+			result.put("content", "비밀번호 찾기 질문에 대한 답 불일치");
+			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
+		}catch(Exception e) {
+			e.printStackTrace();
+			result.put("flag", false);
+			result.put("content", "회원정보 변경 실패");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}
 	}
