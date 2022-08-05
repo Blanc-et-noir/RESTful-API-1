@@ -46,7 +46,30 @@ select option{
 	background-color:white !imporant;
 }
 
+#main_logo_wrapper{
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  position: absolute;
+  display: flex;
+  padding:100px 0px !important;
+}
 
+#main_logo{
+	position:relative;
+	width: 140px;
+	height: auto;
+	margin: auto !important;
+	padding:10px !important;
+}
+
+.main_description_highlight{
+	color:#ee3f5c;
+	font-size:15px;
+	font-weight:900;
+}
 
 #menu_bar{
 	width:100%;
@@ -1124,4 +1147,113 @@ input[type=radio]:not(:checked) + label:hover{
 }
 .article_images_input{
 	display:none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Æ©Åä¸®¾ó*/
+#tutorial_cover{
+	position:fixed;
+	display:block;
+	background: rgb(0,0,0,0.2);
+	width:100%;
+	height:100%;
+	z-index:2000;
+}
+
+#menu_bar_highlight{
+	width: 100%;
+    height: 40px;
+    position: fixed;
+    bottom: 0px;
+    display: flex;
+    flex-direction: row;
+    border: 2px solid #ee3f5c;
+    z-index:2500;
+}
+
+#tutorial_description{
+    position: fixed;
+    display:block;
+    background-color:white;
+    padding:10px;
+    border-radius:5px;
+    text-align:center;
+}
+
+#hnav_highlight{
+	left: 50%;
+	width: 15px;
+    height: 15px;
+    position: fixed;
+    bottom: 10px;
+    border: 2px solid #ee3f5c;
+    z-index:2500;
+    transform: translate(-50%, 0%);
+    border-radius:5px;
+}
+#vnav_highlight{
+	top:50%;
+	width: 15px;
+    height: 90px;
+    position: fixed;
+    right: 10px;
+    border: 2px solid #ee3f5c;
+    z-index:2500;
+    transform: translate(-50%, 0%);
+    border-radius:5px;
+}
+
+.tutorial_description_highlight{
+	color:#ee3f5c;
+}
+
+#tutorial_disable_button{
+	top:65%;
+	left: 50%;
+	transform: translate(-50%, -65%);
+	position: fixed;
+    z-index:2500;
+    border-radius:5px;
+    padding:10px;
+    font-weight:900;
+    transition:0.2s;
+    text-align:center;
+}
+#tutorial_disable_button:hover{
+    color:#ee3f5c;
 }

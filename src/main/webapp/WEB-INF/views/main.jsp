@@ -24,6 +24,7 @@
     <script src="${path}/resources/js/main.js"></script>
     <script src="${path}/resources/js/article.js"></script>
     <script src="${path}/resources/js/problem.js"></script>
+	<script src="${path}/resources/js/tutorial.js"></script>
 
 	<link rel="icon" type="image/x-icon" href="${path}/resources/image/favicon.ico">
     <link rel="stylesheet" href="${path}/resources/css/main.css">
@@ -33,7 +34,13 @@
     <div id="fullpage">
         <div class="section">
             <div class="slide touchable" style="background-color:#f4f4f4">
-            	<p></p>
+            	<div id="main_logo_wrapper">
+					<div id="main_logo" class="touchable">
+            			<img class="touchable" src="${path}/resources/image/main.svg" style="width:100%; display:block;">
+            			<div class="touchable" style="width:100%;text-align:left;"><span class="main_description_highlight">시</span>험에&nbsp;&nbsp;<span class="main_description_highlight">나</span>오는</div>
+            			<div class="touchable" style="width:100%;text-align:right;"><span class="main_description_highlight">부</span>분만&nbsp;&nbsp;<span class="main_description_highlight">로</span>봇처럼</div>
+            		</div>
+            	</div>
             </div>
         </div>
         <div class="section">

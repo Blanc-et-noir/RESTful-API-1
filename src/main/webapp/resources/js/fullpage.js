@@ -244,7 +244,7 @@ $.fn.extend({
             $("#verticalNav").css({
                 "right": "10px",
                 "top": "50%",
-                "transform": "translate(-50%, 0%)",
+                "transform": "translate(0%, -50%)",
                 "position":"fixed",
                 "display":"flex",
                 "flex-direction":"column",
