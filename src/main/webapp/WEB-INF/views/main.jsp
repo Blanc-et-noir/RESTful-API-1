@@ -31,14 +31,13 @@
     <title>CBT 웹 서비스</title>
 </head>
 <body>
-    <div id="fullpage">
+    <div id="fullpage" style="background-color:#f4f4f4;">
         <div class="section">
             <div class="slide touchable" style="background-color:#f4f4f4">
             	<div id="main_logo_wrapper">
 					<div id="main_logo" class="touchable">
-            			<img class="touchable" src="${path}/resources/image/main.svg" style="width:100%; display:block;">
-            			<div class="touchable" style="width:100%;text-align:left;"><span class="main_description_highlight">시</span>험에&nbsp;&nbsp;<span class="main_description_highlight">나</span>오는</div>
-            			<div class="touchable" style="width:100%;text-align:right;"><span class="main_description_highlight">부</span>분만&nbsp;&nbsp;<span class="main_description_highlight">로</span>봇처럼</div>
+            			<div class="touchable" style="width:100%;text-align:left;"><span class="main_description_highlight">시</span>험에<br><span class="main_description_highlight">나</span>오는<br><span class="main_description_highlight">부</span>분만<br><span class="main_description_highlight">로</span>봇처럼</div>
+            			<img class="touchable" src="${path}/resources/image/main.svg" style="width:75%; display:block;">
             		</div>
             	</div>
             </div>
@@ -141,9 +140,9 @@
 					<p class="description touchable">도움이 필요하신가요?<br>신속하게 문제를 해결해드립니다.</p>
             	</div>
             </div>
-			<div class="slide" style="background-color:#f4f4f4">
-				<p>내용</p>
-        	</div>          
+            <div class="slide" style="background-color:#f4f4f4">
+            	
+            </div>
         </div>
         <div class="section">
             <div class="slide" style="background-color:#f4f4f4">
@@ -156,7 +155,37 @@
             	</div>
             </div>
 			<div class="slide" style="background-color:#f4f4f4">
-				<p>내용</p>
+				<div id="service_info_wrapper">
+					<div id="service_info" class="touchable">
+						<dl class="touchable">
+							<dt class="touchable">서비스 정보</dt>
+							<br class="touchable">
+							<dd class="touchable"><span class="touchable" style="color:#ee3f5c; font-weight:900;">[시나부로 개요]</span> 시나브로란 <span class="touchable" style="font-weight:900; color:#6c63ff;">"자신도 모르는 사이에 조금씩"</span> 라는 의미의 순 우리말입니다. 이를 바탕으로 "시험에 나오는 부분만 로봇처럼" 공부하자는 의미에서 "시나부로" 라는 이름으로 서비스를 제공하고자 합니다.</dd>
+							<br class="touchable">
+							<dd class="touchable"><span class="touchable" style="color:#ee3f5c; font-weight:900;">[시나부로 기능]</span> 시나부로 서비스를 활용하면 여러분들은 자격증 시험을 언제, 어디서나, 간편하게 공부할 수 있도록 많은 기출문제를 직접 풀어보고, 이에 대해 많은 사람들과 의견을 공유할 수 있습니다.</dd>
+							<br class="touchable">
+							<dd class="touchable"><span class="touchable" style="color:#ee3f5c; font-weight:900;">[시나부로 목표]</span> 시나부로 서비스를 통해 여러분들이 취득하고자 하는 자격증 시험에 무사히 합격할 수 있기를 진심으로 기원합니다.</dd>
+							<br class="touchable">
+							<br class="touchable">
+							<br class="touchable">
+							<br class="touchable">
+							<dt class="touchable">기술 정보</dt>
+							<br class="touchable">
+							<dd class="touchable"><span class="touchable" style="color:#ee3f5c; font-weight:900;">[Front-end]</span> HTML, CSS, Javascript, JQuery, JSP</dd>
+							<br class="touchable">
+							<dd class="touchable"><span class="touchable" style="color:#ee3f5c; font-weight:900;">[Back-end]</span> Java, Spring, MariaDB, Redis, JWT</dd>
+							<br class="touchable">
+							<br class="touchable">
+							<br class="touchable">
+							<br class="touchable">
+							<dt class="touchable">기타 정보</dt>
+							<br class="touchable">
+							<dd class="touchable"><span class="touchable" style="color:#ee3f5c; font-weight:900;">[SVG Image]</span> SVG 이미지는 unDraw에서 무료로 제공하는 이미지 파일을 사용, https://undraw.co/illustrations</dd>
+							<br class="touchable">
+							<dd class="touchable"><span class="touchable" style="color:#ee3f5c; font-weight:900;">[Fullpage Plugin]</span> Fullpage Plugin은 JQuery의 기능을 활용하여 직접 구현한 플러그인을 활용, https://github.com/Blanc-et-noir/fullpage</dd>
+						</dl>
+					</div>
+				</div>
         	</div>     
         </div>
         <div id='menu_bar' class='touchable'>
