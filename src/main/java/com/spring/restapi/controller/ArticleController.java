@@ -38,12 +38,12 @@ public class ArticleController {
 			articleService.addArticle(request.getServletContext().getRealPath(""),mRequest, param);
 			
 			result.put("true", true);
-			result.put("content", "°Ô½Ã±Û ÀÛ¼º ¼º°ø");
+			result.put("content", "ê²Œì‹œê¸€ ì‘ì„± ì„±ê³µ");
 			return new ResponseEntity<HashMap>(result,HttpStatus.CREATED);
 		}catch(Exception e) {
 			e.printStackTrace();
 			result.put("flag", false);
-			result.put("content", "°Ô½Ã±Û ÀÛ¼º ½ÇÆĞ");
+			result.put("content", "ê²Œì‹œê¸€ ì‘ì„± ì‹¤íŒ¨");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -69,12 +69,12 @@ public class ArticleController {
 			
 			result = articleService.getArticles(param);
 			result.put("flag", true);
-			result.put("content", "°Ô½Ã±Û ¸ñ·Ï Á¶È¸ ¼º°ø");
+			result.put("content", "ê²Œì‹œê¸€ ëª©ë¡ ì¡°íšŒ ì„±ê³µ");
 			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
 			result.put("flag", false);
-			result.put("content", "°Ô½Ã±Û ¸ñ·Ï Á¶È¸ ½ÇÆĞ");
+			result.put("content", "ê²Œì‹œê¸€ ëª©ë¡ ì¡°íšŒ ì‹¤íŒ¨");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -90,7 +90,7 @@ public class ArticleController {
 			articleService.deleteArticle(param);
 			
 			result.put("flag", true);
-			result.put("content", "°Ô½Ã±Û »èÁ¦ ¼º°ø");
+			result.put("content", "ê²Œì‹œê¸€ ì‚­ì œ ì„±ê³µ");
 			return new ResponseEntity<HashMap>(result,HttpStatus.OK);		
 		}catch(NotMatchedUserIdException e) {
 			result.put("flag", false);
@@ -102,12 +102,12 @@ public class ArticleController {
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);	
 		}catch(IOException e) {
 			result.put("flag", false);
-			result.put("content", "ÀÌ¹ÌÁö ÆÄÀÏÀ» »èÁ¦ÇÏ´Â µµÁß ¹®Á¦°¡ ¹ß»ıÇß½À´Ï´Ù.");
+			result.put("content", "ì´ë¯¸ì§€ íŒŒì¼ì„ ì‚­ì œí•˜ëŠ” ë„ì¤‘ ë¬¸ì œê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);	
 		}catch(Exception e) {
 			e.printStackTrace();
 			result.put("flag", false);
-			result.put("content", "°Ô½Ã±Û »èÁ¦ ½ÇÆĞ");
+			result.put("content", "ê²Œì‹œê¸€ ì‚­ì œ ì‹¤íŒ¨");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -123,7 +123,7 @@ public class ArticleController {
 			articleService.modifyArticle(mRequest,request, param);
 			
 			result.put("flag", true);
-			result.put("content", "°Ô½Ã±Û ¼öÁ¤¿¡ ¼º°øÇß½À´Ï´Ù.");
+			result.put("content", "ê²Œì‹œê¸€ ìˆ˜ì • ì„±ê³µ");
 			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
 		}catch(NotFoundArticleException e) {
 			result.put("flag", false);
@@ -136,7 +136,7 @@ public class ArticleController {
 		}catch(Exception e) {
 			e.printStackTrace();
 			result.put("flag", false);
-			result.put("content", "°Ô½Ã±Û ¼öÁ¤¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
+			result.put("content", "ê²Œì‹œê¸€ ìˆ˜ì • ì‹¤íŒ¨");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -158,12 +158,12 @@ public class ArticleController {
 			
 			result = articleService.getArticle(param);
 			result.put("flag", true);
-			result.put("content", "°Ô½Ã±Û Á¶È¸ ¼º°ø");
+			result.put("content", "ê²Œì‹œê¸€ ì¡°íšŒ ì„±ê³µ");
 			return new ResponseEntity<HashMap>(result,HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
 			result.put("flag", false);
-			result.put("content", "°Ô½Ã±Û ¸ñ·Ï ½ÇÆĞ");
+			result.put("content", "ê²Œì‹œê¸€ ì¡°íšŒ ì‹¤íŒ¨");
 			return new ResponseEntity<HashMap>(result,HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -178,12 +178,12 @@ public class ArticleController {
 			articleService.getArticleImage(request,response,param);
 			
 			result.put("flag", true);
-			result.put("content", "°Ô½Ã±Û ÀÌ¹ÌÁö Á¶È¸ ¼º°ø");
+			result.put("content", "ê²Œì‹œê¸€ ì´ë¯¸ì§€ ì¡°íšŒ ì„±ê³µ");
 			return;
 		}catch(Exception e) {
 			e.printStackTrace();
 			result.put("flag", false);
-			result.put("content", "°Ô½Ã±Û ÀÌ¹ÌÁö Á¶È¸ ½ÇÆĞ");
+			result.put("content", "ê²Œì‹œê¸€ ì´ë¯¸ì§€ ì¡°íšŒ ì‹¤íŒ¨");
 			return;
 		}
 	}
