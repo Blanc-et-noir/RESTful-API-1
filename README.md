@@ -1,5 +1,5 @@
 # CBT 웹 서비스
-### [서비스 URL](http://118.67.130.63:8080/restapi/)
+### [서비스 URL](https://www.blancetnoir.info/restapi)
 
 <br/>
 
