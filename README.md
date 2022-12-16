@@ -1,5 +1,4 @@
 # CBT 웹 서비스
-### [서비스 URL](https://www.blancetnoir.info/restapi)
 
 <br/>
 
